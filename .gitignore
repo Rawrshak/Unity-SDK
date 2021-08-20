@@ -63,3 +63,7 @@ crashlytics-build.properties
 # ================== #
 /Assets/Editor/Resources
 /Assets/Editor/Resources.meta
+
+# Test data
+/Assets/Test
+/Assets/Test.meta

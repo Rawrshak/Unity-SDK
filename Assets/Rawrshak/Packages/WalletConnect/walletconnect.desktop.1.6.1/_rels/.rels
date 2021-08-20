@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Type="http://schemas.microsoft.com/packaging/2010/07/manifest" Target="/WalletConnect.Desktop.nuspec" Id="R56E40121A065784A" />
-  <Relationship Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="/package/services/metadata/core-properties/7dbabb10518a401d945590eec51144eb.psmdcp" Id="RDCAE219271C5B81D" />
-</Relationships>
