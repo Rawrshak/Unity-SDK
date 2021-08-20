@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>WalletConnect.Core</id>
+    <version>1.6.1</version>
+    <title>WalletConnectSharp.Core</title>
+    <authors>pedrouid, edkek</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>icon.png</icon>
+    <projectUrl>https://walletconnect.org/</projectUrl>
+    <iconUrl>https://walletconnect.org/walletconnect-logo.svg</iconUrl>
+    <description>A lightweight C# implementation of the WalletConnect protocol that can be used to connect to external wallets or connect a wallet to an external Dapp</description>
+    <copyright>Copyright (c) WalletConnect 2021</copyright>
+    <tags>walletconnect wallet web3 ether ethereum blockchain evm</tags>
+    <repository type="git" url="https://github.com/WalletConnect/WalletConnectSharp" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Newtonsoft.Json" version="13.0.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

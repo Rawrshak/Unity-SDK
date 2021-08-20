@@ -19,5 +19,5 @@ These libraries give the game developer the following functionality:
 - Nethereum: 4.0.5, net461AOT
     - This requires System.Buffers.dll and Microsoft.Extensions.Logging.Abstractions.dll
 - graphQL-client-unity: https://github.com/Gazuntype/graphQL-client-unity
-- WalletConnect: v0.1
+- WalletConnect: using WalletConnectUnity
 - ZXing.net: 0.16.6.0 (unity)
