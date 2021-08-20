@@ -6,41 +6,33 @@ using UnityEngine;
 // Nethereum
 using Nethereum.Web3.Accounts;
 
+// For signing
+using Nethereum.Web3;
+using Nethereum.Util;
+using System.Text;
+using Nethereum.Signer;
+using Nethereum.Hex.HexConvertors.Extensions;
+using Nethereum.ABI.Encoders;
+
 namespace Rawrshak
 {
     [CreateAssetMenu(fileName="PrivateKeyWallet", menuName="Rawrshak/Create Private Key Wallet Object")]
-    public class PrivateKeyWallet : ScriptableObject, IWallet
+    public class PrivateKeyWallet : WalletBase
     {
         // Public properties
         public string privateKey;
-        public List<ContentContract> contract;
 
-        public Account Load()
+        public override void Load()
         {
-            var account = new Nethereum.Web3.Accounts.Account(privateKey);
+            account = new Nethereum.Web3.Accounts.Account(privateKey);
             if (account == null)
             {
-                Debug.LogError("Invalid PrivateKey");
+                Debug.LogError("Invalid Private Key");
+                return;
             }
-            return account;
-        }
-
-        public bool VerifyPermissionsForAll()
-        {
-            // Todo: Make a ContentContract call similar to ERC1155 calls specifically for all content contracts
-            return true;
-        }
-
-        public bool VerifyPermissions(ContentContract contract)
-        {
-            // Todo:
-            return true;
-        }
-
-        public string SignTransaction(MintTransactionData data)
-        {
-            // Todo:
-            return String.Empty;
+            
+            // Get the Eth ECKey for signing
+            eCKey = new EthECKey(privateKey);
         }
     }
 }

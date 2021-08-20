@@ -6,44 +6,34 @@ using UnityEngine;
 // Nethereum
 using Nethereum.Web3.Accounts;
 
+// For signing
+using Nethereum.Web3;
+using Nethereum.Util;
+using System.Text;
+using Nethereum.Signer;
+using Nethereum.Hex.HexConvertors.Extensions;
+using Nethereum.ABI.Encoders;   
+
 namespace Rawrshak
 {
     [CreateAssetMenu(fileName="EncryptedKeyStoreWalletFromString", menuName="Rawrshak/Create Encrypted Key Store Object from String")]
-    public class EncryptedKeyStoreStringWallet : ScriptableObject, IWallet
+    public class EncryptedKeyStoreStringWallet : WalletBase
     {
         // Public properties
         public string keyStoreJson;
         public string password;
-        public List<ContentContract> contract;
 
-        // Private Properties
-
-        public Account Load()
+        public override void Load()
         {
-            var account = Nethereum.Web3.Accounts.Account.LoadFromKeyStore(keyStoreJson, password);
+            account = Nethereum.Web3.Accounts.Account.LoadFromKeyStore(keyStoreJson, password);
             if (account == null)
             {
-                Debug.LogError("Invalid PrivateKey");
+                Debug.LogError("Invalid Encrypted Key Store");
+                return;
             }
-            return account;
-        }
-
-        public bool VerifyPermissionsForAll()
-        {
-            // Todo:
-            return true;
-        }
-
-        public bool VerifyPermissions(ContentContract contract)
-        {
-            // Todo:
-            return true;
-        }
-
-        public string SignTransaction(MintTransactionData data)
-        {
-            // Todo:
-            return String.Empty;
+            
+            // Get the Eth ECKey for signing
+            eCKey = new EthECKey(account.PrivateKey);
         }
     }
 }
