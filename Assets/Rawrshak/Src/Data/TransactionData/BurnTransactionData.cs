@@ -7,12 +7,10 @@ using UnityEngine;
 namespace Rawrshak
 {
     [Serializable]
-    public class MintTransactionData
+    public class BurnTransactionData
     {
-        string to;
+        string account;
         List<BigInteger> tokenIds;
         List<BigInteger> amounts;
-        BigInteger nonce;
-        string signer;
     }
 }
