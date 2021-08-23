@@ -29,10 +29,21 @@ namespace Rawrshak
             }
         }
 
-        public static async Task<bool> UserApproval()
+        public static async Task<bool> UserApproval(string _chain, string _network, string _contract, string _user, string _rpc="")
         {
-            // Todo:
-            return true;
+            string method = "userApproval";
+            string[] obj = { _user };
+            string args = JsonConvert.SerializeObject(obj);
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+            try 
+            {
+                return response.ToLower() == "true";
+            } 
+            catch 
+            {
+                Debug.LogError(response);
+                throw;
+            }
         }
     }
 }

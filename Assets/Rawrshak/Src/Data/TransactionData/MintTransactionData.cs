@@ -9,10 +9,11 @@ namespace Rawrshak
     [Serializable]
     public class MintTransactionData
     {
-        string to;
-        List<BigInteger> tokenIds;
-        List<BigInteger> amounts;
-        BigInteger nonce;
-        string signer;
+        public string to;
+        public List<BigInteger> tokenIds;
+        public List<BigInteger> amounts;
+        public BigInteger nonce;
+        public string signer;
+        public string signature;
     }
 }
