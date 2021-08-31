@@ -1,0 +1,16 @@
+{
+    "name": "Rawrshak Original Sinner Title",
+    "description": "Title bestowed to the earliest community members.",
+    "image": "<default text icon uri on arweave>",
+    "type": "text",
+    "subtype": "title",
+    "assetProperties": 
+    {
+        "title": "Rawrshak Original Sinner",
+        "description": "The earliest of Rawrshak believers. The one's willing to listen to an odd voice somewhere in the depths of the crypto space. These unique individuals supported the creation of the next reality during the depths of a world crisis."
+    },
+    "developerProperties":
+    {
+        "creatorComments": "These guys seriously believed in me when no one else did. I just want to return the favor."
+    }
+}
