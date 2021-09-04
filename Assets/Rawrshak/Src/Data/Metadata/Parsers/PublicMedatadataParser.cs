@@ -39,6 +39,5 @@ public class PublicMedatadataParser : ScriptableObject
                 return PublicAssetMetadataBase.CreateFromJSON(jsonString);
             }
         }
-        return null;
     }
 }

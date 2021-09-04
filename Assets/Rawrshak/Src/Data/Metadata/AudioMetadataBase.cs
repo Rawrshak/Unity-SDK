@@ -21,7 +21,7 @@ namespace Rawrshak
 
         public AudioProperties[] assetProperties;
 
-        public static AudioMetadataBase CreateFromJSON(string jsonString)
+        public static new AudioMetadataBase CreateFromJSON(string jsonString)
         {
             return JsonUtility.FromJson<AudioMetadataBase>(jsonString);
         }
