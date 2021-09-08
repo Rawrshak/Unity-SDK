@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Rawrshak
 {
+    // Todo: Update this. We don't use System Registry anymore
     public class SystemRegistry
     {
         private static string AbiFileLocation = "Abis/SystemRegistry";

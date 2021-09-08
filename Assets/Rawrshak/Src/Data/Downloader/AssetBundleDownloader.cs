@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Events;
 
-public class AssetBundleDownloader : MonoBehaviour
+public class AssetBundleDownloader : SingletonScriptableObject<AssetBundleDownloader>
 {
     public AssetBundle bundle;
     public string error;
 
-    public IEnumerator Download(string uri)
+    public IEnumerator Download(string uri, UnityAction callback)
     {
         using (UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(uri))
         {
@@ -24,6 +25,8 @@ public class AssetBundleDownloader : MonoBehaviour
             else
             {
                 bundle = DownloadHandlerAssetBundle.GetContent(uwr);
+
+                callback();
             }
         }
     }

@@ -5,14 +5,14 @@ using Rawrshak;
 
 public class AudioMetadataParser : MonoBehaviour
 {
-    public string uri;
     public AudioMetadataBase metadata;
 
-    public void Start()
+    public void GetMetadata(string uri)
     {
-        TextAsset metadataTextAsset=(TextAsset)Resources.Load("audioassetmetadata");
-        string jsonString = metadataTextAsset.text;
-
-        metadata = (AudioMetadataBase)PublicMedatadataParser.Parse(jsonString);
+        // TextAsset metadataTextAsset=(TextAsset)Resources.Load("audioassetmetadata");
+        StartCoroutine(MetadataDownloader.Instance.Download(uri, () => {
+            string jsonString = MetadataDownloader.Instance.text;
+            metadata = (AudioMetadataBase)PublicMedatadataParser.Parse(jsonString);
+        }));
     }
 }

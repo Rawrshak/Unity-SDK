@@ -5,9 +5,6 @@ using Rawrshak;
 
 public class PublicMedatadataParser : ScriptableObject
 {
-    // public string uri;
-
-    // Todo: update this for uri
     public static object Parse(string jsonString)
     {
         var baseMetadata = PublicAssetMetadataBase.Parse(jsonString);

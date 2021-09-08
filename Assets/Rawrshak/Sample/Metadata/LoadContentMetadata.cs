@@ -13,7 +13,7 @@ public class LoadContentMetadata : MonoBehaviour
         TextAsset metadataTextAsset=(TextAsset)Resources.Load("contentmetadata");
         string jsonString = metadataTextAsset.text;
 
-        metadata = ContentMetadataSample.CreateFromJSON(jsonString);
+        metadata = ContentMetadataSample.Parse(jsonString);
     }
 
     // Update is called once per frame

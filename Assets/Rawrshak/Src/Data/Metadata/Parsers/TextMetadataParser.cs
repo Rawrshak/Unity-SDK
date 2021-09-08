@@ -5,14 +5,14 @@ using Rawrshak;
 
 public class TextMetadataParser : MonoBehaviour
 {
-    public string uri;
     public TextMetadataBase metadata;
 
-    public void Start()
+    public void GetMetadata(string uri)
     {
-        TextAsset metadataTextAsset=(TextAsset)Resources.Load("textassetmetadata");
-        string jsonString = metadataTextAsset.text;
-
-        metadata = (TextMetadataBase)PublicMedatadataParser.Parse(jsonString);
+        // TextAsset metadataTextAsset=(TextAsset)Resources.Load("textassetmetadata");
+        StartCoroutine(MetadataDownloader.Instance.Download(uri, () => {
+            string jsonString = MetadataDownloader.Instance.text;
+            metadata = (TextMetadataBase)PublicMedatadataParser.Parse(jsonString);
+        }));
     }
 }
