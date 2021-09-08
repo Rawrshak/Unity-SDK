@@ -20,7 +20,7 @@ namespace Rawrshak
 
         public TextProperties assetProperties;
 
-        public static new TextMetadataBase CreateFromJSON(string jsonString)
+        public static new TextMetadataBase Parse(string jsonString)
         {
             return JsonUtility.FromJson<TextMetadataBase>(jsonString);
         }

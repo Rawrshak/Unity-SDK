@@ -18,7 +18,7 @@ namespace Rawrshak
         
         public ImageProperties[] assetProperties;
 
-        public static new ImageMetadataBase CreateFromJSON(string jsonString)
+        public static new ImageMetadataBase Parse(string jsonString)
         {
             return JsonUtility.FromJson<ImageMetadataBase>(jsonString);
         }

@@ -19,7 +19,7 @@ namespace Rawrshak
         public string creator;
         public string owner;
 
-        public static ContentMetadataBase CreateFromJSON(string jsonString)
+        public static ContentMetadataBase Parse(string jsonString)
         {
             return JsonUtility.FromJson<ContentMetadataBase>(jsonString);
         }

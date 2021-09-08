@@ -18,7 +18,7 @@ namespace Rawrshak
         public string type;
         public string subtype;
 
-        public static PublicAssetMetadataBase CreateFromJSON(string jsonString)
+        public static PublicAssetMetadataBase Parse(string jsonString)
         {
             return JsonUtility.FromJson<PublicAssetMetadataBase>(jsonString);
         }

@@ -5,21 +5,25 @@ using UnityEngine.Networking;
 
 public class TextureDownloader : MonoBehaviour
 {
-    public string uri;
     public Texture texture;
     public string error;
 
-    public IEnumerator Download()
+    public IEnumerator Download(string uri)
     {
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
-        yield return www.SendWebRequest();
+        using (UnityWebRequest uwr = UnityWebRequestAssetBundle.GetTexture(uri))
+        {
+            // Request and wait for the texture file to be downloaded
+            yield return uwr.SendWebRequest();
 
-        if (www.result != UnityWebRequest.Result.Success) {
-            Debug.LogError(www.error);
-            error = www.error;
-        }
-        else {
-            texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            if (uwr.result != UnityWebRequest.Result.Success)
+            {
+                error = uwr.error;
+                Debug.LogError(uwr.error);
+            }
+            else
+            {
+                texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            }
         }
     }
 }

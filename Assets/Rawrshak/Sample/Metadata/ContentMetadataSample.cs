@@ -11,7 +11,7 @@ public class ContentMetadataSample : ContentMetadataBase
 {
     public DevProperties properties;
 
-    public new static ContentMetadataSample CreateFromJSON(string jsonString)
+    public new static ContentMetadataSample Parse(string jsonString)
     {
         return JsonUtility.FromJson<ContentMetadataSample>(jsonString);
     }
