@@ -41,18 +41,7 @@ namespace Rawrshak
 
         public abstract void Load();
 
-        public bool VerifyPermissionsForAll()
-        {
-            // Todo: Make a ContentContract call similar to ERC1155 calls specifically for all content contracts
-            return true;
-        }
-
-        public bool VerifyPermissions(ContentContract contract)
-        {
-            // Todo: Make a ContentContract call similar to ERC1155 calls specifically for all content contracts
-            return true;
-        }
-
+        // If mint fails, it might be due to invalid mint permissions for this wallet.
         public string SignEIP712MintTransaction(MintTransactionData data, BigInteger chainId, string verifyingContract)
         {
             if (eCKey == null)

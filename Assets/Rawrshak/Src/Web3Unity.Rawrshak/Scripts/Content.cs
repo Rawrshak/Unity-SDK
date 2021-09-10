@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace Rawrshak
 {
-    // Todo: This needs updating because of changes to system registry
     public class Content
     {
         private static string AbiFileLocation = "Abis/Content";
@@ -137,6 +136,16 @@ namespace Rawrshak
         {
             string method = "burnBatch";
             string args = JsonConvert.SerializeObject(data);
+            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            return response;
+        }
+
+        // To Check for Interface implementation
+        public static async Task<string> SupportsInterface(string _chain, string _network, string _contract, string interfaceId, string _rpc="")
+        {
+            string method = "supportsInterface";
+            string[] obj = { interfaceId };
+            string args = JsonConvert.SerializeObject(obj);
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }

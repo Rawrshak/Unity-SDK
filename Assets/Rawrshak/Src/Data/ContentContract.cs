@@ -19,7 +19,7 @@ namespace Rawrshak
 
         public void VerifyContracts()
         {
-            // Todo: verify contracts
+            // Todo: verify contracts, Use Content.SupportsInterface(0xBF2FD945)
             Debug.LogError("Invalid Contracts.");
         }
 
