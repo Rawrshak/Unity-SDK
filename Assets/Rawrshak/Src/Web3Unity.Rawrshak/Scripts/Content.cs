@@ -55,20 +55,29 @@ namespace Rawrshak
             }        
         }
 
-        public static async Task<string> URI(string _chain, string _network, string _contract, string _tokenId, string _rpc="")
+        public static async Task<string> Name(string _chain, string _network, string _contract, string _rpc="")
         {
-            string method = "uri";
-            string[] obj = { _tokenId };
+            string method = "name";
+            string[] obj = {};
             string args = JsonConvert.SerializeObject(obj);
             string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
+            return response; 
         }
 
-        // Allow the Rawrshak registered systems (Crafting, lootboxing, etc) to manage assets
-        public static async Task<string> ApproveAllSystems(string _chain, string _network, string _contract, string _approval, string _rpc="")
+        public static async Task<string> Symbol(string _chain, string _network, string _contract, string _rpc="")
         {
-            string method = "approveAllSystems";
-            string[] obj = { _approval };
+            string method = "symbol";
+            string[] obj = {};
+            string args = JsonConvert.SerializeObject(obj);
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+            return response; 
+        }
+
+        // Get the contract uri
+        public static async Task<string> ContractUri(string _chain, string _network, string _contract, string _rpc="")
+        {
+            string method = "contractUri";
+            string[] obj = {};
             string args = JsonConvert.SerializeObject(obj);
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
@@ -88,26 +97,6 @@ namespace Rawrshak
         public static async Task<string> TokenUriWithVersion(string _chain, string _network, string _contract, string _tokenId, string _version, string _rpc="")
         {
             string method = "tokenUri";
-            string[] obj = { _tokenId, _version };
-            string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
-        }
-
-        // Get Most recent private token uri
-        public static async Task<string> HiddenTokenUri(string _chain, string _network, string _contract, string _tokenId, string _rpc="")
-        {
-            string method = "hiddenTokenUri";
-            string[] obj = { _tokenId };
-            string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
-        }
-
-        // Get Most recent private token uri with specified version
-        public static async Task<string> HiddenTokenUriWithVersion(string _chain, string _network, string _contract, string _tokenId, string _version, string _rpc="")
-        {
-            string method = "hiddenTokenUri";
             string[] obj = { _tokenId, _version };
             string args = JsonConvert.SerializeObject(obj);
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
