@@ -15,6 +15,7 @@ namespace Rawrshak
         public string name;
         public string description;
         public string image;
+        public string[] tags;
         public string type;
         public string subtype;
 

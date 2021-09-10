@@ -2,6 +2,11 @@
     "name": "Rawrshak Original Sinner Title",
     "description": "Title bestowed to the earliest community members.",
     "image": "<default text icon uri on arweave>",
+    "tags": [
+        "Rawrshak",
+        "Title",
+        "Early Rawrshak Supporter"
+    ],
     "type": "text",
     "subtype": "title",
     "assetProperties": 

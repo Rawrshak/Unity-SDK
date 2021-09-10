@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Rawrshak;
 
+// This extends the content metadata to account for developer data that the developer expects.
 [Serializable]
 public class ContentMetadataSample : ContentMetadataBase
 {

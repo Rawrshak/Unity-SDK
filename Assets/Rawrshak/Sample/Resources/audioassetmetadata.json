@@ -4,6 +4,11 @@
     "image": "<default text icon uri on arweave>",
     "type": "audio",
     "subtype": "sound-effect",
+    "tags": [
+        "Rawrshak",
+        "Sound Effect",
+        "X-Collab"
+    ],
     "assetProperties": 
     [
         {

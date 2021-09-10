@@ -2,6 +2,11 @@
     "name": "Rawrshak Logo Decal",
     "description": "Rawrshak Logo decal usable as a spray, emblem, or decal",
     "image": "<default text icon uri on arweave>",
+    "tags": [
+        "Rawrshak",
+        "Logo",
+        "Summer Collection"
+    ],
     "type": "image",
     "subtype": "square",
     "assetProperties": 

@@ -9,7 +9,6 @@ namespace Rawrshak
     public class ContentContract : ScriptableObject
     {
         public string contract;
-        public string systemRegistry;
         private bool isValid;
 
         public void OnEnable()
