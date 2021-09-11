@@ -5,7 +5,7 @@ using Rawrshak;
 
 namespace Rawrshak
 {
-    public class PublicMedatadataParser : ScriptableObject
+    public class PublicMedatadataParser
     {
         public static object Parse(string jsonString)
         {
@@ -35,7 +35,7 @@ namespace Rawrshak
                 default:
                 {
                     Debug.LogError("Incorrectly Loaded Public Metadata");
-                    return PublicAssetMetadataBase.Parse(jsonString);
+                    return null;
                 }
             }
         }

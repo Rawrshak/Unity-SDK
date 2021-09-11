@@ -20,10 +20,7 @@ namespace Rawrshak
         private bool isValid;
         private Dictionary<BigInteger, BigInteger> assetsToMint;
         
-        // Network Information
-        public string chain;
-        public string network;
-        public BigInteger chainId;
+        public Network network;
 
         public void OnEnable()
         {
@@ -39,7 +36,12 @@ namespace Rawrshak
 
         public async Task<bool> VerifyContracts()
         {
-            return await Content.SupportsContentInterface(chain, network, contract);
+            if (network == null)
+            {
+                Debug.LogError("Network is not set.");
+                return false;
+            }
+            return await Content.SupportsContentInterface(network.chain, network.network, contract);
         }
 
         public async Task<bool> MintAssets(string receiver, BigInteger nonce)
@@ -70,10 +72,10 @@ namespace Rawrshak
             }
 
             // Developer wallet sign the mint transaction. Developer wallet must have correct access rights.
-            transaction.signature = devWallet.SignEIP712MintTransaction(transaction, chainId, contract);
+            transaction.signature = devWallet.SignEIP712MintTransaction(transaction, network.chainId, contract);
 
             // Send Mint transaction
-            string response = await Content.MintBatch(chain, network, contract, transaction);
+            string response = await Content.MintBatch(network.chain, network.network, contract, transaction);
 
             // Response will contain the transaction id 
             Debug.Log(response);
