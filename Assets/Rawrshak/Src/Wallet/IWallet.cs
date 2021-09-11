@@ -11,7 +11,9 @@ namespace Rawrshak
 {
     public interface IWallet
     {
+        string GetPublicAddress();
         void Load();
+        bool IsLoaded();
         string SignEIP712MintTransaction(MintTransactionData data, BigInteger chainId, string verifyingContract); // Sign mint transaction data
         string SignTransaction(string msg); // Sign mint transaction data
     }

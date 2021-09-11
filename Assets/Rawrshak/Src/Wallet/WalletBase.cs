@@ -38,8 +38,22 @@ namespace Rawrshak
             signer = new EthereumMessageSigner();
             eCKey = null;
         }
+        
+        public string GetPublicAddress()
+        {
+            if (account != null)
+            {
+                return account.Address;
+            }
+            return String.Empty;
+        }
 
         public abstract void Load();
+
+        public bool IsLoaded()
+        {
+            return account != null;
+        }
 
         // If mint fails, it might be due to invalid mint permissions for this wallet.
         public string SignEIP712MintTransaction(MintTransactionData data, BigInteger chainId, string verifyingContract)

@@ -54,24 +54,22 @@ namespace Rawrshak
             }        
         }
 
-        public static async Task<string> Name(string _chain, string _network, string _contract, string _rpc="")
+        public static async Task<bool> SupportsContentInterface(string _chain, string _network, string _contract, string _rpc="")
         {
-            string method = "name";
-            string[] obj = {};
+            string method = "supportsInterface";
+            string[] obj = { "0xBF2FD945" };
             string args = JsonConvert.SerializeObject(obj);
             string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-            return response; 
+            try 
+            {
+                return bool.Parse(response);
+            } 
+            catch 
+            {
+                Debug.LogError(response);
+                throw;
+            }
         }
-
-        public static async Task<string> Symbol(string _chain, string _network, string _contract, string _rpc="")
-        {
-            string method = "symbol";
-            string[] obj = {};
-            string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-            return response; 
-        }
-
         // Get the contract uri
         public static async Task<string> ContractUri(string _chain, string _network, string _contract, string _rpc="")
         {
@@ -149,5 +147,6 @@ namespace Rawrshak
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }
+        
     }
 }
