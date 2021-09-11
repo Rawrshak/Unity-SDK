@@ -12,7 +12,6 @@ public class AudioMetadataParser : MonoBehaviour
         GetMetadata("");
     }
 
-
     public void GetMetadata(string uri)
     {
         // This uses the metadata in the Resources Folder
@@ -20,8 +19,7 @@ public class AudioMetadataParser : MonoBehaviour
         metadata = (AudioMetadataBase)PublicMedatadataParser.Parse(metadataTextAsset.text);
 
         // // This uses the metadata that's stored from a uri
-        // StartCoroutine(Downloader.Instance.DownloadMetadata(uri, (metadataJson) => {
-        //     metadata = (AudioMetadataBase)PublicMedatadataParser.Parse(metadataJson);
-        // }));
+        // string metadataJson = Downloader.DownloadMetadata(uri).Result;
+        // metadata = (AudioMetadataBase)PublicMedatadataParser.Parse(metadataJson);
     }
 }
