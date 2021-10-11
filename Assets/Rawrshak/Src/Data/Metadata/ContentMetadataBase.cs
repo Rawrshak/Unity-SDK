@@ -16,6 +16,7 @@ namespace Rawrshak
         public string name;
         public string description;
         public string image;
+        public string game;
         public string creator;
         public string owner;
         public string[] tags;

@@ -54,22 +54,39 @@ namespace Rawrshak
             }        
         }
 
-        public static async Task<string> Name(string _chain, string _network, string _contract, string _rpc="")
+        public static async Task<string> SafeTransferFrom(string _chain, string _network, string _contract, string from, string to, string id, string amount, string _rpc="")
         {
-            string method = "name";
-            string[] obj = {};
+            string method = "safeTransferFrom";
+            string[] obj = { from, to, id, amount, "" };
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-            return response; 
+            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            return response;
         }
 
-        public static async Task<string> Symbol(string _chain, string _network, string _contract, string _rpc="")
+        public static async Task<string> SafeBatchTransferFrom(string _chain, string _network, string _contract, SafeBatchTransferFromTransactionData transactionData, string _rpc="")
         {
-            string method = "symbol";
-            string[] obj = {};
+            string method = "safeBatchTransferFrom";
+            string args = JsonConvert.SerializeObject(transactionData);
+            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            return response;
+        }
+
+        public static async Task<string> isApprovedForAll(string _chain, string _network, string _contract, string address, string oper, string _rpc="")
+        {
+            string method = "isApprovedForAll";
+            string[] obj = { address, oper };
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-            return response; 
+            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            return response;
+        }
+
+        public static async Task<string> SetApprovedForAll(string _chain, string _network, string _contract, string oper, bool approved, string _rpc="")
+        {
+            string method = "setApprovedForAll";
+            string[] obj = { oper, approved ? "true" : "false" };
+            string args = JsonConvert.SerializeObject(obj);
+            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            return response;
         }
 
         // Get the contract uri
@@ -82,38 +99,57 @@ namespace Rawrshak
             return response;
         }
 
-        // Get Most recent public token uri
-        public static async Task<string> TokenUri(string _chain, string _network, string _contract, string _tokenId, string _rpc="")
+        // Get the contract royalty fee rate
+        public static async Task<string> ContractRoyalty(string _chain, string _network, string _contract, string _rpc="")
         {
-            string method = "tokenUri";
-            string[] obj = { _tokenId };
+            string method = "contractRoyalty";
+            string[] obj = {};
             string args = JsonConvert.SerializeObject(obj);
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }
 
-        // Get Most recent public token uri with specified version
-        public static async Task<string> TokenUriWithVersion(string _chain, string _network, string _contract, string _tokenId, string _version, string _rpc="")
+        // Get the user mint nonce
+        public static async Task<string> UserMintNonce(string _chain, string _network, string _contract, string _rpc="")
         {
-            string method = "tokenUri";
+            string method = "userMintNonce";
+            string[] obj = {};
+            string args = JsonConvert.SerializeObject(obj);
+            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            return response;
+        }
+
+        // Get Most recent public token uri
+        public static async Task<string> TokenUri(string _chain, string _network, string _contract, string _tokenId, string _version, string _rpc="")
+        {
+            string method = "uri";
             string[] obj = { _tokenId, _version };
             string args = JsonConvert.SerializeObject(obj);
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }
 
-        // Get the current supply of an asset 
-        public static async Task<BigInteger> Supply(string _chain, string _network, string _contract, string _rpc="")
+        public static async Task<string> TokenUri(string _chain, string _network, string _contract, string _tokenId, string _rpc="")
         {
-            string method = "supply";
-            string[] obj = {};
+            string method = "uri";
+            string[] obj = { _tokenId };
+            string args = JsonConvert.SerializeObject(obj);
+            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            return response;
+        }
+
+        // Get the current total supply of an asset 
+        public static async Task<BigInteger> TotalSupply(string _chain, string _network, string _contract, string _tokenId, string _rpc="")
+        {
+            string method = "totalSupply";
+            string[] obj = { _tokenId };
             string args = JsonConvert.SerializeObject(obj);
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
             return BigInteger.Parse(response);
         }
         
         // Get the max supply of an asset 
-        public static async Task<BigInteger> MaxSupply(string _chain, string _network, string _contract, string _rpc="")
+        public static async Task<BigInteger> MaxSupply(string _chain, string _network, string _contract, string _tokenId, string _rpc="")
         {
             string method = "maxSupply";
             string[] obj = {};
