@@ -19,8 +19,7 @@ public class TextMetadataParser : MonoBehaviour
         metadata = (TextMetadataBase)PublicMedatadataParser.Parse(metadataTextAsset.text);
 
         // // This uses the metadata that's stored from a uri
-        // StartCoroutine(Downloader.Instance.DownloadMetadata(uri, (metadataJson) => {
-        //     metadata = (TextMetadataBase)PublicMedatadataParser.Parse(metadataJson);
-        // }));
+        // string metadataJson = Downloader.DownloadMetadata(uri).Result;
+        // metadata = (TextMetadataBase)PublicMedatadataParser.Parse(metadataJson);
     }
 }

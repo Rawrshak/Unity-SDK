@@ -3,37 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rawrshak;
 
-public class PublicMedatadataParser : ScriptableObject
+namespace Rawrshak
 {
-    public static object Parse(string jsonString)
+    public class PublicMedatadataParser
     {
-        var baseMetadata = PublicAssetMetadataBase.Parse(jsonString);
-        if (baseMetadata == null)
-            return null;
-        switch (baseMetadata.type)
+        public static object Parse(string jsonString)
         {
-            case "text":
+            var baseMetadata = PublicAssetMetadataBase.Parse(jsonString);
+            if (baseMetadata == null)
+                return null;
+            switch (baseMetadata.type)
             {
-                var textMetadata = TextMetadataBase.Parse(jsonString);
-                Debug.Log("Text Loaded");
-                return textMetadata;
-            }
-            case "image":
-            {
-                var imageMetadata = ImageMetadataBase.Parse(jsonString);
-                Debug.Log("Image Loaded");
-                return imageMetadata;
-            }
-            case "audio":
-            {
-                var audioMetadata = AudioMetadataBase.Parse(jsonString);
-                Debug.Log("Audio Loaded");
-                return audioMetadata;
-            }
-            default:
-            {
-                Debug.LogError("Incorrectly Loaded Public Metadata");
-                return PublicAssetMetadataBase.Parse(jsonString);
+                case "text":
+                {
+                    var textMetadata = TextMetadataBase.Parse(jsonString);
+                    Debug.Log("Text Loaded");
+                    return textMetadata;
+                }
+                case "image":
+                {
+                    var imageMetadata = ImageMetadataBase.Parse(jsonString);
+                    Debug.Log("Image Loaded");
+                    return imageMetadata;
+                }
+                case "audio":
+                {
+                    var audioMetadata = AudioMetadataBase.Parse(jsonString);
+                    Debug.Log("Audio Loaded");
+                    return audioMetadata;
+                }
+                default:
+                {
+                    Debug.LogError("Incorrectly Loaded Public Metadata");
+                    return null;
+                }
             }
         }
     }

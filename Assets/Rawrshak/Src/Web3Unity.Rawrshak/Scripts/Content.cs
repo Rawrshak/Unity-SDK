@@ -88,7 +88,7 @@ namespace Rawrshak
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }
-
+        
         // Get the contract uri
         public static async Task<string> ContractUri(string _chain, string _network, string _contract, string _rpc="")
         {
@@ -185,5 +185,6 @@ namespace Rawrshak
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }
+        
     }
 }
