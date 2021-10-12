@@ -177,13 +177,21 @@ namespace Rawrshak
         }
 
         // To Check for Interface implementation
-        public static async Task<string> SupportsInterface(string _chain, string _network, string _contract, string interfaceId, string _rpc="")
+        public static async Task<bool> SupportsInterface(string _chain, string _network, string _contract, string interfaceId, string _rpc="")
         {
             string method = "supportsInterface";
             string[] obj = { interfaceId };
             string args = JsonConvert.SerializeObject(obj);
             string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
+            try 
+            {
+                return bool.Parse(response);
+            } 
+            catch 
+            {
+                Debug.LogError(response);
+                throw;
+            }
         }
         
     }
