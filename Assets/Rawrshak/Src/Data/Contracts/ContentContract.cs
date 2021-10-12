@@ -41,7 +41,7 @@ namespace Rawrshak
                 Debug.LogError("Network is not set.");
                 return false;
             }
-            return await Content.SupportsContentInterface(network.chain, network.network, contract);
+            return await Content.SupportsInterface(network.chain, network.network, contract, "0xBF2FD945");
         }
 
         public async Task<bool> MintAssets(string receiver, BigInteger nonce)
