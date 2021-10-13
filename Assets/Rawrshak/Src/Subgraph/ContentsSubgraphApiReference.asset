@@ -1,0 +1,1304 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ccf793b7ca1cc645b9cd36d753b8e3c, type: 3}
+  m_Name: ContentsSubgraphApiReference
+  m_EditorClassIdentifier: 
+  url: http://localhost:8000/subgraphs/name/gcbsumid/contents
+  queries:
+  - name: GetContentContractInfo
+    type: 0
+    query: "query GetContentContractInfo{\n    content(  id :\"0x25c71b0b48ae6e8478b3404cec960a4387f4fdf3\"
+      ){\n        id\n        name\n        game\n        creator\n        owner\n       
+      contractAddress\n        contractUri\n        royaltyRate\n        tags{\n           
+      id\n        }\n    }\n}"
+    queryString: content
+    returnType: Content
+    queryOptions:
+    - contentFactory
+    - contentFactories
+    - contentManager
+    - contentManagers
+    - asset
+    - assets
+    - assetBalance
+    - assetBalances
+    - content
+    - contents
+    - tag
+    - tags
+    - account
+    - accounts
+    - approval
+    - approvals
+    - transaction
+    - transactions
+    - minter
+    - minters
+    - _meta
+    fields:
+    - index: 0
+      name: id
+      type: ID
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: factory
+        type: ContentFactory
+      - name: manager
+        type: ContentManager
+      - name: contractAddress
+        type: Bytes
+      - name: contractUri
+        type: String
+      - name: assets
+        type: Asset
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: minters
+        type: Minter
+      - name: name
+        type: String
+      - name: game
+        type: String
+      - name: creator
+        type: String
+      - name: owner
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 9
+      name: name
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: factory
+        type: ContentFactory
+      - name: manager
+        type: ContentManager
+      - name: contractAddress
+        type: Bytes
+      - name: contractUri
+        type: String
+      - name: assets
+        type: Asset
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: minters
+        type: Minter
+      - name: name
+        type: String
+      - name: game
+        type: String
+      - name: creator
+        type: String
+      - name: owner
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 10
+      name: game
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: factory
+        type: ContentFactory
+      - name: manager
+        type: ContentManager
+      - name: contractAddress
+        type: Bytes
+      - name: contractUri
+        type: String
+      - name: assets
+        type: Asset
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: minters
+        type: Minter
+      - name: name
+        type: String
+      - name: game
+        type: String
+      - name: creator
+        type: String
+      - name: owner
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 11
+      name: creator
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: factory
+        type: ContentFactory
+      - name: manager
+        type: ContentManager
+      - name: contractAddress
+        type: Bytes
+      - name: contractUri
+        type: String
+      - name: assets
+        type: Asset
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: minters
+        type: Minter
+      - name: name
+        type: String
+      - name: game
+        type: String
+      - name: creator
+        type: String
+      - name: owner
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 12
+      name: owner
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: factory
+        type: ContentFactory
+      - name: manager
+        type: ContentManager
+      - name: contractAddress
+        type: Bytes
+      - name: contractUri
+        type: String
+      - name: assets
+        type: Asset
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: minters
+        type: Minter
+      - name: name
+        type: String
+      - name: game
+        type: String
+      - name: creator
+        type: String
+      - name: owner
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 3
+      name: contractAddress
+      type: Bytes
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: factory
+        type: ContentFactory
+      - name: manager
+        type: ContentManager
+      - name: contractAddress
+        type: Bytes
+      - name: contractUri
+        type: String
+      - name: assets
+        type: Asset
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: minters
+        type: Minter
+      - name: name
+        type: String
+      - name: game
+        type: String
+      - name: creator
+        type: String
+      - name: owner
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 4
+      name: contractUri
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: factory
+        type: ContentFactory
+      - name: manager
+        type: ContentManager
+      - name: contractAddress
+        type: Bytes
+      - name: contractUri
+        type: String
+      - name: assets
+        type: Asset
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: minters
+        type: Minter
+      - name: name
+        type: String
+      - name: game
+        type: String
+      - name: creator
+        type: String
+      - name: owner
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 7
+      name: royaltyRate
+      type: Int
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: factory
+        type: ContentFactory
+      - name: manager
+        type: ContentManager
+      - name: contractAddress
+        type: Bytes
+      - name: contractUri
+        type: String
+      - name: assets
+        type: Asset
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: minters
+        type: Minter
+      - name: name
+        type: String
+      - name: game
+        type: String
+      - name: creator
+        type: String
+      - name: owner
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 13
+      name: tags
+      type: Tag
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: id
+        type: ID
+      - name: factory
+        type: ContentFactory
+      - name: manager
+        type: ContentManager
+      - name: contractAddress
+        type: Bytes
+      - name: contractUri
+        type: String
+      - name: assets
+        type: Asset
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: minters
+        type: Minter
+      - name: name
+        type: String
+      - name: game
+        type: String
+      - name: creator
+        type: String
+      - name: owner
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 0
+      name: id
+      type: ID
+      parentIndexes: 08000000
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: contents
+        type: Content
+      - name: assets
+        type: Asset
+      hasChanged: 0
+    isComplete: 1
+  - name: GetAssetInfoFromTokenId
+    type: 0
+    query: "query GetAssetInfoFromTokenId{\n    assets(  where :{ parentContract
+      :\"0x25c71b0b48ae6e8478b3404cec960a4387f4fdf3\", tokenId :0} ){\n        id\n       
+      currentSupply\n        maxSupply\n        latestPublicUriVersion\n        name\n       
+      type\n        subtype\n        tags{\n            id\n        }\n        tokenId\n   
+      }\n}"
+    queryString: assets
+    returnType: Assets
+    queryOptions:
+    - contentFactory
+    - contentFactories
+    - contentManager
+    - contentManagers
+    - asset
+    - assets
+    - assetBalance
+    - assetBalances
+    - content
+    - contents
+    - tag
+    - tags
+    - account
+    - accounts
+    - approval
+    - approvals
+    - transaction
+    - transactions
+    - minter
+    - minters
+    - _meta
+    fields:
+    - index: 0
+      name: id
+      type: ID
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 3
+      name: currentSupply
+      type: BigInt
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 4
+      name: maxSupply
+      type: BigInt
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 9
+      name: latestPublicUriVersion
+      type: BigInt
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 13
+      name: name
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 14
+      name: type
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 15
+      name: subtype
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 16
+      name: tags
+      type: Tag
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 0
+      name: id
+      type: ID
+      parentIndexes: 07000000
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: contents
+        type: Content
+      - name: assets
+        type: Asset
+      hasChanged: 0
+    - index: 1
+      name: tokenId
+      type: BigInt
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    isComplete: 1
+  - name: GetAssetInfoFromName
+    type: 0
+    query: "query GetAssetInfoFromName{\n    assets(  where :{ parentContract :\"0x25c71b0b48ae6e8478b3404cec960a4387f4fdf3\",
+      name :\"Demoman Title\"} ){\n        id\n        tokenId\n        currentSupply\n       
+      maxSupply\n        latestPublicUriVersion\n        name\n        type\n       
+      subtype\n        tags{\n            id\n        }\n    }\n}"
+    queryString: assets
+    returnType: Assets
+    queryOptions:
+    - contentFactory
+    - contentFactories
+    - contentManager
+    - contentManagers
+    - asset
+    - assets
+    - assetBalance
+    - assetBalances
+    - content
+    - contents
+    - tag
+    - tags
+    - account
+    - accounts
+    - approval
+    - approvals
+    - transaction
+    - transactions
+    - minter
+    - minters
+    - _meta
+    fields:
+    - index: 0
+      name: id
+      type: ID
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 1
+      name: tokenId
+      type: BigInt
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 3
+      name: currentSupply
+      type: BigInt
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 4
+      name: maxSupply
+      type: BigInt
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 9
+      name: latestPublicUriVersion
+      type: BigInt
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 13
+      name: name
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 14
+      name: type
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 15
+      name: subtype
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 16
+      name: tags
+      type: Tag
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    - index: 0
+      name: id
+      type: ID
+      parentIndexes: 08000000
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: contents
+        type: Content
+      - name: assets
+        type: Asset
+      hasChanged: 0
+    isComplete: 1
+  - name: GetAssetsWithTag
+    type: 0
+    query: 
+    queryString: tag
+    returnType: Tag
+    queryOptions:
+    - contentFactory
+    - contentFactories
+    - contentManager
+    - contentManagers
+    - asset
+    - assets
+    - assetBalance
+    - assetBalances
+    - content
+    - contents
+    - tag
+    - tags
+    - account
+    - accounts
+    - approval
+    - approvals
+    - transaction
+    - transactions
+    - minter
+    - minters
+    - _meta
+    fields:
+    - index: 0
+      name: id
+      type: ID
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: contents
+        type: Content
+      - name: assets
+        type: Asset
+      hasChanged: 0
+    - index: 2
+      name: assets
+      type: Asset
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: id
+        type: ID
+      - name: contents
+        type: Content
+      - name: assets
+        type: Asset
+      hasChanged: 0
+    - index: 0
+      name: id
+      type: ID
+      parentIndexes: 01000000
+      hasSubField: 0
+      possibleFields:
+      - name: id
+        type: ID
+      - name: tokenId
+        type: BigInt
+      - name: parentContract
+        type: Content
+      - name: currentSupply
+        type: BigInt
+      - name: maxSupply
+        type: BigInt
+      - name: balances
+        type: AssetBalance
+      - name: royaltyReceiver
+        type: Account
+      - name: royaltyRate
+        type: Int
+      - name: latestHiddenUriVersion
+        type: BigInt
+      - name: latestPublicUriVersion
+        type: BigInt
+      - name: transactions
+        type: Transaction
+      - name: mintCount
+        type: BigInt
+      - name: burnCount
+        type: BigInt
+      - name: name
+        type: String
+      - name: type
+        type: String
+      - name: subtype
+        type: String
+      - name: tags
+        type: Tag
+      hasChanged: 0
+    isComplete: 0
+  mutations: []
+  subscriptions: []
+  loading: 0

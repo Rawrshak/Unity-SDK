@@ -1,0 +1,15 @@
+query GetContentInfo {{
+    content ( id: "{0}" ) {{
+        id
+        name
+        game
+        creator
+        owner
+        contractAddress
+        contractUri
+        royaltyRate
+        tags {{
+            id
+        }}
+    }}
+}}
