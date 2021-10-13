@@ -9,18 +9,18 @@ using GraphQlClient.Core;
 
 namespace Rawrshak
 {
-    public class QueryGetAssetsWithTag : QueryBase
+    public class QueryGetAssetIdsWithTag : QueryBase
     {
-        public QueryGetAssetsWithTagReturnData data;
+        public QueryGetAssetIdsWithTagReturnData data;
 
         [Serializable]
-        public class QueryGetAssetsWithTagReturnData
+        public class QueryGetAssetIdsWithTagReturnData
         {
             public DataObject data;
             
-            public static QueryGetAssetsWithTagReturnData ParseJson(string jsonString)
+            public static QueryGetAssetIdsWithTagReturnData ParseJson(string jsonString)
             {
-                return JsonUtility.FromJson<QueryGetAssetsWithTagReturnData>(jsonString);
+                return JsonUtility.FromJson<QueryGetAssetIdsWithTagReturnData>(jsonString);
             }
         }
 
@@ -32,7 +32,7 @@ namespace Rawrshak
 
         async void Start()
         {
-            TextAsset metadataTextAsset=(TextAsset)Resources.Load("GetAssetsWithTag");
+            TextAsset metadataTextAsset=(TextAsset)Resources.Load("GetAssetIdsWithTag");
             query = metadataTextAsset.text;
 
             // Note: These are for test purposes
@@ -47,7 +47,7 @@ namespace Rawrshak
             string returnData = await PostAsync(queryWithArgs);
 
             // Parse data
-            data = QueryGetAssetsWithTagReturnData.ParseJson(returnData);
+            data = QueryGetAssetIdsWithTagReturnData.ParseJson(returnData);
         }
     }
 }

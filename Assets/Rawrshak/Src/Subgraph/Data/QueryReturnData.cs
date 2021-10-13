@@ -19,6 +19,7 @@ namespace Rawrshak
         public string contractAddress;
         public string contractUri;
         public int royaltyRate;
+        public AssetData assets;
         public TagData[] tags;
     }
 
@@ -37,18 +38,23 @@ namespace Rawrshak
     }
 
     [Serializable]
-    public class AssetTokenIdData 
+    public class AssetIdData 
     {
         public string id;
-        public ContentData parentContract;
+        public ContentIdData parentContract;
         public string tokenId;
-        public TagData[] tags;
+    }
+
+    [Serializable]
+    public class ContentIdData 
+    {
+        public string id;
     }
 
     [Serializable]
     public class TagData 
     {
         public string id;
-        public AssetTokenIdData[] assets;
+        public AssetIdData[] assets;
     }
 }

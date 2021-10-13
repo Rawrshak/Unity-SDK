@@ -37,7 +37,7 @@ namespace Rawrshak
             await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3");
         }
 
-        public async Task Fetch(string address) {            
+        public async Task Fetch(string address) {
             string queryWithArgs = String.Format(query, address.ToLower());
             Debug.Log(queryWithArgs);
 
