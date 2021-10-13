@@ -1,0 +1,14 @@
+query GetAssetsInWallet {{
+    account ( id: "{0}" ) {{
+        assetBalances ( first: {1}, where: {{ id_gt: "{2}" }} ) {{
+            id
+            amount
+            asset {{
+                parentContract {{
+                    id
+                }}
+                tokenId
+            }}
+        }}
+    }}
+}}

@@ -38,6 +38,16 @@ namespace Rawrshak
     }
 
     [Serializable]
+    public class AccountData
+    {
+        public string id;
+        public string address;
+        public string mintCount;
+        public string burnCount;
+        public string uniqueAssetCount;
+    }
+
+    [Serializable]
     public class AssetIdData 
     {
         public string id;
@@ -56,5 +66,20 @@ namespace Rawrshak
     {
         public string id;
         public AssetIdData[] assets;
+    }
+    
+    [Serializable]
+    public class AccountAssetBalancesData 
+    {
+        public AssetBalance[] assetBalances;
+    }
+    
+    [Serializable]
+    public class AssetBalance 
+    {
+        public string id;
+        public int amount;
+
+        public AssetIdData asset;
     }
 }
