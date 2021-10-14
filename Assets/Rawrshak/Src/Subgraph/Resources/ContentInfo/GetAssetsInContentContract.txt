@@ -4,12 +4,13 @@ query GetAssetsInContentContract {{
         assets ( first: {1}, where: {{ id_gt: "{2}" }} ) {{
             id
             tokenId
-            currentSupply
-            maxSupply
-            latestPublicUriVersion
             name
             type
             subtype
+            currentSupply
+            maxSupply
+            latestPublicUriVersion
+            latestHiddenUriVersion
             tags {{
                 id
             }}

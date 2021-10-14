@@ -11,24 +11,7 @@ namespace Rawrshak
 {
     public class QueryGetAssetIdsWithTag : QueryBase
     {
-        public QueryGetAssetIdsWithTagReturnData data;
-
-        [Serializable]
-        public class QueryGetAssetIdsWithTagReturnData
-        {
-            public DataObject data;
-            
-            public static QueryGetAssetIdsWithTagReturnData ParseJson(string jsonString)
-            {
-                return JsonUtility.FromJson<QueryGetAssetIdsWithTagReturnData>(jsonString);
-            }
-        }
-
-        [Serializable]
-        public class DataObject 
-        {
-            public TagData[] tags;
-        }
+        public ReturnData data;
 
         async void Start()
         {
@@ -47,7 +30,40 @@ namespace Rawrshak
             string returnData = await PostAsync(queryWithArgs);
 
             // Parse data
-            data = QueryGetAssetIdsWithTagReturnData.ParseJson(returnData);
+            data = JsonUtility.FromJson<ReturnData>(returnData);
+        }
+
+        [Serializable]
+        public class ReturnData
+        {
+            public DataObject data;
+        }
+
+        [Serializable]
+        public class DataObject 
+        {
+            public TagData[] tags;
+        }
+
+        [Serializable]
+        public class TagData 
+        {
+            public string id;
+            public AssetData[] assets;
+        }
+
+        [Serializable]
+        public class AssetData 
+        {
+            public string id;
+            public string tokenId;
+            public ContentIdData parentContract;
+        }
+
+        [Serializable]
+        public class ContentIdData 
+        {
+            public string id;
         }
     }
 }

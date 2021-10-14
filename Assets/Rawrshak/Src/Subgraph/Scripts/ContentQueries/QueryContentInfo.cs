@@ -10,25 +10,7 @@ namespace Rawrshak
 {
     public class QueryContentInfo : QueryBase
     {
-        public QueryContentInfoReturnData data;
-
-        [Serializable]
-        public class QueryContentInfoReturnData
-        {
-            public DataObject data;
-            
-            public static QueryContentInfoReturnData ParseJson(string jsonString)
-            {
-                return JsonUtility.FromJson<QueryContentInfoReturnData>(jsonString);
-            }
-        }
-
-        [Serializable]
-        public class DataObject 
-        {
-            public ContentData content;
-        }
-
+        public ReturnData data;
         async void Start()
         {
             TextAsset metadataTextAsset=(TextAsset)Resources.Load("GetContentInfo");
@@ -45,7 +27,39 @@ namespace Rawrshak
             string returnData = await PostAsync(queryWithArgs);
 
             // Parse data
-            data = QueryContentInfoReturnData.ParseJson(returnData);
+            data = JsonUtility.FromJson<ReturnData>(returnData);
+        }
+
+        [Serializable]
+        public class ReturnData
+        {
+            public DataObject data;
+        }
+
+        [Serializable]
+        public class DataObject 
+        {
+            public ContentData content;
+        }
+        
+        [Serializable]
+        public class ContentData 
+        {
+            public string id;
+            public string name;
+            public string game;
+            public string creator;
+            public string owner;
+            public string contractAddress;
+            public string contractUri;
+            public int royaltyRate;
+            public TagData[] tags;
+        }
+
+        [Serializable]
+        public class TagData 
+        {
+            public string id;
         }
     }
 }

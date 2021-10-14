@@ -2,28 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.Networking;
 using GraphQlClient.Core;
 
 namespace Rawrshak
 {
-    public class QueryGetAssetsInContentContract : QueryBase
+    public class GetWalletAssetsOfType : QueryBase
     {
         public ReturnData data;
 
         async void Start()
         {
-            TextAsset metadataTextAsset=(TextAsset)Resources.Load("GetAssetsInContentContract");
+            TextAsset metadataTextAsset=(TextAsset)Resources.Load("GetWalletAssetsOfType");
             query = metadataTextAsset.text;
 
-            await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3", 10, "");
+            // await Fetch("", 10, "");
         }
 
-        public async Task Fetch(string contractAddress, int first, string lastId) {
-            // Note: Default sorting is by ID and in ascending alphanumeric order (not by creation time)
-            string queryWithArgs = String.Format(query, contractAddress.ToLower(), first, lastId);
+        public async Task Fetch(string walletAddress, string subtype, int first, string lastId) {
+            string queryWithArgs = String.Format(query, walletAddress.ToLower(), subtype, first, lastId);
             Debug.Log(queryWithArgs);
 
             // Post query
@@ -42,14 +40,21 @@ namespace Rawrshak
         [Serializable]
         public class DataObject 
         {
-            public ContentData content;
+            public AccountData account;
         }
-
+    
         [Serializable]
-        public class ContentData 
+        public class AccountData
+        {
+            public AssetBalanceData[] assetBalances;
+        }
+        
+        [Serializable]
+        public class AssetBalanceData 
         {
             public string id;
-            public AssetData[] assets;
+            public int amount;
+            public AssetData asset;
         }
 
         [Serializable]
@@ -57,18 +62,11 @@ namespace Rawrshak
         {
             public string id;
             public string tokenId;
-            public string name;
-            public string type;
-            public string subtype;
-            public string currentSupply;
-            public string maxSupply;
-            public string latestPublicUriVersion;
-            public string latestHiddenUriVersion;
-            public TagData[] tags;
+            public ContentData parentContract;
         }
 
         [Serializable]
-        public class TagData 
+        public class ContentData 
         {
             public string id;
         }

@@ -10,24 +10,7 @@ namespace Rawrshak
 {
     public class GetAssetsInWallet : QueryBase
     {
-        public GetAssetsInWalletReturnData data;
-
-        [Serializable]
-        public class GetAssetsInWalletReturnData
-        {
-            public DataObject data;
-            
-            public static GetAssetsInWalletReturnData ParseJson(string jsonString)
-            {
-                return JsonUtility.FromJson<GetAssetsInWalletReturnData>(jsonString);
-            }
-        }
-
-        [Serializable]
-        public class DataObject 
-        {
-            public AccountAssetBalancesData account;
-        }
+        public ReturnData data;
 
         async void Start()
         {
@@ -37,15 +20,55 @@ namespace Rawrshak
             // await Fetch("", 10, "");
         }
 
-        public async Task Fetch(string address, int first, string lastId) {
-            string queryWithArgs = String.Format(query, address.ToLower());
+        public async Task Fetch(string walletAddress, int first, string lastId) {
+            string queryWithArgs = String.Format(query, walletAddress.ToLower(), first, lastId);
             Debug.Log(queryWithArgs);
 
             // Post query
             string returnData = await PostAsync(queryWithArgs);
 
             // Parse data
-            data = GetAssetsInWalletReturnData.ParseJson(returnData);
+            data = JsonUtility.FromJson<ReturnData>(returnData);
+        }
+
+        [Serializable]
+        public class ReturnData
+        {
+            public DataObject data;
+        }
+
+        [Serializable]
+        public class DataObject 
+        {
+            public AccountData account;
+        }
+    
+        [Serializable]
+        public class AccountData 
+        {
+            public AssetBalanceData[] assetBalances;
+        }
+        
+        [Serializable]
+        public class AssetBalanceData 
+        {
+            public string id;
+            public int amount;
+            public AssetData asset;
+        }
+
+        [Serializable]
+        public class AssetData 
+        {
+            public string id;
+            public string tokenId;
+            public ContentData parentContract;
+        }
+
+        [Serializable]
+        public class ContentData 
+        {
+            public string id;
         }
     }
 }

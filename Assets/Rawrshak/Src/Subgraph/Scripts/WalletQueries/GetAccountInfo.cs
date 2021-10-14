@@ -10,24 +10,7 @@ namespace Rawrshak
 {
     public class GetAccountInfo : QueryBase
     {
-        public GetAccountInfoReturnData data;
-
-        [Serializable]
-        public class GetAccountInfoReturnData
-        {
-            public DataObject data;
-            
-            public static GetAccountInfoReturnData ParseJson(string jsonString)
-            {
-                return JsonUtility.FromJson<GetAccountInfoReturnData>(jsonString);
-            }
-        }
-
-        [Serializable]
-        public class DataObject 
-        {
-            public AccountData account;
-        }
+        public ReturnData data;
 
         async void Start()
         {
@@ -45,7 +28,34 @@ namespace Rawrshak
             string returnData = await PostAsync(queryWithArgs);
 
             // Parse data
-            data = GetAccountInfoReturnData.ParseJson(returnData);
+            data = JsonUtility.FromJson<ReturnData>(returnData);
+        }
+
+        [Serializable]
+        public class ReturnData
+        {
+            public DataObject data;
+            
+            public static ReturnData ParseJson(string jsonString)
+            {
+                return JsonUtility.FromJson<ReturnData>(jsonString);
+            }
+        }
+
+        [Serializable]
+        public class DataObject 
+        {
+            public AccountData account;
+        }
+
+        [Serializable]
+        public class AccountData
+        {
+            public string id;
+            public string address;
+            public string mintCount;
+            public string burnCount;
+            public string uniqueAssetCount;
         }
     }
 }
