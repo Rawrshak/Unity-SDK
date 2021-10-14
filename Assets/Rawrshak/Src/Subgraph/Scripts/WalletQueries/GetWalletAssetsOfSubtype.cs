@@ -10,17 +10,20 @@ namespace Rawrshak
 {
     public class GetWalletAssetsOfSubtype : QueryBase
     {
+        static string QUERY_STRING_LOCATION = "WalletInfo/GetWalletAssetsOfSubtype";
         public ReturnData data;
 
         async void Start()
         {
-            TextAsset metadataTextAsset=(TextAsset)Resources.Load("GetWalletAssetsOfSubtype");
-            query = metadataTextAsset.text;
+            url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
             // await Fetch("", 10, "");
         }
 
         public async Task Fetch(string walletAddress, string subtype, int first, string lastId) {
+            // Load query if this is the first Fetch
+            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+
             string queryWithArgs = String.Format(query, walletAddress.ToLower(), subtype, first, lastId);
             Debug.Log(queryWithArgs);
 

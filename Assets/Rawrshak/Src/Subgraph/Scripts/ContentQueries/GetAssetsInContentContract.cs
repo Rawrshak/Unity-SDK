@@ -2,29 +2,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Networking;
 using GraphQlClient.Core;
 
 namespace Rawrshak
 {
-    public class GetWalletAssetsFromContract : QueryBase
+    public class GetAssetsInContentContract : QueryBase
     {
-        static string QUERY_STRING_LOCATION = "WalletInfo/GetWalletAssetsFromContract";
+        static string QUERY_STRING_LOCATION = "ContentInfo/GetAssetsInContentContract";
         public ReturnData data;
 
         async void Start()
         {
             url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
-            // await Fetch("", 10, "");
+            await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3", 10, "");
         }
 
-        public async Task Fetch(string walletAddress, string contractAddress, int first, string lastId) {
+        public async Task Fetch(string contractAddress, int first, string lastId) {
             // Load query if this is the first Fetch
             LoadQueryIfEmpty(QUERY_STRING_LOCATION);
-            
-            string queryWithArgs = String.Format(query, walletAddress.ToLower(), contractAddress.ToLower(), first, lastId);
+
+            // Note: Default sorting is by ID and in ascending alphanumeric order (not by creation time)
+            string queryWithArgs = String.Format(query, contractAddress.ToLower(), first, lastId);
             Debug.Log(queryWithArgs);
 
             // Post query
@@ -43,21 +45,14 @@ namespace Rawrshak
         [Serializable]
         public class DataObject 
         {
-            public AccountData account;
+            public ContentData content;
         }
-    
+
         [Serializable]
-        public class AccountData
-        {
-            public AssetBalanceData[] assetBalances;
-        }
-        
-        [Serializable]
-        public class AssetBalanceData 
+        public class ContentData 
         {
             public string id;
-            public int amount;
-            public AssetData asset;
+            public AssetData[] assets;
         }
 
         [Serializable]
@@ -65,11 +60,18 @@ namespace Rawrshak
         {
             public string id;
             public string tokenId;
-            public ContentData parentContract;
+            public string name;
+            public string type;
+            public string subtype;
+            public string currentSupply;
+            public string maxSupply;
+            public string latestPublicUriVersion;
+            public string latestHiddenUriVersion;
+            public TagData[] tags;
         }
 
         [Serializable]
-        public class ContentData 
+        public class TagData 
         {
             public string id;
         }

@@ -11,18 +11,19 @@ namespace Rawrshak
 {
     public abstract class QueryBase : MonoBehaviour
     {
-        public GraphApi contentsSubgraph;
-
+        public string url;
         protected string query;
 
-        protected async Task<string> PostAsync(string queryWithArgs) {
-            if (contentsSubgraph == null) {
-                Debug.LogError("Content Subgraph API not set");
-                throw new Exception("Content Subgraph API not set.");
+        protected void LoadQueryIfEmpty(string queryLocation) {
+            if (String.IsNullOrEmpty(query)) {
+                TextAsset metadataTextAsset=(TextAsset)Resources.Load(queryLocation);
+                query = metadataTextAsset.text;
             }
+        }
 
+        protected async Task<string> PostAsync(string queryWithArgs) {
             // Post query
-            UnityWebRequest request = await contentsSubgraph.Post(queryWithArgs);
+            UnityWebRequest request = await HttpHandler.PostAsync(url, queryWithArgs, null);
             Debug.Log(HttpHandler.FormatJson(request.downloadHandler.text));
 
             return request.downloadHandler.text;

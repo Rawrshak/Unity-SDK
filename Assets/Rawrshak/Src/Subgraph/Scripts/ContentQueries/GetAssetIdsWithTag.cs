@@ -9,21 +9,24 @@ using GraphQlClient.Core;
 
 namespace Rawrshak
 {
-    public class QueryGetAssetsInContentContract : QueryBase
+    public class GetAssetIdsWithTag : QueryBase
     {
+        static string QUERY_STRING_LOCATION = "ContentInfo/GetAssetIdsWithTag";
         public ReturnData data;
 
         async void Start()
         {
-            TextAsset metadataTextAsset=(TextAsset)Resources.Load("GetAssetsInContentContract");
-            query = metadataTextAsset.text;
+            url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
-            await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3", 10, "");
+            // Note: These are for test purposes
+            // await Fetch(15, "", "Rawrshak");
         }
 
-        public async Task Fetch(string contractAddress, int first, string lastId) {
-            // Note: Default sorting is by ID and in ascending alphanumeric order (not by creation time)
-            string queryWithArgs = String.Format(query, contractAddress.ToLower(), first, lastId);
+        public async Task Fetch(int first, string lastId, string tag) {
+            // Load query if this is the first Fetch
+            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+
+            string queryWithArgs = String.Format(query, first, lastId, tag);
             Debug.Log(queryWithArgs);
 
             // Post query
@@ -42,11 +45,11 @@ namespace Rawrshak
         [Serializable]
         public class DataObject 
         {
-            public ContentData content;
+            public TagData[] tags;
         }
 
         [Serializable]
-        public class ContentData 
+        public class TagData 
         {
             public string id;
             public AssetData[] assets;
@@ -57,18 +60,11 @@ namespace Rawrshak
         {
             public string id;
             public string tokenId;
-            public string name;
-            public string type;
-            public string subtype;
-            public string currentSupply;
-            public string maxSupply;
-            public string latestPublicUriVersion;
-            public string latestHiddenUriVersion;
-            public TagData[] tags;
+            public ContentIdData parentContract;
         }
 
         [Serializable]
-        public class TagData 
+        public class ContentIdData 
         {
             public string id;
         }

@@ -9,19 +9,22 @@ using GraphQlClient.Core;
 
 namespace Rawrshak
 {
-    public class QueryGetAssetInfo : QueryBase
+    public class GetAssetInfo : QueryBase
     {
+        static string QUERY_STRING_LOCATION = "ContentInfo/GetAssetInfo";
         public ReturnData data;
 
         async void Start()
         {
-            TextAsset metadataTextAsset=(TextAsset)Resources.Load("GetAssetInfo");
-            query = metadataTextAsset.text;
+            url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
             await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3", 0);
         }
 
         public async Task Fetch(string contractAddress, int tokenId) {
+            // Load query if this is the first Fetch
+            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+            
             string queryWithArgs = String.Format(query, contractAddress.ToLower(), tokenId);
             Debug.Log(queryWithArgs);
 

@@ -10,17 +10,20 @@ namespace Rawrshak
 {
     public class GetAccountInfo : QueryBase
     {
+        static string QUERY_STRING_LOCATION = "WalletInfo/GetAccountInfo";
         public ReturnData data;
 
         async void Start()
         {
-            TextAsset metadataTextAsset=(TextAsset)Resources.Load("GetAccountInfo");
-            query = metadataTextAsset.text;
+            url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
             // await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3");
         }
 
         public async Task Fetch(string address) {
+            // Load query if this is the first Fetch
+            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+
             string queryWithArgs = String.Format(query, address.ToLower());
             Debug.Log(queryWithArgs);
 
