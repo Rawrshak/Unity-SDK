@@ -17,10 +17,15 @@ namespace Rawrshak
         {
             url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
-            // await Fetch("", 10, "");
+            // Test Query
+            // await Fetch("0x90f79bf6eb2c4f870365e785982e1f101e93b906", "0xc643fad6b1691a6c61d2766f3ac9751251f92bad", 3, "");
+            // await Fetch("0x90f79bf6eb2c4f870365e785982e1f101e93b906", "0xc643fad6b1691a6c61d2766f3ac9751251f92bad", 3, "0xc643fad6b1691a6c61d2766f3ac9751251f92bad-0x90f79bf6eb2c4f870365e785982e1f101e93b906-1");
         }
 
         public async Task Fetch(string walletAddress, string contractAddress, int first, string lastId) {
+            // Make sure Url has been set.
+            CheckUrl();
+            
             // Load query if this is the first Fetch
             LoadQueryIfEmpty(QUERY_STRING_LOCATION);
             

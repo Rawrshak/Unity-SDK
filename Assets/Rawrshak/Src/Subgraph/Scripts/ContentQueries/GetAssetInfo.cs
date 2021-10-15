@@ -18,10 +18,14 @@ namespace Rawrshak
         {
             url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
-            await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3", 0);
+            // Test Query
+            // await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3", 2);
         }
 
         public async Task Fetch(string contractAddress, int tokenId) {
+            // Make sure Url has been set.
+            CheckUrl();
+            
             // Load query if this is the first Fetch
             LoadQueryIfEmpty(QUERY_STRING_LOCATION);
             
@@ -45,7 +49,7 @@ namespace Rawrshak
         [Serializable]
         public class DataObject 
         {
-            public AssetData[] assets;
+            public AssetData asset;
         }
 
         [Serializable]

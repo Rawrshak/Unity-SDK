@@ -17,14 +17,18 @@ namespace Rawrshak
         {
             url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
-            // await Fetch("", 10, "");
+            // Test Query
+            await Fetch("0x90f79bf6eb2c4f870365e785982e1f101e93b906", "text", 3, "");
         }
 
-        public async Task Fetch(string walletAddress, string subtype, int first, string lastId) {
+        public async Task Fetch(string walletAddress, string type, int first, string lastId) {
+            // Make sure Url has been set.
+            CheckUrl();
+
             // Load query if this is the first Fetch
             LoadQueryIfEmpty(QUERY_STRING_LOCATION);
 
-            string queryWithArgs = String.Format(query, walletAddress.ToLower(), subtype, first, lastId);
+            string queryWithArgs = String.Format(query, walletAddress.ToLower(), type.ToLower(), first, lastId);
             Debug.Log(queryWithArgs);
 
             // Post query

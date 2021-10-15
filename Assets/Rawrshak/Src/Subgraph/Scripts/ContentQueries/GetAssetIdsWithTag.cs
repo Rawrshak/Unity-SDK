@@ -18,11 +18,15 @@ namespace Rawrshak
         {
             url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
-            // Note: These are for test purposes
-            // await Fetch(15, "", "Rawrshak");
+            // Test Query
+            // await Fetch("Rawrshak", 15, "");
+            // await Fetch("Rawrshak", 5, "0xb955b6c65ff69bfe07a557aa385055282b8a5ea3-4");
         }
 
-        public async Task Fetch(int first, string lastId, string tag) {
+        public async Task Fetch(string tag, int first, string lastId) {
+            // Make sure Url has been set.
+            CheckUrl();
+            
             // Load query if this is the first Fetch
             LoadQueryIfEmpty(QUERY_STRING_LOCATION);
 

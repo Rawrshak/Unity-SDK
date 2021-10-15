@@ -16,10 +16,14 @@ namespace Rawrshak
         {
             url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
 
-            await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3");
+            // Test Query
+            // await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3");
         }
 
         public async Task Fetch(string address) {
+            // Make sure Url has been set.
+            CheckUrl();
+            
             // Load query if this is the first Fetch
             LoadQueryIfEmpty(QUERY_STRING_LOCATION);
 

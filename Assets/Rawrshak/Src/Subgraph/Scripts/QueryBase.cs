@@ -21,6 +21,12 @@ namespace Rawrshak
             }
         }
 
+        protected void CheckUrl() {
+            if (String.IsNullOrEmpty(url)) {
+                throw new Exception("Subgraph URL has not been set.");
+            }
+        }
+
         protected async Task<string> PostAsync(string queryWithArgs) {
             // Post query
             UnityWebRequest request = await HttpHandler.PostAsync(url, queryWithArgs, null);
