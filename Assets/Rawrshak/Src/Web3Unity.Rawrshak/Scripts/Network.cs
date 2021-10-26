@@ -6,10 +6,11 @@ using UnityEngine;
 namespace Rawrshak
 {
     [CreateAssetMenu(fileName="Network", menuName="Rawrshak/Create Network Object")]
-    public class Network : ScriptableObject
+    public class Network : SingletonScriptableObject<Network>
     {
-        public string chain;
-        public string network;
-        public BigInteger chainId;
+        public string chain = "ethereum";
+        public string network = "optimistic-kovan";
+        public BigInteger chainId = 69;
+        public string httpEndpoint = "https://kovan.optimism.io";
     }
 }

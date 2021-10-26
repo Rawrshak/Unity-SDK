@@ -26,6 +26,7 @@ namespace Rawrshak
         {
             isValid = false;
             assetsToMint = new Dictionary<BigInteger, BigInteger>();
+            network = Network.Instance;
         }
         
         public void OnDisable()
@@ -41,7 +42,7 @@ namespace Rawrshak
                 Debug.LogError("Network is not set.");
                 return false;
             }
-            return await Content.SupportsInterface(network.chain, network.network, contract, "0xBF2FD945");
+            return await Content.SupportsInterface(network.chain, network.network, contract, "0x15f57ea0", network.httpEndpoint);
         }
 
         public async Task<bool> MintAssets(string receiver, BigInteger nonce)
@@ -75,7 +76,7 @@ namespace Rawrshak
             transaction.signature = devWallet.SignEIP712MintTransaction(transaction, network.chainId, contract);
 
             // Send Mint transaction
-            string response = await Content.MintBatch(network.chain, network.network, contract, transaction);
+            string response = await Content.MintBatch(network.chain, network.network, contract, transaction, network.httpEndpoint);
 
             // Response will contain the transaction id 
             Debug.Log(response);

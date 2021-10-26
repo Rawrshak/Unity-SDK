@@ -16,8 +16,9 @@ namespace Rawrshak
                 Debug.LogError("Invalid LoadMetadata input.");
                 return null;
             }
+
             // 1. Get the Asset Uri from the Content Contract
-            string uri = await Content.TokenUri(network.chain, network.network, asset.contract, asset.tokenId.ToString());
+            string uri = await Content.TokenUri(network.chain, network.network, asset.contract, asset.tokenId.ToString(), network.httpEndpoint);
 
             if (String.IsNullOrEmpty(uri))
             {
