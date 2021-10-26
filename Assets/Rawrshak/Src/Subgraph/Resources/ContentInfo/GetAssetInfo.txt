@@ -5,6 +5,7 @@ query GetAssetInfo {{
         name
         type
         subtype
+        imageUri
         currentSupply
         maxSupply
         latestPublicUriVersion

@@ -66,6 +66,7 @@ namespace Rawrshak
             public string name;
             public string type;
             public string subtype;
+            public string imageUri;
             public string currentSupply;
             public string maxSupply;
             public string latestPublicUriVersion;

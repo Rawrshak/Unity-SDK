@@ -88,6 +88,7 @@ namespace Rawrshak
     [Serializable]
     public class AudioProperties
     {
+        // Todo: Need to update this based off of the Metadata Frameworks. UpdateDurationMs and sampleRateHz
         public string uri;
         public string engine;
         public string compression;
