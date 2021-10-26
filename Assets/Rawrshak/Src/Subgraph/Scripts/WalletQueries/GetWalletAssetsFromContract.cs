@@ -13,18 +13,16 @@ namespace Rawrshak
         static string QUERY_STRING_LOCATION = "WalletInfo/GetWalletAssetsFromContract";
         public ReturnData data;
 
-        async void Start()
-        {
-            url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
-
-            // Test Query
-            // await Fetch("0x90f79bf6eb2c4f870365e785982e1f101e93b906", "0xc643fad6b1691a6c61d2766f3ac9751251f92bad", 3, "");
-            // await Fetch("0x90f79bf6eb2c4f870365e785982e1f101e93b906", "0xc643fad6b1691a6c61d2766f3ac9751251f92bad", 3, "0xc643fad6b1691a6c61d2766f3ac9751251f92bad-0x90f79bf6eb2c4f870365e785982e1f101e93b906-1");
-        }
+        // async void Start()
+        // {
+        //     // Test Query
+        //     await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF", "0x184d723b301c08401f200a4cdf221c5fc93df3e5", 3, "");
+        //     // await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF", "0x184d723b301c08401f200a4cdf221c5fc93df3e5", 3, "0x184d723b301c08401f200a4cdf221c5fc93df3e5-0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF-1");
+        // }
 
         public async Task Fetch(string walletAddress, string contractAddress, int first, string lastId) {
             // Make sure Url has been set.
-            CheckUrl();
+            CheckSubgraph();
             
             // Load query if this is the first Fetch
             LoadQueryIfEmpty(QUERY_STRING_LOCATION);
@@ -33,7 +31,7 @@ namespace Rawrshak
             Debug.Log(queryWithArgs);
 
             // Post query
-            string returnData = await PostAsync(queryWithArgs);
+            string returnData = await PostAsync(subgraph.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
             data = JsonUtility.FromJson<ReturnData>(returnData);

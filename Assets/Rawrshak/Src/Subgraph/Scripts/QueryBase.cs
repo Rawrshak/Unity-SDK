@@ -11,7 +11,7 @@ namespace Rawrshak
 {
     public abstract class QueryBase : MonoBehaviour
     {
-        public string url;
+        public Subgraph subgraph = null;
         protected string query;
 
         protected void LoadQueryIfEmpty(string queryLocation) {
@@ -21,15 +21,15 @@ namespace Rawrshak
             }
         }
 
-        protected void CheckUrl() {
-            if (String.IsNullOrEmpty(url)) {
-                throw new Exception("Subgraph URL has not been set.");
+        protected void CheckSubgraph() {
+            if (subgraph == null) {
+                subgraph = Subgraph.Instance;
             }
         }
 
-        protected async Task<string> PostAsync(string queryWithArgs) {
+        protected async Task<string> PostAsync(string uri, string queryWithArgs) {
             // Post query
-            UnityWebRequest request = await HttpHandler.PostAsync(url, queryWithArgs, null);
+            UnityWebRequest request = await HttpHandler.PostAsync(uri, queryWithArgs, null);
             Debug.Log(HttpHandler.FormatJson(request.downloadHandler.text));
 
             return request.downloadHandler.text;

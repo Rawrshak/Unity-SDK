@@ -14,18 +14,16 @@ namespace Rawrshak
         static string QUERY_STRING_LOCATION = "ContentInfo/GetAssetsInContentContract";
         public ReturnData data;
 
-        async void Start()
-        {
-            url = "http://localhost:8000/subgraphs/name/gcbsumid/contents";
-
-            // Test Query
-            // await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3", 6, "");
-            // await Fetch("0x25c71B0B48AE6e8478B3404CEC960a4387f4fDF3", 6, "0x25c71b0b48ae6e8478b3404cec960a4387f4fdf3-5");
-        }
+        // async void Start()
+        // {
+        //     // Test Query
+        //     await Fetch("0xd0938b7fDB19de29c85f90BCBe33c094a29AE285", 6, "");
+        //     // await Fetch("0xd0938b7fDB19de29c85f90BCBe33c094a29AE285", 6, "0xd0938b7fDB19de29c85f90BCBe33c094a29AE285-5");
+        // }
 
         public async Task Fetch(string contractAddress, int first, string lastId) {
             // Make sure Url has been set.
-            CheckUrl();
+            CheckSubgraph();
             
             // Load query if this is the first Fetch
             LoadQueryIfEmpty(QUERY_STRING_LOCATION);
@@ -35,7 +33,7 @@ namespace Rawrshak
             Debug.Log(queryWithArgs);
 
             // Post query
-            string returnData = await PostAsync(queryWithArgs);
+            string returnData = await PostAsync(subgraph.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
             data = JsonUtility.FromJson<ReturnData>(returnData);
