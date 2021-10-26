@@ -42,7 +42,7 @@ namespace Rawrshak
                 Debug.LogError("Network is not set.");
                 return false;
             }
-            return await Content.SupportsInterface(network.chain, network.network, contract, "0x15f57ea0", network.httpEndpoint);
+            return await Content.SupportsInterface(network.chain, network.network, contract, "0x6a3af2b5", network.httpEndpoint);
         }
 
         public async Task<bool> MintAssets(string receiver, BigInteger nonce)
@@ -75,11 +75,12 @@ namespace Rawrshak
             // Developer wallet sign the mint transaction. Developer wallet must have correct access rights.
             transaction.signature = devWallet.SignEIP712MintTransaction(transaction, network.chainId, contract);
 
-            // Send Mint transaction
-            string response = await Content.MintBatch(network.chain, network.network, contract, transaction, network.httpEndpoint);
+            // Todo: Implement WalletConnect + Nethereum MintBatch()
+            // // Send Mint transaction
+            // string response = await Content.MintBatch(network.chain, network.network, contract, transaction, network.httpEndpoint);
 
-            // Response will contain the transaction id 
-            Debug.Log(response);
+            // // Response will contain the transaction id 
+            // Debug.Log(response);
 
             return true;
         }

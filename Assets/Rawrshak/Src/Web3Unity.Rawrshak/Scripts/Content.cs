@@ -13,6 +13,12 @@ namespace Rawrshak
         private static string AbiFileLocation = "Abis/Content";
         private static string abi = Resources.Load<TextAsset>(AbiFileLocation).text;
 
+        public class RoyaltyResponse 
+        { 
+            public string receiver;
+            public string rate; 
+        }
+
         // ERC1155 API
         public static async Task<BigInteger> BalanceOf(string _chain, string _network, string _contract, string _account, string _tokenId, string _rpc="")
         {
@@ -54,39 +60,21 @@ namespace Rawrshak
             }        
         }
 
-        public static async Task<string> SafeTransferFrom(string _chain, string _network, string _contract, string from, string to, string id, string amount, string _rpc="")
-        {
-            string method = "safeTransferFrom";
-            string[] obj = { from, to, id, amount, "" };
-            string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
-        }
-
-        public static async Task<string> SafeBatchTransferFrom(string _chain, string _network, string _contract, SafeBatchTransferFromTransactionData transactionData, string _rpc="")
-        {
-            string method = "safeBatchTransferFrom";
-            string args = JsonConvert.SerializeObject(transactionData);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
-        }
-
-        public static async Task<string> isApprovedForAll(string _chain, string _network, string _contract, string address, string oper, string _rpc="")
+        public static async Task<bool> isApprovedForAll(string _chain, string _network, string _contract, string _account, string _operator, string _rpc="")
         {
             string method = "isApprovedForAll";
-            string[] obj = { address, oper };
+            string[] obj = { _account, _operator };
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
-        }
-
-        public static async Task<string> SetApprovedForAll(string _chain, string _network, string _contract, string oper, bool approved, string _rpc="")
-        {
-            string method = "setApprovedForAll";
-            string[] obj = { oper, approved ? "true" : "false" };
-            string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+            try 
+            {
+                return Boolean.Parse(response);
+            } 
+            catch 
+            {
+                Debug.LogError(response);
+                throw;
+            }
         }
         
         // Get the contract uri
@@ -95,37 +83,39 @@ namespace Rawrshak
             string method = "contractUri";
             string[] obj = {};
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }
 
         // Get the contract royalty fee rate
-        public static async Task<string> ContractRoyalty(string _chain, string _network, string _contract, string _rpc="")
+        public static async Task<RoyaltyResponse> ContractRoyalty(string _chain, string _network, string _contract, string _rpc="")
         {
             string method = "contractRoyalty";
             string[] obj = {};
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+            RoyaltyResponse royalties = JsonUtility.FromJson<RoyaltyResponse>(response);
+            return royalties;
         }
 
         // Get the user mint nonce
-        public static async Task<string> UserMintNonce(string _chain, string _network, string _contract, string _rpc="")
+        // Todo: Needs Content contract update
+        public static async Task<string> UserMintNonce(string _chain, string _network, string _contract, string _address, string _rpc="")
         {
             string method = "userMintNonce";
-            string[] obj = {};
+            string[] obj = { _address };
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }
 
         // Get Most recent public token uri
-        public static async Task<string> TokenUri(string _chain, string _network, string _contract, string _tokenId, string _version, string _rpc="")
+        public static async Task<string> TokenUriWithVersion(string _chain, string _network, string _contract, string _tokenId, string _version, string _rpc="")
         {
             string method = "uri";
             string[] obj = { _tokenId, _version };
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }
 
@@ -134,7 +124,7 @@ namespace Rawrshak
             string method = "uri";
             string[] obj = { _tokenId };
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
             return response;
         }
 
@@ -144,48 +134,10 @@ namespace Rawrshak
             string method = "totalSupply";
             string[] obj = { _tokenId };
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return BigInteger.Parse(response);
-        }
-        
-        // Get the max supply of an asset 
-        public static async Task<BigInteger> MaxSupply(string _chain, string _network, string _contract, string _tokenId, string _rpc="")
-        {
-            string method = "maxSupply";
-            string[] obj = {};
-            string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return BigInteger.Parse(response);
-        }
-
-        // Mint an array of assets; MintData must be signed by internal developer wallet
-        public static async Task<string> MintBatch(string _chain, string _network, string _contract, MintTransactionData data, string _rpc="")
-        {
-            string method = "mintBatch";
-            string args = JsonConvert.SerializeObject(data);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
-        }
-
-        // Burn an array of assets; only user can burn
-        public static async Task<string> BurnBatch(string _chain, string _network, string _contract, BurnTransactionData data, string _rpc="")
-        {
-            string method = "burnBatch";
-            string args = JsonConvert.SerializeObject(data);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
-            return response;
-        }
-
-        // To Check for Interface implementation
-        public static async Task<bool> SupportsInterface(string _chain, string _network, string _contract, string interfaceId, string _rpc="")
-        {
-            string method = "supportsInterface";
-            string[] obj = { interfaceId };
-            string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.MultiCall(_chain, _network, _contract, abi, method, args, _rpc);
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
             try 
             {
-                return bool.Parse(response);
+                return BigInteger.Parse(response);
             } 
             catch 
             {
@@ -194,5 +146,88 @@ namespace Rawrshak
             }
         }
         
+        // Get the max supply of an asset 
+        public static async Task<BigInteger> MaxSupply(string _chain, string _network, string _contract, string _tokenId, string _rpc="")
+        {
+            string method = "maxSupply";
+            string[] obj = { _tokenId };
+            string args = JsonConvert.SerializeObject(obj);
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+            try 
+            {
+                return BigInteger.Parse(response);
+            } 
+            catch 
+            {
+                Debug.LogError(response);
+                throw;
+            }
+        }
+
+        // To Check for Interface implementation
+        public static async Task<bool> SupportsInterface(string _chain, string _network, string _contract, string interfaceId, string _rpc="")
+        {
+            string method = "supportsInterface";
+            string[] obj = { interfaceId };
+            string args = JsonConvert.SerializeObject(obj);
+            string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+            try 
+            {
+                return Boolean.Parse(response);
+            } 
+            catch 
+            {
+                Debug.LogError(response);
+                throw;
+            }
+        }
+        
+        // Todo [Blocked]: ChainSafe's Gaming SDKs currently do not support non-WebGL transactions. We've 
+        //                 requested this from the ChainSafe team but it is still in progress. In the 
+        //                 meantime, we'll work with WalletConnect + Nethereum for sending transactions
+
+        // public static async Task<string> SafeTransferFrom(string _chain, string _network, string _contract, string from, string to, string id, string amount, string _rpc="")
+        // {
+        //     string method = "safeTransferFrom";
+        //     string[] obj = { from, to, id, amount, "" };
+        //     string args = JsonConvert.SerializeObject(obj);
+        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+        //     return response;
+        // }
+
+        // public static async Task<string> SafeBatchTransferFrom(string _chain, string _network, string _contract, SafeBatchTransferFromTransactionData transactionData, string _rpc="")
+        // {
+        //     string method = "safeBatchTransferFrom";
+        //     string args = JsonConvert.SerializeObject(transactionData);
+        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+        //     return response;
+        // }
+
+        // public static async Task<string> SetApprovedForAll(string _chain, string _network, string _contract, string oper, bool approved, string _rpc="")
+        // {
+        //     string method = "setApprovedForAll";
+        //     string[] obj = { oper, approved ? "true" : "false" };
+        //     string args = JsonConvert.SerializeObject(obj);
+        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+        //     return response;
+        // }
+
+        // // Mint an array of assets; MintData must be signed by internal developer wallet
+        // public static async Task<string> MintBatch(string _chain, string _network, string _contract, MintTransactionData data, string _rpc="")
+        // {
+        //     string method = "mintBatch";
+        //     string args = JsonConvert.SerializeObject(data);
+        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+        //     return response;
+        // }
+
+        // // Burn an array of assets; only user can burn
+        // public static async Task<string> BurnBatch(string _chain, string _network, string _contract, BurnTransactionData data, string _rpc="")
+        // {
+        //     string method = "burnBatch";
+        //     string args = JsonConvert.SerializeObject(data);
+        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
+        //     return response;
+        // }
     }
 }

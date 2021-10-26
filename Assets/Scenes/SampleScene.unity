@@ -192,12 +192,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156228358}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 349f83fe8257c68438209481ca6a9d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
+  subgraph: {fileID: 0}
   data:
     data:
       asset:
@@ -206,6 +206,7 @@ MonoBehaviour:
         name: 
         type: 
         subtype: 
+        imageUri: 
         currentSupply: 
         maxSupply: 
         latestPublicUriVersion: 
@@ -232,12 +233,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156228358}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32fff8c47973d5343b25d660dfd8f1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
+  subgraph: {fileID: 0}
   data:
     data:
       content:
@@ -255,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcb4c75f365a9742b564c4bd9dcb120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
+  subgraph: {fileID: 0}
   data:
     data:
       tags: []
@@ -316,6 +317,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &546598240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 546598242}
+  - component: {fileID: 546598241}
+  m_Layer: 0
+  m_Name: EthereumOptimismQueries
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &546598241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546598240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0714959b60229d0499087a7edbbf0e46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  privateKey: 
+  wallet: {fileID: 0}
+  network: {fileID: 0}
+  contractAddress: 0x184d723b301c08401f200a4cdf221c5fc93df3e5
+--- !u!4 &546598242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546598240}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -430,7 +478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &938359339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,12 +486,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938359338}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c5d8d69bec94254d867390f3f7f3b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
+  subgraph: {fileID: 0}
   data:
     data:
       account:
@@ -473,12 +521,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938359338}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69de65af484367d4ebf117a0bed67807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
+  subgraph: {fileID: 0}
   data:
     data:
       account:
@@ -495,7 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9462b3fafffe99f4e92b363884446d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
+  subgraph: {fileID: 0}
   data:
     data:
       account:
@@ -507,12 +555,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938359338}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d82600aafa89f64ca8e93fa33f721dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
+  subgraph: {fileID: 0}
   data:
     data:
       account:
@@ -524,12 +572,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938359338}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 981ee836665abb94cb92a65b19944116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
+  subgraph: {fileID: 0}
   data:
     data:
       account:
@@ -646,7 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd666e641427f5941957f2bc42e24fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
+  subgraph: {fileID: 0}
   data:
     data:
       content:
