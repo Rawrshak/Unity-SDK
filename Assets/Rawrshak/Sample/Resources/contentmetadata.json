@@ -1,0 +1,32 @@
+{
+    "name": "Rawrshak Default Assets",
+    "description": "Lorem ipsum...",
+    "image": "https://arweave.net/9KvpWZFGq1rD0slJYbe54-cQ34RTDHmNHiuqJk__AB8",
+    "creator": "Rawrshak",
+    "owner": "Rawrshak",
+    "game": "",
+    "tags": [
+        "Rawrshak",
+        "Test",
+        "Role-Playing Game"
+    ],
+    "properties": {
+        "simple_property": "example value",
+        "rich_property": {
+            "name": "Name",
+            "value": "123",
+            "display_value": "123 Example Value",
+            "prop_class": "emphasis",
+            "css": {
+                "color": "#ffffff",
+                "font-weight": "bold",
+                "text-decoration": "underline"
+            }
+        },
+        "array_property": {
+            "name": "Name",
+            "value": [1,2,3,4],
+            "prop_class": "emphasis"
+        }
+    }
+}
