@@ -182,52 +182,56 @@ namespace Rawrshak
             }
         }
         
-        // Todo [Blocked]: ChainSafe's Gaming SDKs currently do not support non-WebGL transactions. We've 
-        //                 requested this from the ChainSafe team but it is still in progress. In the 
-        //                 meantime, we'll work with WalletConnect + Nethereum for sending transactions
+        // Todo [Blocked]: ChainSafe's Gaming SDKs helps build the data transaction but does not 
+        //                 send transactions. We're working with WalletConnect + ChainSafe's Gaming 
+        //                 SDK to send contract transactions.
+        public static async Task<string> SafeTransferFrom(string _chain, string _network, string _contract, string from, string to, string id, string amount, string _rpc="")
+        {
+            string method = "safeTransferFrom";
+            string[] obj = { from, to, id, amount, "" };
+            string args = JsonConvert.SerializeObject(obj);
+            string response = await EVM.CreateContractData(abi, method, args, _rpc);
+            // Todo: Get the Wallet Connect Session and Call Send Transaction
+            return response;
+        }
 
-        // public static async Task<string> SafeTransferFrom(string _chain, string _network, string _contract, string from, string to, string id, string amount, string _rpc="")
-        // {
-        //     string method = "safeTransferFrom";
-        //     string[] obj = { from, to, id, amount, "" };
-        //     string args = JsonConvert.SerializeObject(obj);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
+        public static async Task<string> SafeBatchTransferFrom(string _chain, string _network, string _contract, SafeBatchTransferFromTransactionData data, string _rpc="")
+        {
+            string method = "safeBatchTransferFrom";
+            string args = data.GenerateArgsForCreateContractData();
+            string response = await EVM.CreateContractData(abi, method, args, _rpc);
+            // Todo: Get the Wallet Connect Session and Call Send Transaction
+            return response;
+        }
 
-        // public static async Task<string> SafeBatchTransferFrom(string _chain, string _network, string _contract, SafeBatchTransferFromTransactionData transactionData, string _rpc="")
-        // {
-        //     string method = "safeBatchTransferFrom";
-        //     string args = JsonConvert.SerializeObject(transactionData);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
+        public static async Task<string> SetApprovedForAll(string _chain, string _network, string _contract, string oper, bool approved, string _rpc="")
+        {
+            string method = "setApprovedForAll";
+            string[] obj = { oper, approved ? "true" : "false" };
+            string args = JsonConvert.SerializeObject(obj);
+            string response = await EVM.CreateContractData(abi, method, args, _rpc);
+            // Todo: Get the Wallet Connect Session and Call Send Transaction
+            return response;
+        }
 
-        // public static async Task<string> SetApprovedForAll(string _chain, string _network, string _contract, string oper, bool approved, string _rpc="")
-        // {
-        //     string method = "setApprovedForAll";
-        //     string[] obj = { oper, approved ? "true" : "false" };
-        //     string args = JsonConvert.SerializeObject(obj);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
+        // Mint an array of assets; MintData must be signed by internal developer wallet
+        public static async Task<string> MintBatch(string _chain, string _network, string _contract, MintTransactionData data, string _rpc="")
+        {
+            string method = "mintBatch";
+            string args = data.GenerateArgsForCreateContractData();
+            string response = await EVM.CreateContractData(abi, method, args, _rpc);
+            // Todo: Get the Wallet Connect Session and Call Send Transaction
+            return response;
+        }
 
-        // // Mint an array of assets; MintData must be signed by internal developer wallet
-        // public static async Task<string> MintBatch(string _chain, string _network, string _contract, MintTransactionData data, string _rpc="")
-        // {
-        //     string method = "mintBatch";
-        //     string args = JsonConvert.SerializeObject(data);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
-
-        // // Burn an array of assets; only user can burn
-        // public static async Task<string> BurnBatch(string _chain, string _network, string _contract, BurnTransactionData data, string _rpc="")
-        // {
-        //     string method = "burnBatch";
-        //     string args = JsonConvert.SerializeObject(data);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
+        // Burn an array of assets; only user can burn
+        public static async Task<string> BurnBatch(string _chain, string _network, string _contract, BurnTransactionData data, string _rpc="")
+        {
+            string method = "burnBatch";
+            string args = data.GenerateArgsForCreateContractData();
+            string response = await EVM.CreateContractData(abi, method, args, _rpc);
+            // Todo: Get the Wallet Connect Session and Call Send Transaction
+            return response;
+        }
     }
 }

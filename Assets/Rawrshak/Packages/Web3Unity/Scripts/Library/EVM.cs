@@ -149,8 +149,22 @@ public class EVM
     form.AddField("abi", _abi);
     form.AddField("method", _method);
     form.AddField("args", _args);
-    form.AddField("rpc", _rpc);
+form.AddField("rpc", _rpc);
     string url = host + "/createTransaction";
+    UnityWebRequest webRequest = UnityWebRequest.Post(url, form);
+    await webRequest.SendWebRequest();
+    StringResponse data = JsonUtility.FromJson<StringResponse>(System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data));
+    return data.response;
+  }
+
+  public static async Task<string> CreateContractData(string _abi, string _method, string _args, string _rpc = "")
+  {
+    WWWForm form = new WWWForm();
+    form.AddField("abi", _abi);
+    form.AddField("method", _method);
+    form.AddField("args", _args);
+    form.AddField("rpc", _rpc);
+    string url = host + "/createContractData";
     UnityWebRequest webRequest = UnityWebRequest.Post(url, form);
     await webRequest.SendWebRequest();
     StringResponse data = JsonUtility.FromJson<StringResponse>(System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data));
