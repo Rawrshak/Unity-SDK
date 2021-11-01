@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
+using WalletConnectSharp.Core.Models.Ethereum;
+using WalletConnectSharp.Unity;
 
 namespace Rawrshak
 {
@@ -190,18 +192,32 @@ namespace Rawrshak
             string method = "safeTransferFrom";
             string[] obj = { from, to, id, amount, "" };
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.CreateContractData(abi, method, args, _rpc);
-            // Todo: Get the Wallet Connect Session and Call Send Transaction
-            return response;
+            string response = await EVM.CreateContractData(abi, method, args);
+
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = response
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
         }
 
         public static async Task<string> SafeBatchTransferFrom(string _chain, string _network, string _contract, SafeBatchTransferFromTransactionData data, string _rpc="")
         {
             string method = "safeBatchTransferFrom";
             string args = data.GenerateArgsForCreateContractData();
-            string response = await EVM.CreateContractData(abi, method, args, _rpc);
-            // Todo: Get the Wallet Connect Session and Call Send Transaction
-            return response;
+            string response = await EVM.CreateContractData(abi, method, args);
+            
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = response
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
         }
 
         public static async Task<string> SetApprovedForAll(string _chain, string _network, string _contract, string oper, bool approved, string _rpc="")
@@ -209,9 +225,16 @@ namespace Rawrshak
             string method = "setApprovedForAll";
             string[] obj = { oper, approved ? "true" : "false" };
             string args = JsonConvert.SerializeObject(obj);
-            string response = await EVM.CreateContractData(abi, method, args, _rpc);
-            // Todo: Get the Wallet Connect Session and Call Send Transaction
-            return response;
+            string response = await EVM.CreateContractData(abi, method, args);
+            
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = response
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
         }
 
         // Mint an array of assets; MintData must be signed by internal developer wallet
@@ -219,9 +242,16 @@ namespace Rawrshak
         {
             string method = "mintBatch";
             string args = data.GenerateArgsForCreateContractData();
-            string response = await EVM.CreateContractData(abi, method, args, _rpc);
-            // Todo: Get the Wallet Connect Session and Call Send Transaction
-            return response;
+            string response = await EVM.CreateContractData(abi, method, args);
+            
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = response
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
         }
 
         // Burn an array of assets; only user can burn
@@ -229,9 +259,16 @@ namespace Rawrshak
         {
             string method = "burnBatch";
             string args = data.GenerateArgsForCreateContractData();
-            string response = await EVM.CreateContractData(abi, method, args, _rpc);
-            // Todo: Get the Wallet Connect Session and Call Send Transaction
-            return response;
+            string response = await EVM.CreateContractData(abi, method, args);
+            
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = response
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
         }
     }
 }
