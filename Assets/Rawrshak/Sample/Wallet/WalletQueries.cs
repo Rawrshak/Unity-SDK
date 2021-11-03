@@ -8,43 +8,40 @@ namespace Rawrshak
 {
     public class WalletQueries : MonoBehaviour
     {
-        public string privateKey = "";
-        public PrivateKeyWallet wallet;
         public Network network;
 
         // Optimism Kovan Testnet - Sample Content Contract Address
-        public string contractAddress = "0x184d723b301c08401f200a4cdf221c5fc93df3e5";
+        public string contractAddress;
+        public string playerAddress;
+        public string oper;
 
         // Start is called before the first frame update
         async void Start()
         {
             network = Network.Instance;
+            
+            Debug.Log("Player Wallet: " + playerAddress);
+            Debug.Log("Contract Address: " + contractAddress);
 
-            wallet = FindObjectOfType<PrivateKeyWallet>();
-            if (!wallet) {
-                wallet = ScriptableObject.CreateInstance<PrivateKeyWallet>();
-            }
-            wallet.privateKey = privateKey;
-            wallet.Load();
-
-            string addr = wallet.GetPublicAddress();
-            Debug.Log("Wallet: " + addr);
+            Debug.Log("Network chain: " + network.chain);
+            Debug.Log("Network network: " + network.network);
+            Debug.Log("Network endpoint: " + network.httpEndpoint);
 
             // Check Balance
-            BigInteger balance = await Content.BalanceOf(network.chain, network.network, contractAddress, addr, "1", network.httpEndpoint);
-            Debug.Log(addr + "'s Balance: " + balance.ToString());
+            BigInteger balance = await Content.BalanceOf(network.chain, network.network, contractAddress, playerAddress, "3", network.httpEndpoint);
+            Debug.Log(playerAddress + "'s Balance: " + balance.ToString());
     
             // Check BalanceOfBatch
-            string[] accounts = new string[] {addr, addr};
-            string[] tokenIds = new string[] {"0", "1"};
+            string[] accounts = new string[] {playerAddress, playerAddress};
+            string[] tokenIds = new string[] {"3", "4"};
             List<BigInteger> balances = await Content.BalanceOfBatch(network.chain, network.network, contractAddress, accounts, tokenIds, network.httpEndpoint);
             balances.ForEach(delegate(BigInteger balance) {
-                Debug.Log(addr + "'s Balance: " + balance.ToString());
+                Debug.Log(playerAddress + "'s Balance: " + balance.ToString());
             });
 
             /****** Content Contract Calls ******/
             // IsApprovedForAll()
-            bool isApproved = await Content.isApprovedForAll(network.chain, network.network, contractAddress, contractAddress, contractAddress, network.httpEndpoint);
+            bool isApproved = await Content.isApprovedForAll(network.chain, network.network, contractAddress, playerAddress, oper, network.httpEndpoint);
             Debug.Log("isApproved: " + isApproved);
             
             // ContractUri()
