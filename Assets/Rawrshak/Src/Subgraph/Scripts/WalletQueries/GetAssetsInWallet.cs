@@ -17,7 +17,7 @@ namespace Rawrshak
         // {
         //     // Test Query
         //     // await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF",  2, "");
-        //     await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF",  2, "0x184d723b301c08401f200a4cdf221c5fc93df3e5-0xb796bce3db9a9dfb3f435a375f69f43a104b4caf-1");
+        //     await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF",  2, "0xc9EBafF8237740353E0dEd89130fB83be4bd3F90-0xb796bce3db9a9dfb3f435a375f69f43a104b4caf-1");
         // }
 
         public async Task Fetch(string walletAddress, int first, string lastId) {

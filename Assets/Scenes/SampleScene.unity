@@ -434,7 +434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &546598241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,10 +447,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0714959b60229d0499087a7edbbf0e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateKey: 
-  wallet: {fileID: 0}
   network: {fileID: 0}
-  contractAddress: 0x8896fD674aE91340570129BB9391F533ec2e9aa4
+  contractAddress: 0xc9EBafF8237740353E0dEd89130fB83be4bd3F90
   playerAddress: 0x0dE84C9AaEBAbb2CAF8C07012852671000bf31A7
   oper: 0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF
 --- !u!4 &546598242
@@ -954,7 +952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1449598147
 Transform:
   m_ObjectHideFlags: 0

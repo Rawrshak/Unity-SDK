@@ -17,8 +17,8 @@ namespace Rawrshak
         // async void Start()
         // {
         //     // Test Query
-        //     await Fetch("0xd0938b7fDB19de29c85f90BCBe33c094a29AE285", 6, "");
-        //     // await Fetch("0xd0938b7fDB19de29c85f90BCBe33c094a29AE285", 6, "0xd0938b7fDB19de29c85f90BCBe33c094a29AE285-5");
+        //     await Fetch("0x393d8e12aa7f22f8999bf9ddac6842db2bb6f096", 6, "");
+        //     // await Fetch("0x393d8e12aa7f22f8999bf9ddac6842db2bb6f096", 6, "0x393d8e12aa7f22f8999bf9ddac6842db2bb6f096-5");
         // }
 
         public async Task Fetch(string contractAddress, int first, string lastId) {
@@ -71,6 +71,7 @@ namespace Rawrshak
             public string maxSupply;
             public string latestPublicUriVersion;
             public string latestHiddenUriVersion;
+            public string latestPublicUri;
             public TagData[] tags;
         }
 

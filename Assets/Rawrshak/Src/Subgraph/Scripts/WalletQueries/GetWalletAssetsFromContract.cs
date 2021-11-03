@@ -16,8 +16,8 @@ namespace Rawrshak
         // async void Start()
         // {
         //     // Test Query
-        //     await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF", "0x184d723b301c08401f200a4cdf221c5fc93df3e5", 3, "");
-        //     // await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF", "0x184d723b301c08401f200a4cdf221c5fc93df3e5", 3, "0x184d723b301c08401f200a4cdf221c5fc93df3e5-0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF-1");
+        //     await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF", "0xc9EBafF8237740353E0dEd89130fB83be4bd3F90", 3, "");
+        //     // await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF", "0xc9EBafF8237740353E0dEd89130fB83be4bd3F90", 3, "0xc9EBafF8237740353E0dEd89130fB83be4bd3F90-0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF-1");
         // }
 
         public async Task Fetch(string walletAddress, string contractAddress, int first, string lastId) {

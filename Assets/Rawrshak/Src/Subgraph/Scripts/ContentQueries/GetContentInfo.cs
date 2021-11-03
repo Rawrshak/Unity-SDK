@@ -16,7 +16,7 @@ namespace Rawrshak
         // async void Start()
         // {
         //     // Test Query
-        //     await Fetch("0xd0938b7fDB19de29c85f90BCBe33c094a29AE285");
+        //     await Fetch("0x393d8e12aa7f22f8999bf9ddac6842db2bb6f096");
         // }
 
         public async Task Fetch(string address) {
@@ -55,11 +55,18 @@ namespace Rawrshak
             public string name;
             public string game;
             public string creator;
-            public string owner;
+            public string creatorAddress;
+            public OwnerData owner;
             public string contractAddress;
             public string contractUri;
             public int royaltyRate;
             public TagData[] tags;
+        }
+
+        [Serializable]
+        public class OwnerData 
+        {
+            public string id;
         }
 
         [Serializable]
