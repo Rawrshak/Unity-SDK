@@ -55,59 +55,62 @@ namespace Rawrshak
             return account != null;
         }
 
-        // If mint fails, it might be due to invalid mint permissions for this wallet.
+        // Todo: Eip712Signer does not support arrays yet. Update this when it is supported. Mint from in-game doesn't
+        //       work so far.
+        // Issue Tracker: https://github.com/Nethereum/Nethereum/issues/730 
         public string SignEIP712MintTransaction(MintTransactionData data, BigInteger chainId, string verifyingContract)
         {
-            if (eCKey == null)
-            {
-                Debug.LogError("Account has not been set.");
-                return String.Empty;
-            }
+            throw new NotImplementedException("Array types are not supported");
+            // if (eCKey == null)
+            // {
+            //     Debug.LogError("Account has not been set.");
+            //     return String.Empty;
+            // }
+            // var typedData = new TypedData
+            // {
+            //     Domain = new Domain
+            //     {
+            //         Name = "MintData",
+            //         Version = "1",
+            //         ChainId = chainId,
+            //         VerifyingContract = verifyingContract
+            //     },
+            //     Types = new Dictionary<string, MemberDescription[]>
+            //     {
+            //         ["EIP712Domain"] = new[]
+            //         {
+            //             new MemberDescription {Name = "name", Type = "string"},
+            //             new MemberDescription {Name = "version", Type = "string"},
+            //             new MemberDescription {Name = "chainId", Type = "uint256"},
+            //             new MemberDescription {Name = "verifyingContract", Type = "address"},
+            //         },
+            //         ["MintData"] = new[]
+            //         {
+            //             new MemberDescription {Name = "to", Type = "address"},
+            //             new MemberDescription {Name = "tokenIds", Type = "uint256[]"},
+            //             new MemberDescription {Name = "amounts", Type = "uint256[]"},
+            //             new MemberDescription {Name = "nonce", Type = "uint256"},
+            //             new MemberDescription {Name = "signer", Type = "address"},
+            //         }
+            //     },
+            //     PrimaryType = "MintData",
+            //     Message = new[]
+            //     {
+            //         new MemberValue {TypeName = "address", Value = data.to},
+            //         new MemberValue {TypeName = "uint256[]", Value = data.tokenIds.ToArray()},
+            //         new MemberValue {TypeName = "uint256[]", Value = data.amounts.ToArray()},
+            //         new MemberValue {TypeName = "uint256", Value = data.nonce},
+            //         new MemberValue {TypeName = "address", Value = account.Address}
+            //     }
+            // };
 
-            // Todo: Clean this up later. I don't know if this works yet
-            var typedData = new TypedData
-            {
-                Domain = new Domain
-                {
-                    Name = "MintData",
-                    Version = "1",
-                    ChainId = chainId,
-                    VerifyingContract = verifyingContract
-                },
-                Types = new Dictionary<string, MemberDescription[]>
-                {
-                    ["EIP712Domain"] = new[]
-                    {
-                        new MemberDescription {Name = "name", Type = "string"},
-                        new MemberDescription {Name = "version", Type = "string"},
-                        new MemberDescription {Name = "chainId", Type = "uint256"},
-                        new MemberDescription {Name = "verifyingContract", Type = "address"},
-                    },
-                    ["MintData"] = new[]
-                    {
-                        new MemberDescription {Name = "to", Type = "address"},
-                        new MemberDescription {Name = "tokenIds", Type = "uint256[]"},
-                        new MemberDescription {Name = "amounts", Type = "uint256[]"},
-                        new MemberDescription {Name = "nonce", Type = "uint256"},
-                        new MemberDescription {Name = "signer", Type = "address"},
-                    }
-                },
-                PrimaryType = "MintData",
-                Message = new[]
-                {
-                    new MemberValue {TypeName = "address", Value = data.to},
-                    new MemberValue {TypeName = "uint256[]", Value = data.tokenIds.ToArray()},
-                    new MemberValue {TypeName = "uint256[]", Value = data.amounts.ToArray()},
-                    new MemberValue {TypeName = "uint256", Value = data.nonce},
-                    new MemberValue {TypeName = "address", Value = data.signer}
-                }
-            };
+            // // Todo: SignTypedData() is currently broken. This needs to get fixed by Nethereum. 
+            // // Issue Tracker: https://github.com/Nethereum/Nethereum/issues/730 
+            // // return eip712Signer.SignTypedData(typedData, eCKey);
 
-            var signature = eip712Signer.SignTypedData(typedData, eCKey);
-            data.signature = signature;
-
-            // return signed transaction data
-            return signature;
+            // // This is currently a workaround because eip712Signer.SignTypedData() returns the wrong signature.
+            // var hashedData = Sha3Keccack.Current.CalculateHash(Eip712TypedDataSigner.Current.EncodeTypedData(typedData));
+            // return EthECDSASignature.CreateStringSignature(eCKey.SignAndCalculateV(hashedData));
         }
 
         public string SignTransaction(string msg)

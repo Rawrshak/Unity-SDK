@@ -13,18 +13,25 @@ public class TransactionCreator : MonoBehaviour
 {
     public PrivateKeyWallet devWallet;
 
-    private static string FUNCTION_SELECTOR = "0x84547d25";
-    public string to = "90f79bf6eb2c4f870365e785982e1f101e93b906";
+    public string to;
     public List<BigInteger> tokenIds;
     public List<BigInteger> amounts;
     public BigInteger nonce = 10;
-    public string signer = "90f79bf6eb2c4f870365e785982e1f101e93b906";
-    public string signature = "";
+    public string signer;
+    public string signature;
     public MintTransactionData transaction;
+    public string privateKey;
+    public int chainId;
+    public string contract;
 
     // Start is called before the first frame update
     async void Start()
     {
+        if (String.IsNullOrEmpty(privateKey)) {
+            Debug.LogError("Private Key is Empty");
+            return;
+        }
+
         tokenIds = new List<BigInteger>();
         tokenIds.Add(7);
         tokenIds.Add(8);
@@ -38,14 +45,9 @@ public class TransactionCreator : MonoBehaviour
         devWallet = FindObjectOfType<PrivateKeyWallet>();
         if (!devWallet) {
             devWallet = ScriptableObject.CreateInstance<PrivateKeyWallet>();
-            devWallet.privateKey = "7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6";
+            devWallet.privateKey = privateKey;
         }
         devWallet.Load();
-
-        Debug.Log("Wallet: " + devWallet.GetPublicAddress());
-        Debug.Log("Wallet: " + to);
-
-        BigInteger chainId = 31337;
 
         transaction = new MintTransactionData();
         transaction.to = "0x" + to;
@@ -53,33 +55,14 @@ public class TransactionCreator : MonoBehaviour
         transaction.signer = "0x" + signer;
         transaction.tokenIds = tokenIds;
         transaction.amounts = amounts;
-        transaction.signature = devWallet.SignEIP712MintTransaction(transaction, chainId, "0x0165878A594ca255338adfa4d48449f69242Eb8F");
+
+        // Todo: SignEIP712MintTransaction is currently not supported. Wait for ChainSafe Offline sign or
+        //       Nethereum to implement Array parameters in offline signing.
+        // transaction.signature = devWallet.SignEIP712MintTransaction(transaction, chainId, contract);
 
         signature = transaction.signature;
-        Debug.Log("Signature: " + signature);
-        
-        // object[][] obj = { transaction.GenerateArgsForCreateContractData() };
-        // string args = JsonConvert.SerializeObject(obj);
         Debug.Log("Args: " + transaction.GenerateArgsForCreateContractData());
         
-    }
-
-    private string ConvertListOfBigIntToTransactionString(List<BigInteger> array) {
-        BigInteger len = array.Count;
-        Debug.Log("Length: " + len.ToString("X64"));
-
-        string arrayString = len.ToString("X64");
-
-        List<string> arrayStr = new List<string>();
-        for (int i = 0; i < array.Count; i++) {
-            Debug.Log(String.Format("[{0}]: {1}", i, array[i].ToString("X64")));
-            arrayStr.Add(array[i].ToString("X64"));
-        }
-
-        string arrayConcat = String.Concat(arrayStr);
-        arrayString = String.Concat(arrayString, arrayConcat);
-
-        return arrayString;
     }
 
     public async void Update()
@@ -89,6 +72,7 @@ public class TransactionCreator : MonoBehaviour
             string AbiFileLocation = "Abis/Content";
             string abi = Resources.Load<TextAsset>(AbiFileLocation).text;
 
+            // Currently, only developer wallets can mint. Need offline signing for this to work.
             string data = await EVM.CreateContractData(abi, "mintBatch", transaction.GenerateArgsForCreateContractData());
             Debug.Log("Contract Data: " + data);
 
@@ -99,7 +83,7 @@ public class TransactionCreator : MonoBehaviour
             var transactionData = new TransactionData()
             {
                 from = address,
-                to = "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+                to = contract,
                 data = data
             };
             string response = await WalletConnect.ActiveSession.EthSendTransaction(transactionData);
