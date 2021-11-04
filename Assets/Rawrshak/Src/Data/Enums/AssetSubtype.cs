@@ -8,7 +8,10 @@ namespace Rawrshak
         Lore,
         Square,
         HorizontalBanner,
+        VerticalBanner,
         SoundEffect,
+        Shout,
+        CharacterLine,
         BackgroundMusic
     }
 }

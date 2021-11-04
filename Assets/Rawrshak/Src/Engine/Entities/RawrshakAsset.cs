@@ -15,7 +15,7 @@ namespace Rawrshak
         public string tokenId;
         public string name;
         public AssetType type;
-        public string subtype;
+        public AssetSubtype subtype;
         public string currentSupply;
         public string maxSupply;
         public string latestPublicUriVersion;
@@ -25,6 +25,7 @@ namespace Rawrshak
         public PublicAssetMetadataBase baseMetadata;
         public string imageUri;
         public Texture2D imageTexture;
+        public Component assetComponent;
         
         private Network network;
 
@@ -45,7 +46,7 @@ namespace Rawrshak
 
             name = data.data.asset.name;
             type = ParseAssetType(data.data.asset.type);
-            subtype = data.data.asset.subtype;
+            subtype = ParseAssetSubtype(data.data.asset.subtype);
             imageUri = data.data.asset.imageUri;
             currentSupply = data.data.asset.currentSupply;
             maxSupply = data.data.asset.maxSupply;
@@ -67,6 +68,26 @@ namespace Rawrshak
         public async Task DownloadImage()
         {
             imageTexture = await Downloader.DownloadTexture(imageUri);
+        }
+
+        public void CreateAssetComponent()
+        {
+            switch (subtype)
+            {
+                case AssetSubtype.Title:
+                {
+                    assetComponent = gameObject.AddComponent(typeof(TitleAsset));
+                    if (!((TitleAsset)assetComponent).Init(baseMetadata)) {
+                        Destroy(assetComponent);
+                    }
+                    break;
+                }
+                default:
+                {
+                    Debug.LogError("Invalid asset component to add.");
+                    break;
+                }
+            }
         }
 
         public bool IsTextAsset()
@@ -108,7 +129,8 @@ namespace Rawrshak
             baseMetadata = PublicAssetMetadataBase.Parse(metadataJson);
         }
 
-        public static AssetType ParseAssetType(string type) {
+        public static AssetType ParseAssetType(string type)
+        {
             switch (type)
             {
                 case "text":
@@ -134,7 +156,8 @@ namespace Rawrshak
             }
         }
 
-        public static AssetSubtype ParseAssetSubtype(string subtype) {
+        public static AssetSubtype ParseAssetSubtype(string subtype)
+        {
             switch (subtype)
             {
                 case "custom":
@@ -157,9 +180,21 @@ namespace Rawrshak
                 {
                     return AssetSubtype.HorizontalBanner;
                 }
+                case "vertical-banner":
+                {
+                    return AssetSubtype.VerticalBanner;
+                }
                 case "sound-effect":
                 {
                     return AssetSubtype.SoundEffect;
+                }
+                case "shout":
+                {
+                    return AssetSubtype.Shout;
+                }
+                case "character-line":
+                {
+                    return AssetSubtype.CharacterLine;
                 }
                 case "background-music":
                 {
