@@ -25,7 +25,7 @@ public class TransactionCreator : MonoBehaviour
     public string contract;
 
     // Start is called before the first frame update
-    async void Start()
+    void Start()
     {
         if (String.IsNullOrEmpty(privateKey)) {
             Debug.LogError("Private Key is Empty");

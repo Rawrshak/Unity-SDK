@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Rawrshak
 {
-    public class TitleAsset : TextAssetBase
+    public class LoreAsset : TextAssetBase
     {
         public bool IsValidAsset()
         {
-            if (metadata.assetProperties.description.Length > (int)MaxDescriptionLength.Title)
+            if (metadata.assetProperties.description.Length > (int)MaxDescriptionLength.Lore)
             {
                 return false;
             }

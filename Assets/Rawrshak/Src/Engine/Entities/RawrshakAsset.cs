@@ -13,7 +13,7 @@ namespace Rawrshak
         // not belong to this developer.
         public string contractAddress;
         public string tokenId;
-        public string name;
+        public string assetName;
         public AssetType type;
         public AssetSubtype subtype;
         public string currentSupply;
@@ -44,7 +44,7 @@ namespace Rawrshak
                 return false;
             }
 
-            name = data.data.asset.name;
+            assetName = data.data.asset.name;
             type = ParseAssetType(data.data.asset.type);
             subtype = ParseAssetSubtype(data.data.asset.subtype);
             imageUri = data.data.asset.imageUri;
@@ -60,7 +60,7 @@ namespace Rawrshak
             }
 
             // Download Metadata
-            LoadMetadata(latestPublicUri);
+            await LoadMetadata(latestPublicUri);
 
             return true;
         }
@@ -72,12 +72,87 @@ namespace Rawrshak
 
         public void CreateAssetComponent()
         {
+            // Todo: Optimize this function later
             switch (subtype)
             {
+                case AssetSubtype.Custom:
+                {
+                    switch (type)
+                    {
+                        case AssetType.Text:
+                        {
+                            assetComponent = gameObject.AddComponent(typeof(CustomTextAsset));
+                            ((CustomTextAsset)assetComponent).Init(baseMetadata);
+                            if (!((CustomTextAsset)assetComponent).IsValidAsset())
+                            {
+                                Destroy(assetComponent);
+                            }
+                            break;
+                        }
+                        case AssetType.Image:
+                        {
+                            assetComponent = gameObject.AddComponent(typeof(CustomImageAsset));
+                            ((CustomImageAsset)assetComponent).Init(baseMetadata);
+                            if (!((CustomImageAsset)assetComponent).IsValidAsset())
+                            {
+                                Destroy(assetComponent);
+                            }
+                            break;
+                        }
+                        default:
+                        {
+                            Debug.LogError("Invalid asset component to add.");
+                            break;
+                        }
+                    }
+                    break;
+                }
                 case AssetSubtype.Title:
                 {
                     assetComponent = gameObject.AddComponent(typeof(TitleAsset));
-                    if (!((TitleAsset)assetComponent).Init(baseMetadata)) {
+                    ((TitleAsset)assetComponent).Init(baseMetadata);
+                    if (!((TitleAsset)assetComponent).IsValidAsset())
+                    {
+                        Destroy(assetComponent);
+                    }
+                    break;
+                }
+                case AssetSubtype.Lore:
+                {
+                    assetComponent = gameObject.AddComponent(typeof(LoreAsset));
+                    ((LoreAsset)assetComponent).Init(baseMetadata);
+                    if (!((LoreAsset)assetComponent).IsValidAsset())
+                    {
+                        Destroy(assetComponent);
+                    }
+                    break;
+                }
+                case AssetSubtype.Square:
+                {
+                    assetComponent = gameObject.AddComponent(typeof(SquareAsset));
+                    ((SquareAsset)assetComponent).Init(baseMetadata);
+                    if (!((SquareAsset)assetComponent).IsValidAsset())
+                    {
+                        Destroy(assetComponent);
+                    }
+                    break;
+                }
+                case AssetSubtype.HorizontalBanner:
+                {
+                    assetComponent = gameObject.AddComponent(typeof(HorizontalBannerAsset));
+                    ((HorizontalBannerAsset)assetComponent).Init(baseMetadata);
+                    if (!((HorizontalBannerAsset)assetComponent).IsValidAsset())
+                    {
+                        Destroy(assetComponent);
+                    }
+                    break;
+                }
+                case AssetSubtype.VerticalBanner:
+                {
+                    assetComponent = gameObject.AddComponent(typeof(VerticalBannerAsset));
+                    ((VerticalBannerAsset)assetComponent).Init(baseMetadata);
+                    if (!((VerticalBannerAsset)assetComponent).IsValidAsset())
+                    {
                         Destroy(assetComponent);
                     }
                     break;
