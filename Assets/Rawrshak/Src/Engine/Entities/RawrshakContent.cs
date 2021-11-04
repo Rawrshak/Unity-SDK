@@ -12,12 +12,6 @@ namespace Rawrshak
     [CreateAssetMenu(fileName="RawrshakContent", menuName="Rawrshak/Create Content Contract Object")]
     public class RawrshakContent : ScriptableObject
     {
-        enum State
-        {
-            READY_TO_MINT,
-            MINTING
-        }
-
         public string contractAddress;
         private int statusCheckSleepDuration = 5000;
         public bool usingArweave = false;
@@ -27,12 +21,14 @@ namespace Rawrshak
         private Network network;
         private bool isValid;
         private Dictionary<BigInteger, BigInteger> assetsToMint;
+        private ContentState state;
 
         public void OnEnable()
         {
             isValid = false;
             assetsToMint = new Dictionary<BigInteger, BigInteger>();
             network = Network.Instance;
+            state = ContentState.NoAssetsToMint;
         }
         
         public void OnDisable()
@@ -82,6 +78,11 @@ namespace Rawrshak
         // Returns the transaction id
         public async Task<string> MintAssets(string receiver, WalletBase devWallet)
         {
+            if (state == ContentState.Minting) {
+                Debug.LogError("Contract is currently minting.");
+                return String.Empty;
+            }
+
             if (!isValid)
             {
                 Debug.LogError("Contract or Network is not valid.");
@@ -124,37 +125,69 @@ namespace Rawrshak
             // transaction.signature = devWallet.SignEIP712MintTransaction(transaction, network.chainId, contractAddress);
 
             // Send Mint transaction
-            string response = await Content.MintBatch(network.chain, network.network, contractAddress, transaction, network.httpEndpoint);
+            string response = String.Empty;
+            try
+            {
+                response= await Content.MintBatch(network.chain, network.network, contractAddress, transaction, network.httpEndpoint);
+
+                state = ContentState.Minting;
+            }
+            catch (Exception e)
+            {
+                // Reset state to ready to mint to try again
+                state = ContentState.ReadyToMint;
+                Debug.LogException(e, this);
+            }
 
             return response;
         }
 
         public async Task<string> WaitForTransaction(string transactionId) 
-        {   
+        {
+            if (state != ContentState.Minting) {
+                Debug.LogError("Contract is not minting.");
+                return "fail";
+            }
+
             if (!isValid)
             {
                 Debug.LogError("Network is not valid.");
                 return "fail";
             }
 
-            string status = "pending";
-            while (status == "pending")
+            string transactionStatus = "pending";
+            while (transactionStatus == "pending")
             {
                 // Poll every duration to check if the transaction has occurred. 
                 // Todo: If the transaction id is invalid, does it return success or fail?
-                status = await EVM.TxStatus(network.chain, network.network, transactionId, network.httpEndpoint);
+                transactionStatus = await EVM.TxStatus(network.chain, network.network, transactionId, network.httpEndpoint);
                 Thread.Sleep(statusCheckSleepDuration);
             }
 
-            return status;
+            assetsToMint.Clear();
+            state = ContentState.NoAssetsToMint;
+
+            return transactionStatus;
         }
 
-        public void ClearMintList() {
+        public bool ClearMintList() {
+            if (state == ContentState.Minting) {
+                Debug.LogError("Contract is currently minting.");
+                return false;
+            }
+
             assetsToMint.Clear();
+            state = ContentState.NoAssetsToMint;
+            return true;
         }
 
         public bool AddToMintList(RawrshakAsset asset, BigInteger amount)
         {
+            if (state == ContentState.Minting) {
+                Debug.LogError("Contract is currently minting.");
+                return false;
+            }
+
             if (contractAddress != asset.contractAddress)
             {
                 Debug.LogError("Asset does not belong to this contract.");
@@ -168,11 +201,20 @@ namespace Rawrshak
                 return true;
             }
             assetsToMint.Add(tokenId, amount);
+            
+            if (state == ContentState.NoAssetsToMint) {
+                state = ContentState.ReadyToMint;
+            }
             return true;
         }
 
         public bool RemoveFromMintList(RawrshakAsset asset, BigInteger amount)
         {
+            if (state == ContentState.Minting) {
+                Debug.LogError("Contract is currently minting.");
+                return false;
+            }
+            
             if (contractAddress != asset.contractAddress)
             {
                 Debug.LogError("Asset does not belong to this contract.");
@@ -186,6 +228,12 @@ namespace Rawrshak
                 return true;
             }
             assetsToMint[tokenId] -= amount;
+
+            if (assetsToMint.Count  == 0) 
+            {
+                state = ContentState.NoAssetsToMint;
+            }
+
             return true;
         }
 
