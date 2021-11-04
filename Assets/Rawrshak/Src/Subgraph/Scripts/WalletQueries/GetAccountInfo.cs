@@ -10,30 +10,18 @@ namespace Rawrshak
 {
     public class GetAccountInfo : QueryBase
     {
-        static string QUERY_STRING_LOCATION = "WalletInfo/GetAccountInfo";
-        public ReturnData data;
-
-        // async void Start()
-        // {
-        //     // Test Query
-        //     await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF");
-        // }
-
-        public async Task Fetch(string address) {
-            // Make sure Url has been set.
-            CheckSubgraph();
-            
+        public static async Task<ReturnData> Fetch(string address) {
             // Load query if this is the first Fetch
-            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+            string query = LoadQuery(Constants.GET_ACCOUNT_INFO_QUERY_STRING_LOCATION);
 
+            // Load the query parameters
             string queryWithArgs = String.Format(query, address.ToLower());
-            Debug.Log(queryWithArgs);
 
             // Post query
-            string returnData = await PostAsync(subgraph.contentsSubgraphUri, queryWithArgs);
+            string returnData = await PostAsync(Subgraph.Instance.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
-            data = JsonUtility.FromJson<ReturnData>(returnData);
+            return JsonUtility.FromJson<ReturnData>(returnData);
         }
 
         [Serializable]

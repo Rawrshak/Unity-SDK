@@ -11,31 +11,18 @@ namespace Rawrshak
 {
     public class GetAssetInfo : QueryBase
     {
-        static string QUERY_STRING_LOCATION = "ContentInfo/GetAssetInfo";
-        public ReturnData data;
-
-        // async void Start()
-        // {
-        //     // Test Query
-        //     await Fetch("0x393d8e12aa7f22f8999bf9ddac6842db2bb6f096", 2);
-        // }
-
-        public async Task Fetch(string contractAddress, int tokenId) {
-            // Make sure Url has been set.
-            CheckSubgraph();
-            
+        public static async Task<ReturnData> Fetch(string contractAddress, string tokenId) {
             // Load query if this is the first Fetch
-            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+            string query = LoadQuery(Constants.GET_ASSET_INFO_QUERY_STRING_LOCATION);
             
+            // Load the query parameters
             string queryWithArgs = String.Format(query, contractAddress.ToLower(), tokenId);
-            Debug.Log(queryWithArgs);
 
             // Post query
-            string returnData = await PostAsync(subgraph.contentsSubgraphUri, queryWithArgs);
+            string returnData = await PostAsync(Subgraph.Instance.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
-            data = JsonUtility.FromJson<ReturnData>(returnData);
-            // Debug.Log("TokenId: " + data.data.assets[0].tokenId + ", currentSupply:" + data.data.assets[0].currentSupply);
+            return JsonUtility.FromJson<ReturnData>(returnData);
         }
 
         [Serializable]

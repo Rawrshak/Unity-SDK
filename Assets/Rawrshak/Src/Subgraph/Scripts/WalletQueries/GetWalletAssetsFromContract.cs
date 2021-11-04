@@ -10,31 +10,18 @@ namespace Rawrshak
 {
     public class GetWalletAssetsFromContract : QueryBase
     {
-        static string QUERY_STRING_LOCATION = "WalletInfo/GetWalletAssetsFromContract";
-        public ReturnData data;
-
-        // async void Start()
-        // {
-        //     // Test Query
-        //     await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF", "0xc9EBafF8237740353E0dEd89130fB83be4bd3F90", 3, "");
-        //     // await Fetch("0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF", "0xc9EBafF8237740353E0dEd89130fB83be4bd3F90", 3, "0xc9EBafF8237740353E0dEd89130fB83be4bd3F90-0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF-1");
-        // }
-
-        public async Task Fetch(string walletAddress, string contractAddress, int first, string lastId) {
-            // Make sure Url has been set.
-            CheckSubgraph();
-            
+        public static async Task<ReturnData> Fetch(string walletAddress, string contractAddress, int first, string lastId) {
             // Load query if this is the first Fetch
-            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+            string query = LoadQuery(Constants.GET_WALLET_ASSETS_FROM_CONTRACT_QUERY_STRING_LOCATION);
             
+            // Load the query parameters
             string queryWithArgs = String.Format(query, walletAddress.ToLower(), contractAddress.ToLower(), first, lastId);
-            Debug.Log(queryWithArgs);
 
             // Post query
-            string returnData = await PostAsync(subgraph.contentsSubgraphUri, queryWithArgs);
+            string returnData = await PostAsync(Subgraph.Instance.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
-            data = JsonUtility.FromJson<ReturnData>(returnData);
+            return JsonUtility.FromJson<ReturnData>(returnData);
         }
 
         [Serializable]

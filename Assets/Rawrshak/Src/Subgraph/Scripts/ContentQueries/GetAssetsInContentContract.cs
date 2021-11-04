@@ -11,32 +11,19 @@ namespace Rawrshak
 {
     public class GetAssetsInContentContract : QueryBase
     {
-        static string QUERY_STRING_LOCATION = "ContentInfo/GetAssetsInContentContract";
-        public ReturnData data;
-
-        // async void Start()
-        // {
-        //     // Test Query
-        //     await Fetch("0x393d8e12aa7f22f8999bf9ddac6842db2bb6f096", 6, "");
-        //     // await Fetch("0x393d8e12aa7f22f8999bf9ddac6842db2bb6f096", 6, "0x393d8e12aa7f22f8999bf9ddac6842db2bb6f096-5");
-        // }
-
-        public async Task Fetch(string contractAddress, int first, string lastId) {
-            // Make sure Url has been set.
-            CheckSubgraph();
-            
+        public static async Task<ReturnData> Fetch(string contractAddress, int first, string lastId) {
             // Load query if this is the first Fetch
-            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+            string query = LoadQuery(Constants.GET_ASSETS_IN_CONTENT_CONTRACT_QUERY_STRING_LOCATION);
 
             // Note: Default sorting is by ID and in ascending alphanumeric order (not by creation time)
+            // Load the query parameters
             string queryWithArgs = String.Format(query, contractAddress.ToLower(), first, lastId);
-            Debug.Log(queryWithArgs);
 
             // Post query
-            string returnData = await PostAsync(subgraph.contentsSubgraphUri, queryWithArgs);
+            string returnData = await PostAsync(Subgraph.Instance.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
-            data = JsonUtility.FromJson<ReturnData>(returnData);
+            return JsonUtility.FromJson<ReturnData>(returnData);
         }
 
         [Serializable]

@@ -10,30 +10,18 @@ namespace Rawrshak
 {
     public class GetContentInfo : QueryBase
     {
-        static string QUERY_STRING_LOCATION = "ContentInfo/GetContentInfo";
-        public ReturnData data;
-
-        // async void Start()
-        // {
-        //     // Test Query
-        //     await Fetch("0x393d8e12aa7f22f8999bf9ddac6842db2bb6f096");
-        // }
-
-        public async Task Fetch(string address) {
-            // Make sure Url has been set.
-            CheckSubgraph();
-            
+        public static async Task<ReturnData> Fetch(string address) {
             // Load query if this is the first Fetch
-            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+            string query = LoadQuery(Constants.GET_CONTENT_INFO_QUERY_STRING_LOCATION);
 
+            // Load the query parameters
             string queryWithArgs = String.Format(query, address.ToLower());
-            Debug.Log(queryWithArgs);
 
             // Post query
-            string returnData = await PostAsync(subgraph.contentsSubgraphUri, queryWithArgs);
+            string returnData = await PostAsync(Subgraph.Instance.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
-            data = JsonUtility.FromJson<ReturnData>(returnData);
+            return JsonUtility.FromJson<ReturnData>(returnData);
         }
 
         [Serializable]
