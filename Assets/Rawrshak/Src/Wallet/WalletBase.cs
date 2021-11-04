@@ -24,9 +24,6 @@ namespace Rawrshak
         // Static property
         private readonly Eip712TypedDataSigner eip712Signer = new Eip712TypedDataSigner();
 
-        // Public properties
-        public List<ContentContract> contract;
-
         // Private properties
         protected Account account;
         protected EthereumMessageSigner signer;

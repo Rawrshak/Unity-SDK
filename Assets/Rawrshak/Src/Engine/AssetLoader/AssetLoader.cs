@@ -18,7 +18,7 @@ namespace Rawrshak
             }
 
             // 1. Get the Asset Uri from the Content Contract
-            string uri = await Content.TokenUri(network.chain, network.network, asset.contract, asset.tokenId.ToString(), network.httpEndpoint);
+            string uri = await Content.TokenUri(network.chain, network.network, asset.contractAddress, asset.tokenId.ToString(), network.httpEndpoint);
 
             if (String.IsNullOrEmpty(uri))
             {

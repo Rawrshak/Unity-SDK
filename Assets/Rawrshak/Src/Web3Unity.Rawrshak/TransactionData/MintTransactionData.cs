@@ -17,7 +17,7 @@ namespace Rawrshak
         public List<BigInteger> amounts;
         public BigInteger nonce;
         public string signer;
-        public string signature;
+        public string signature = "0x";
 
         public string GenerateArgsForCreateContractData() {
             object[] mintData = {
