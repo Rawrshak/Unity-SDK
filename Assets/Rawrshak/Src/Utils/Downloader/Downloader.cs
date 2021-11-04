@@ -30,7 +30,7 @@ namespace Rawrshak
             return uwr.downloadHandler.text;
         }
         
-        public static async Task<Texture> DownloadTexture(string uri)
+        public static async Task<Texture2D> DownloadTexture(string uri)
         {
             UnityWebRequest uwr = UnityWebRequest.Get(uri);
             

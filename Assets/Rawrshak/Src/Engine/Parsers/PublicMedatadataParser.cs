@@ -5,6 +5,7 @@ using Rawrshak;
 
 namespace Rawrshak
 {
+    // Todo: Might be redundant. Marked For Delete?
     public class PublicMedatadataParser
     {
         public static object Parse(string jsonString)

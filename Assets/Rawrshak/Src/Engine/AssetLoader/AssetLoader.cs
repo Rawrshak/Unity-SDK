@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 namespace Rawrshak
 {
+    // Todo: Might be redundant. Marked For Delete?
     public class AssetLoader
     {
         public static async Task<PublicAssetMetadataBase> LoadMetadata(RawrshakAsset asset, Network network)
