@@ -99,6 +99,16 @@ namespace Rawrshak
                             }
                             break;
                         }
+                        case AssetType.Audio:
+                        {
+                            assetComponent = gameObject.AddComponent(typeof(CustomAudioAsset));
+                            ((CustomAudioAsset)assetComponent).Init(baseMetadata);
+                            if (!((CustomAudioAsset)assetComponent).IsValidAsset())
+                            {
+                                Destroy(assetComponent);
+                            }
+                            break;
+                        }
                         default:
                         {
                             Debug.LogError("Invalid asset component to add.");
@@ -152,6 +162,46 @@ namespace Rawrshak
                     assetComponent = gameObject.AddComponent(typeof(VerticalBannerAsset));
                     ((VerticalBannerAsset)assetComponent).Init(baseMetadata);
                     if (!((VerticalBannerAsset)assetComponent).IsValidAsset())
+                    {
+                        Destroy(assetComponent);
+                    }
+                    break;
+                }
+                case AssetSubtype.SoundEffect:
+                {
+                    assetComponent = gameObject.AddComponent(typeof(SoundEffectAsset));
+                    ((SoundEffectAsset)assetComponent).Init(baseMetadata);
+                    if (!((SoundEffectAsset)assetComponent).IsValidAsset())
+                    {
+                        Destroy(assetComponent);
+                    }
+                    break;
+                }
+                case AssetSubtype.Shout:
+                {
+                    assetComponent = gameObject.AddComponent(typeof(ShoutAsset));
+                    ((ShoutAsset)assetComponent).Init(baseMetadata);
+                    if (!((ShoutAsset)assetComponent).IsValidAsset())
+                    {
+                        Destroy(assetComponent);
+                    }
+                    break;
+                }
+                case AssetSubtype.CharacterLine:
+                {
+                    assetComponent = gameObject.AddComponent(typeof(CharacterLineAsset));
+                    ((CharacterLineAsset)assetComponent).Init(baseMetadata);
+                    if (!((CharacterLineAsset)assetComponent).IsValidAsset())
+                    {
+                        Destroy(assetComponent);
+                    }
+                    break;
+                }
+                case AssetSubtype.BackgroundMusic:
+                {
+                    assetComponent = gameObject.AddComponent(typeof(BackgroundMusicAsset));
+                    ((BackgroundMusicAsset)assetComponent).Init(baseMetadata);
+                    if (!((BackgroundMusicAsset)assetComponent).IsValidAsset())
                     {
                         Destroy(assetComponent);
                     }
