@@ -6,7 +6,7 @@ namespace Rawrshak
 {
     public class SoundEffectAsset : AudioAssetBase
     {
-        public bool IsValidAsset()
+        public override bool IsValidAsset()
         {
             foreach(var audio in audioData)
             {

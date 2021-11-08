@@ -7,7 +7,7 @@ namespace Rawrshak
     public class VerticalBannerAsset : ImageAssetBase
     {
         public static float VerticalBannerAspectRatio = 0.5f;
-        public bool IsValidAsset()
+        public override bool IsValidAsset()
         {
             foreach(var img in metadata.assetProperties)
             {

@@ -48,7 +48,7 @@ namespace Rawrshak
             return ((DownloadHandlerTexture)uwr.downloadHandler).texture;
         }
 
-        public static async Task<AssetBundle> DownloadAssetBundle(string uri, UnityAction<AssetBundle> callback)
+        public static async Task<AssetBundle> DownloadAssetBundle(string uri)
         {
             UnityWebRequest uwr = UnityWebRequest.Get(uri);
             

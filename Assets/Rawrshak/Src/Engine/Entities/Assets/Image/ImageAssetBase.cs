@@ -6,20 +6,19 @@ using UnityEngine;
 
 namespace Rawrshak
 {
-    public class ImageAssetBase : MonoBehaviour
+    public abstract class ImageAssetBase : AssetBase
     {
         protected ImageMetadataBase metadata;
-        protected Texture2D currentTextureAsset;
+        private Texture2D currentTextureAsset;
 
-        public void Init(PublicAssetMetadataBase baseMetadata)
+        public override void Init(PublicAssetMetadataBase baseMetadata)
         {
             metadata = ImageMetadataBase.Parse(baseMetadata.jsonString);
             metadata.jsonString = baseMetadata.jsonString;
         }
 
-        public async Task<Texture2D> GetTexture2D(int width, int height)
+        public async Task<Texture2D> LoadAndSetTexture2D(int width, int height)
         {
-            // Set Texture2D
             if (metadata.assetProperties.Length == 0)
             {
                 Debug.LogError("No image asset uri available");
@@ -31,10 +30,10 @@ namespace Rawrshak
                 currentTextureAsset.width == width &&
                 currentTextureAsset.height == height)
             {
-                return null;
+                return currentTextureAsset;
             }
 
-            // Use 1st texture as the default
+            // Find the resolution if it exists
             string uri = String.Empty;
             for (int i = 0; i < metadata.assetProperties.Length; ++i)
             {
@@ -45,16 +44,48 @@ namespace Rawrshak
                 }
             }
 
-            // resolution doesn't exist
-            if (String.IsNullOrEmpty(uri))
+            // resolution doesn't exists
+            if (!String.IsNullOrEmpty(uri))
             {
-                return currentTextureAsset;
+                Debug.LogError("Resolution is not found");
+                return null;
             }
             
             // resolution found
-            // Todo: error checking
-            currentTextureAsset = await Downloader.DownloadTexture(uri);
+            Texture2D downloadedTexture = await Downloader.DownloadTexture(uri);
+
+            // verify that the downloaded texture has the correct resolution
+            if (downloadedTexture.width != width || downloadedTexture.height != height)
+            {
+                Debug.LogError("Incorrect Metadata for downloaded texture2d object");
+                return null;
+            }
+
+            currentTextureAsset = downloadedTexture;
             return currentTextureAsset;
+        }
+
+        public Texture2D GetCurrentTexture2D()
+        {
+            return currentTextureAsset;
+        }
+
+        public int GetCurrentWidth()
+        {
+            if (currentTextureAsset == null)
+            {
+                return 0;
+            }
+            return currentTextureAsset.width;
+        }
+
+        public int GetCurrentHeight()
+        {
+            if (currentTextureAsset == null)
+            {
+                return 0;
+            }
+            return currentTextureAsset.height;
         }
         
         public List<List<int>> GetAvailableResolutions()
@@ -70,7 +101,7 @@ namespace Rawrshak
             return resolutions;
         }
 
-        protected bool VerifyAspectRatio(float height, float width, float aspectRatio)
+        protected static bool VerifyAspectRatio(float height, float width, float aspectRatio)
         {
             return height * aspectRatio == width;
         }

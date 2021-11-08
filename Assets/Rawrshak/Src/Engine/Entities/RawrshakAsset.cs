@@ -65,14 +65,23 @@ namespace Rawrshak
             return true;
         }
 
-        public async Task DownloadImage()
+        public async Task<bool> LoadImage()
         {
-            imageTexture = await Downloader.DownloadTexture(imageUri);
+            if (!String.IsNullOrEmpty(imageUri))
+            {
+                imageTexture = await Downloader.DownloadTexture(imageUri);
+                return true;
+            }
+            return false;
         }
 
         public void CreateAssetComponent()
         {
-            // Todo: Optimize this function later
+            // If the asset component already exists, No-op.
+            if (assetComponent) {
+                return;
+            }
+
             switch (subtype)
             {
                 case AssetSubtype.Custom:
@@ -81,161 +90,113 @@ namespace Rawrshak
                     {
                         case AssetType.Text:
                         {
-                            assetComponent = gameObject.AddComponent(typeof(CustomTextAsset));
-                            ((CustomTextAsset)assetComponent).Init(baseMetadata);
-                            if (!((CustomTextAsset)assetComponent).IsValidAsset())
-                            {
-                                Destroy(assetComponent);
-                            }
+                            assetComponent = gameObject.AddComponent<CustomTextAsset>();
                             break;
                         }
                         case AssetType.Image:
                         {
-                            assetComponent = gameObject.AddComponent(typeof(CustomImageAsset));
-                            ((CustomImageAsset)assetComponent).Init(baseMetadata);
-                            if (!((CustomImageAsset)assetComponent).IsValidAsset())
-                            {
-                                Destroy(assetComponent);
-                            }
+                            assetComponent = gameObject.AddComponent<CustomImageAsset>();
                             break;
                         }
                         case AssetType.Audio:
                         {
-                            assetComponent = gameObject.AddComponent(typeof(CustomAudioAsset));
-                            ((CustomAudioAsset)assetComponent).Init(baseMetadata);
-                            if (!((CustomAudioAsset)assetComponent).IsValidAsset())
-                            {
-                                Destroy(assetComponent);
-                            }
+                            assetComponent = gameObject.AddComponent<CustomAudioAsset>();
                             break;
                         }
                         default:
                         {
                             Debug.LogError("Invalid asset component to add.");
-                            break;
+                            return;
                         }
                     }
                     break;
                 }
                 case AssetSubtype.Title:
                 {
-                    assetComponent = gameObject.AddComponent(typeof(TitleAsset));
-                    ((TitleAsset)assetComponent).Init(baseMetadata);
-                    if (!((TitleAsset)assetComponent).IsValidAsset())
-                    {
-                        Destroy(assetComponent);
-                    }
+                    assetComponent = gameObject.AddComponent<TitleAsset>();
                     break;
                 }
                 case AssetSubtype.Lore:
                 {
-                    assetComponent = gameObject.AddComponent(typeof(LoreAsset));
-                    ((LoreAsset)assetComponent).Init(baseMetadata);
-                    if (!((LoreAsset)assetComponent).IsValidAsset())
-                    {
-                        Destroy(assetComponent);
-                    }
+                    assetComponent = gameObject.AddComponent<LoreAsset>();
                     break;
                 }
                 case AssetSubtype.Square:
                 {
-                    assetComponent = gameObject.AddComponent(typeof(SquareAsset));
-                    ((SquareAsset)assetComponent).Init(baseMetadata);
-                    if (!((SquareAsset)assetComponent).IsValidAsset())
-                    {
-                        Destroy(assetComponent);
-                    }
+                    assetComponent = gameObject.AddComponent<SquareAsset>();
                     break;
                 }
                 case AssetSubtype.HorizontalBanner:
                 {
-                    assetComponent = gameObject.AddComponent(typeof(HorizontalBannerAsset));
-                    ((HorizontalBannerAsset)assetComponent).Init(baseMetadata);
-                    if (!((HorizontalBannerAsset)assetComponent).IsValidAsset())
-                    {
-                        Destroy(assetComponent);
-                    }
+                    assetComponent = gameObject.AddComponent<HorizontalBannerAsset>();
                     break;
                 }
                 case AssetSubtype.VerticalBanner:
                 {
-                    assetComponent = gameObject.AddComponent(typeof(VerticalBannerAsset));
-                    ((VerticalBannerAsset)assetComponent).Init(baseMetadata);
-                    if (!((VerticalBannerAsset)assetComponent).IsValidAsset())
-                    {
-                        Destroy(assetComponent);
-                    }
+                    assetComponent = gameObject.AddComponent<VerticalBannerAsset>();
                     break;
                 }
                 case AssetSubtype.SoundEffect:
                 {
-                    assetComponent = gameObject.AddComponent(typeof(SoundEffectAsset));
-                    ((SoundEffectAsset)assetComponent).Init(baseMetadata);
-                    if (!((SoundEffectAsset)assetComponent).IsValidAsset())
-                    {
-                        Destroy(assetComponent);
-                    }
+                    assetComponent = gameObject.AddComponent<SoundEffectAsset>();
                     break;
                 }
                 case AssetSubtype.Shout:
                 {
-                    assetComponent = gameObject.AddComponent(typeof(ShoutAsset));
-                    ((ShoutAsset)assetComponent).Init(baseMetadata);
-                    if (!((ShoutAsset)assetComponent).IsValidAsset())
-                    {
-                        Destroy(assetComponent);
-                    }
+                    assetComponent = gameObject.AddComponent<ShoutAsset>();
                     break;
                 }
                 case AssetSubtype.CharacterLine:
                 {
-                    assetComponent = gameObject.AddComponent(typeof(CharacterLineAsset));
-                    ((CharacterLineAsset)assetComponent).Init(baseMetadata);
-                    if (!((CharacterLineAsset)assetComponent).IsValidAsset())
-                    {
-                        Destroy(assetComponent);
-                    }
+                    assetComponent = gameObject.AddComponent<CharacterLineAsset>();
                     break;
                 }
                 case AssetSubtype.BackgroundMusic:
                 {
-                    assetComponent = gameObject.AddComponent(typeof(BackgroundMusicAsset));
-                    ((BackgroundMusicAsset)assetComponent).Init(baseMetadata);
-                    if (!((BackgroundMusicAsset)assetComponent).IsValidAsset())
-                    {
-                        Destroy(assetComponent);
-                    }
+                    assetComponent = gameObject.AddComponent<BackgroundMusicAsset>();
                     break;
                 }
                 default:
                 {
                     Debug.LogError("Invalid asset component to add.");
-                    break;
+                    return;
                 }
             }
+
+            // Initializes the component. If it the asset isn't valid, the component is removed.
+            InitAsset(assetComponent as AssetBase);
         }
 
         public bool IsTextAsset()
         {
-            return baseMetadata.type == "text";
+            return type == AssetType.Text;
         }
 
         public bool IsAudioAsset()
         {
-            return baseMetadata.type == "audio";
+            return type == AssetType.Audio;
         }
 
         public bool IsImageAsset()
         {
-            return baseMetadata.type == "image";
+            return type == AssetType.Image;
         }
 
         public bool IsStatic3dObjectAsset()
         {
-            return baseMetadata.type == "static3dObject";
+            return type == AssetType.Static3dObject;
         }
 
         // Internal Functions
+        private void InitAsset(AssetBase component)
+        {
+            component.Init(baseMetadata);
+            if (!component.IsValidAsset())
+            {
+                Destroy(component);
+            }
+        }
+
         private async Task LoadMetadata(string uri)
         {
             if (String.IsNullOrEmpty(uri))
@@ -331,9 +292,5 @@ namespace Rawrshak
                 }
             }
         }
-
-
-        // Todo:
-        // - Based on the type of asset, create a new component that handles the Texture, Text, Audio, or 3D asset
     }
 }

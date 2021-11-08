@@ -6,7 +6,7 @@ namespace Rawrshak
 {
     public class CustomTextAsset : TextAssetBase
     {
-        public bool IsValidAsset()
+        public override bool IsValidAsset()
         {
             if (metadata.assetProperties.title.Length > MaxTitleLength)
             {

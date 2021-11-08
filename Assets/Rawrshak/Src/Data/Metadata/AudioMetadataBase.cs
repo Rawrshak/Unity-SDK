@@ -23,6 +23,7 @@ namespace Rawrshak
     [Serializable]
     public class AudioProperties
     {
+        public string filename;
         public string uri;
         public string engine;
         public string compression;

@@ -6,7 +6,7 @@ namespace Rawrshak
 {
     public class CustomAudioAsset : AudioAssetBase
     {
-        public bool IsValidAsset()
+        public override bool IsValidAsset()
         {
             return true;
         }

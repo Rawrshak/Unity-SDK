@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Rawrshak
 {
-    public class TextAssetBase : MonoBehaviour
+    public abstract class TextAssetBase : AssetBase
     {
         public static int MaxTitleLength = 40;
         public enum MaxDescriptionLength {
@@ -14,7 +14,7 @@ namespace Rawrshak
 
         protected TextMetadataBase metadata;
 
-        public void Init(PublicAssetMetadataBase baseMetadata)
+        public override void Init(PublicAssetMetadataBase baseMetadata)
         {
             metadata = TextMetadataBase.Parse(baseMetadata.jsonString);
             metadata.jsonString = baseMetadata.jsonString;

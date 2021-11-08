@@ -6,7 +6,7 @@ namespace Rawrshak
 {
     public class CustomImageAsset : ImageAssetBase
     {
-        public bool IsValidAsset()
+        public override bool IsValidAsset()
         {
             // Custom text assets do not have a max length
             return true;

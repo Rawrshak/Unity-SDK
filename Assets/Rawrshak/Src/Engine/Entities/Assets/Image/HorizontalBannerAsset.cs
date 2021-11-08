@@ -7,7 +7,7 @@ namespace Rawrshak
     public class HorizontalBannerAsset : ImageAssetBase
     {
         public static float HorizontalBannerAspectRatio = 2.0f;
-        public bool IsValidAsset()
+        public override bool IsValidAsset()
         {
             foreach(var img in metadata.assetProperties)
             {
