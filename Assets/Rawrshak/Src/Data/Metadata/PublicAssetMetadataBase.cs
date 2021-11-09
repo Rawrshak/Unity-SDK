@@ -12,6 +12,7 @@ namespace Rawrshak
     [Serializable]
     public class PublicAssetMetadataBase
     {
+        public string jsonString;
         public string name;
         public string description;
         public string image;
@@ -21,7 +22,9 @@ namespace Rawrshak
 
         public static PublicAssetMetadataBase Parse(string jsonString)
         {
-            return JsonUtility.FromJson<PublicAssetMetadataBase>(jsonString);
+            PublicAssetMetadataBase metadata = JsonUtility.FromJson<PublicAssetMetadataBase>(jsonString);
+            metadata.jsonString = jsonString;
+            return metadata;
         }
     }
 }

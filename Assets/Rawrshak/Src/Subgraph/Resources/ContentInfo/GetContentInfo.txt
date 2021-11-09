@@ -4,7 +4,10 @@ query GetContentInfo {{
         name
         game
         creator
-        owner
+        creatorAddress
+        owner {{
+            id
+        }}
         contractAddress
         contractUri
         royaltyRate

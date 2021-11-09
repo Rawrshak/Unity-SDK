@@ -11,31 +11,18 @@ namespace Rawrshak
 {
     public class GetAssetIdsWithTag : QueryBase
     {
-        static string QUERY_STRING_LOCATION = "ContentInfo/GetAssetIdsWithTag";
-        public ReturnData data;
-
-        // async void Start()
-        // {
-        //     // Test Query
-        //     // await Fetch("Rawrshak", 15, "");
-        //     await Fetch("Rawrshak", 5, "0xd0938b7fdb19de29c85f90bcbe33c094a29ae285-2");
-        // }
-
-        public async Task Fetch(string tag, int first, string lastId) {
-            // Make sure Url has been set.
-            CheckSubgraph();
-            
+        public static async Task<ReturnData> Fetch(string tag, int first, string lastId) {
             // Load query if this is the first Fetch
-            LoadQueryIfEmpty(QUERY_STRING_LOCATION);
+            string query = LoadQuery(Constants.GET_ASSET_IDS_WITH_TAG_QUERY_STRING_LOCATION);
 
+            // Load the query parameters
             string queryWithArgs = String.Format(query, first, lastId, tag);
-            Debug.Log(queryWithArgs);
 
             // Post query
-            string returnData = await PostAsync(subgraph.contentsSubgraphUri, queryWithArgs);
+            string returnData = await PostAsync(Subgraph.Instance.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
-            data = JsonUtility.FromJson<ReturnData>(returnData);
+            return JsonUtility.FromJson<ReturnData>(returnData);
         }
 
         [Serializable]

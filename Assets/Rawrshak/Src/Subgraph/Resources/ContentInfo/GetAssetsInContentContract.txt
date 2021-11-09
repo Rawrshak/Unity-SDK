@@ -12,6 +12,7 @@ query GetAssetsInContentContract {{
             maxSupply
             latestPublicUriVersion
             latestHiddenUriVersion
+            latestPublicUri
             tags {{
                 id
             }}

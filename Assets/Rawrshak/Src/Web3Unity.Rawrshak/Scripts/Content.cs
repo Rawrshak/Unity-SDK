@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
+using WalletConnectSharp.Core.Models.Ethereum;
+using WalletConnectSharp.Unity;
 
 namespace Rawrshak
 {
@@ -99,7 +101,6 @@ namespace Rawrshak
         }
 
         // Get the user mint nonce
-        // Todo: Needs Content contract update
         public static async Task<string> UserMintNonce(string _chain, string _network, string _contract, string _address, string _rpc="")
         {
             string method = "userMintNonce";
@@ -182,52 +183,101 @@ namespace Rawrshak
             }
         }
         
-        // Todo [Blocked]: ChainSafe's Gaming SDKs currently do not support non-WebGL transactions. We've 
-        //                 requested this from the ChainSafe team but it is still in progress. In the 
-        //                 meantime, we'll work with WalletConnect + Nethereum for sending transactions
+        // The following are contract transactions that depend on a WalletConnect Active Session. Please refer to 
+        // WalletConnectUnity's docs on how to use WalletConnect in your project:
+        //      https://github.com/WalletConnect/WalletConnectUnity
+        //
+        // We use ChainSafe's EVM.CreateContractData() to build the data necessary to create a contract transaction
+        // that is sent to the WalletConnect Active Session. 
+        //
+        // The Transaction's Gas Estimate, GasPrice (in wei), and Wallet Nonce should be determined by the wallet and 
+        // is intentionally left empty in the TransactionData object.
+        public static async Task<string> SafeTransferFrom(string _contract, string from, string to, string id, string amount)
+        {
+            string method = "safeTransferFrom";
+            string[] obj = { from, to, id, amount, "0x" };
+            string args = JsonConvert.SerializeObject(obj);
+            string contractData = await EVM.CreateContractData(abi, method, args);
 
-        // public static async Task<string> SafeTransferFrom(string _chain, string _network, string _contract, string from, string to, string id, string amount, string _rpc="")
-        // {
-        //     string method = "safeTransferFrom";
-        //     string[] obj = { from, to, id, amount, "" };
-        //     string args = JsonConvert.SerializeObject(obj);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = contractData
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
+        }
 
-        // public static async Task<string> SafeBatchTransferFrom(string _chain, string _network, string _contract, SafeBatchTransferFromTransactionData transactionData, string _rpc="")
-        // {
-        //     string method = "safeBatchTransferFrom";
-        //     string args = JsonConvert.SerializeObject(transactionData);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
+        public static async Task<string> SafeBatchTransferFrom(string _chain, string _network, string _contract, SafeBatchTransferFromTransactionData data, string _rpc="")
+        {
+            string method = "safeBatchTransferFrom";
+            string args = data.GenerateArgsForCreateContractData();
+            string contractData = await EVM.CreateContractData(abi, method, args);
+            
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = contractData
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
+        }
 
-        // public static async Task<string> SetApprovedForAll(string _chain, string _network, string _contract, string oper, bool approved, string _rpc="")
-        // {
-        //     string method = "setApprovedForAll";
-        //     string[] obj = { oper, approved ? "true" : "false" };
-        //     string args = JsonConvert.SerializeObject(obj);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
+        public static async Task<string> SetApprovedForAll(string _chain, string _network, string _contract, string oper, bool approved, string _rpc="")
+        {
+            string method = "setApprovedForAll";
+            string[] obj = { oper, approved ? "true" : "false" };
+            string args = JsonConvert.SerializeObject(obj);
+            string contractData = await EVM.CreateContractData(abi, method, args);
+            
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = contractData
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
+        }
 
-        // // Mint an array of assets; MintData must be signed by internal developer wallet
-        // public static async Task<string> MintBatch(string _chain, string _network, string _contract, MintTransactionData data, string _rpc="")
-        // {
-        //     string method = "mintBatch";
-        //     string args = JsonConvert.SerializeObject(data);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
+        // Mint an array of assets; MintData must be signed by internal developer wallet
+        public static async Task<string> MintBatch(string _chain, string _network, string _contract, MintTransactionData data, string _rpc="")
+        {
+            // Todo: [Blocked] This will fail if the transaction requires an offline signer from the developer wallet.
+            //      This feature is currently unavailable because of incorrect signature issues with Nethereum's 
+            //      Eip712Signer not supporting array paramters. ChainSafe's offline signer is still currently in 
+            //      development.
+            string method = "mintBatch";
+            string args = data.GenerateArgsForCreateContractData();
+            string contractData = await EVM.CreateContractData(abi, method, args);
+            
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = contractData
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
+        }
 
-        // // Burn an array of assets; only user can burn
-        // public static async Task<string> BurnBatch(string _chain, string _network, string _contract, BurnTransactionData data, string _rpc="")
-        // {
-        //     string method = "burnBatch";
-        //     string args = JsonConvert.SerializeObject(data);
-        //     string response = await EVM.Call(_chain, _network, _contract, abi, method, args, _rpc);
-        //     return response;
-        // }
+        // Burn an array of assets; only user can burn
+        public static async Task<string> BurnBatch(string _chain, string _network, string _contract, BurnTransactionData data, string _rpc="")
+        {
+            string method = "burnBatch";
+            string args = data.GenerateArgsForCreateContractData();
+            string contractData = await EVM.CreateContractData(abi, method, args);
+            
+            string address = WalletConnect.ActiveSession.Accounts[0];
+            var transaction = new TransactionData()
+            {
+                from = address,
+                to = _contract,
+                data = contractData
+            };
+            return await WalletConnect.ActiveSession.EthSendTransaction(transaction);
+        }
     }
 }

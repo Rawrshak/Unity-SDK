@@ -20,5 +20,5 @@ These libraries give the game developer the following functionality:
     - This requires System.Buffers.dll and Microsoft.Extensions.Logging.Abstractions.dll
 - graphQL-client-unity: https://github.com/Gazuntype/graphQL-client-unity
 - Chainsafe SDK: https://github.com/ChainSafe/web3.unity 
-- WalletConnect: using WalletConnectUnity
-- ZXing.net: 0.16.6.0 (unity)
+  - Web3.Unity: v1.0.7
+- WalletConnectUnity: https://github.com/WalletConnect/WalletConnectUnity

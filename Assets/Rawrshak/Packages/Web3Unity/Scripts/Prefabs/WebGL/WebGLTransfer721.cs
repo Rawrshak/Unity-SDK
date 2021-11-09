@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-#if UNITY_WEBGL
 public class WebGLTransfer721: MonoBehaviour
 {
     [SerializeField]
@@ -20,17 +19,18 @@ public class WebGLTransfer721: MonoBehaviour
         // smart contract method to call
         string method = "safeTransferFrom";
         // array of arguments for contract
-        string[] obj = {_Config.Account, toAccount, tokenId};
+        string[] obj = { PlayerPrefs.GetString("Account"), toAccount, tokenId };
         string args = JsonConvert.SerializeObject(obj);
         // value in wei
         string value = "0";
+        // gas limit OPTIONAL
+        string gas = "21000";
         // connects to user's browser wallet (metamask) to send a transaction
         try {
-            string response = await Web3GL.Send(method, abi, contract, args, value);
+            string response = await Web3GL.SendContract(method, abi, contract, args, value, gas);
             Debug.Log(response);
         } catch (Exception e) {
             Debug.LogException(e, this);
         }
     }
 }
-#endif

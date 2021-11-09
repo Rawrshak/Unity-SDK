@@ -17,7 +17,6 @@ namespace Rawrshak
         public string image;
         public string game;
         public string creator;
-        public string owner;
         public string[] tags;
 
         public static ContentMetadataBase Parse(string jsonString)
