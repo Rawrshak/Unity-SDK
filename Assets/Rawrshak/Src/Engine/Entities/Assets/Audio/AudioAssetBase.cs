@@ -29,6 +29,16 @@ namespace Rawrshak
         protected Dictionary<ContentTypes, AudioProperties> audioData;
         protected ContentTypes currentContentType;
         protected AudioClip currentAudioClip;
+        protected AssetBundle currentAssetBundle;
+
+        void OnDisabled()
+        {
+            // Unload completely before disabling object
+            if (currentAssetBundle)
+            {
+                currentAssetBundle.Unload(true);
+            }
+        }
 
         public override void Init(PublicAssetMetadataBase baseMetadata)
         {
@@ -70,19 +80,19 @@ namespace Rawrshak
                 return null;
             }
 
-            // Download the assetbundle
-            AssetBundle assetBundle = await Downloader.DownloadAssetBundle(data.uri);
-            if (assetBundle == null)
+            AssetBundle assetBundle = currentAssetBundle;
+            if (data.uri != audioData[currentContentType].uri)
             {
-                Debug.LogError("AssetBundle not found");
-                return null;
+                // Download the assetbundle
+                assetBundle = await Downloader.DownloadAssetBundle(data.uri);
+                if (assetBundle == null)
+                {
+                    Debug.LogError("AssetBundle not found");
+                    return null;
+                }
             }
 
-            // Todo: Might want to save the AssetBundle
             AudioClip audioClip = assetBundle.LoadAsset<AudioClip>(data.filename);
-
-            // Unload Asset bundle
-            assetBundle.Unload(false);
 
             if (audioClip == null)
             {
@@ -97,6 +107,13 @@ namespace Rawrshak
                 return null;
             }
 
+            // If a new AssetBundle was loaded that's different from the current bundle
+            if (assetBundle != currentAssetBundle)
+            {
+                currentAssetBundle.Unload(false);
+            }
+
+            currentAssetBundle = assetBundle;
             currentAudioClip = audioClip;
             currentContentType = type;
             return currentAudioClip;
