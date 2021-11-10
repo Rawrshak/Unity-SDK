@@ -79,7 +79,7 @@ namespace Rawrshak
             }
 
             // Todo: Might want to save the AssetBundle
-            AudioClip audioClip = assetBundle.LoadAsset<AudioClip>(data.filename);
+            AudioClip audioClip = assetBundle.LoadAsset<AudioClip>(data.name);
 
             // Unload Asset bundle
             assetBundle.Unload(false);
