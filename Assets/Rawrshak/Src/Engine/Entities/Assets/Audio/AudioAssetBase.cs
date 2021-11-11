@@ -92,7 +92,8 @@ namespace Rawrshak
                 }
             }
 
-            AudioClip audioClip = assetBundle.LoadAsset<AudioClip>(data.filename);
+            // Todo: Might want to save the AssetBundle
+            AudioClip audioClip = assetBundle.LoadAsset<AudioClip>(data.name);
 
             if (audioClip == null)
             {
