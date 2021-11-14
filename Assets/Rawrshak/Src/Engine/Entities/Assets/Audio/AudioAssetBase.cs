@@ -74,7 +74,7 @@ namespace Rawrshak
 
             AudioProperties data = audioData[type];
             
-            if (!String.IsNullOrEmpty(data.uri))
+            if (String.IsNullOrEmpty(data.uri))
             {
                 Debug.LogError("AudioClip metadata uri is not found");
                 return null;
@@ -92,7 +92,6 @@ namespace Rawrshak
                 }
             }
 
-            // Todo: Might want to save the AssetBundle
             AudioClip audioClip = assetBundle.LoadAsset<AudioClip>(data.name);
 
             if (audioClip == null)
