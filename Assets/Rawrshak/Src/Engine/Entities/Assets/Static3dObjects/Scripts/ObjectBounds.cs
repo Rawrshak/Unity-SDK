@@ -59,7 +59,9 @@ public class ObjectBounds : MonoBehaviour
         if (!objectCollider)
         {
             Debug.LogError("Target Object doesn't have a Collider.");
+            return;
         }
+        Update();
     }
 
     public void ClearTargetObject()
