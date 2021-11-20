@@ -153,10 +153,6 @@ namespace Rawrshak
 
         public Fidelity GetCurrentFidelity()
         {
-            if (currentPrefab == null)
-            {
-                return Fidelity.Invalid;
-            }
             return currentFidelity;
         }
         

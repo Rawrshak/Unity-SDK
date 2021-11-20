@@ -51,6 +51,7 @@ namespace Rawrshak
         public static async Task<AssetBundle> DownloadAssetBundle(string uri)
         {
             UnityWebRequest uwr = UnityWebRequest.Get(uri);
+            uwr.downloadHandler = new DownloadHandlerAssetBundle(uwr.url, 0);
             
             // Request and wait for the text json file to be downloaded
             await uwr.SendWebRequest();
