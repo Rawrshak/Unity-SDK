@@ -65,6 +65,7 @@ namespace Rawrshak
             metadata = Static3dObjectMetadataBase.Parse(baseMetadata.jsonString);
             metadata.jsonString = baseMetadata.jsonString;
             
+            prefabData = new List<PrefabProperties>();
             foreach (var prefabProperties in metadata.assetProperties)
             {
                 // Filter out non-unity engine assets and unsupported assets
@@ -135,7 +136,7 @@ namespace Rawrshak
             //       necessary shape.
 
             // If a new AssetBundle was loaded is different from the current bundle
-            if (assetBundle != currentAssetBundle)
+            if (currentAssetBundle && assetBundle != currentAssetBundle)
             {
                 currentAssetBundle.Unload(false);
             }

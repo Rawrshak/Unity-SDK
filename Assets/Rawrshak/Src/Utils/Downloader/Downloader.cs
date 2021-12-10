@@ -33,6 +33,7 @@ namespace Rawrshak
         public static async Task<Texture2D> DownloadTexture(string uri)
         {
             UnityWebRequest uwr = UnityWebRequest.Get(uri);
+            uwr.downloadHandler = new DownloadHandlerTexture();
             
             // Request and wait for the text json file to be downloaded
             await uwr.SendWebRequest();
@@ -45,7 +46,7 @@ namespace Rawrshak
             }
 
             // Show results as texture
-            return ((DownloadHandlerTexture)uwr.downloadHandler).texture;
+            return DownloadHandlerTexture.GetContent(uwr);
         }
 
         public static async Task<AssetBundle> DownloadAssetBundle(string uri)
