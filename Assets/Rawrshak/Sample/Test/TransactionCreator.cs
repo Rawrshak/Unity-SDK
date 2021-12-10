@@ -56,8 +56,7 @@ public class TransactionCreator : MonoBehaviour
         transaction.tokenIds = tokenIds;
         transaction.amounts = amounts;
 
-        // Todo: SignEIP712MintTransaction is currently not supported. Wait for ChainSafe Offline sign or
-        //       Nethereum to implement Array parameters in offline signing.
+        // Todo: Wait for ChainSafe Offline signing service
         // transaction.signature = devWallet.SignEIP712MintTransaction(transaction, chainId, contract);
 
         signature = transaction.signature;

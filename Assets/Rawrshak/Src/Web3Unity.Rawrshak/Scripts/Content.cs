@@ -246,6 +246,7 @@ namespace Rawrshak
         public static async Task<string> MintBatch(string _chain, string _network, string _contract, MintTransactionData data, string _rpc="")
         {
             // Todo: [Blocked] This will fail if the transaction requires an offline signer from the developer wallet.
+            // Todo: Wait for ChainSafe Offline signing service
             //      This feature is currently unavailable because of incorrect signature issues with Nethereum's 
             //      Eip712Signer not supporting array paramters. ChainSafe's offline signer is still currently in 
             //      development.
