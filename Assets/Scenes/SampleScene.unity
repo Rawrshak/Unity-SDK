@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -964,7 +964,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1335759954
 PrefabInstance:
@@ -987,7 +987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3484712734552121311, guid: 8a09ec6eba5cc0b47a25223917fcad27, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3484712734552121311, guid: 8a09ec6eba5cc0b47a25223917fcad27, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1169,7 +1169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07d60b940f90c84b8bcbab5023fe937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  devWallet: {fileID: 0}
   to: 0x370E19C677AF1546f2C0cd9649190c3112fbe5E8
   contract: 0xc9EBafF8237740353E0dEd89130fB83be4bd3F90
   transaction:
@@ -1220,7 +1219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871d9ce7865e6d944bcdee524eb64bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  devWallet: {fileID: 0}
   to: 90F79BF6EB2C4F870365E785982E1F101E93B906
   signer: 90F79BF6EB2C4F870365E785982E1F101E93B906
   signature: 
@@ -1398,68 +1396,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893666119}
   m_CullTransparentMesh: 1
---- !u!1 &2068353329
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2068353331}
-  - component: {fileID: 2068353330}
-  m_Layer: 0
-  m_Name: RawrshakObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2068353330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2068353329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 156e018869f8b1c49ae016bf236ddcbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  contractAddress: 
-  tokenId: 
-  assetName: 
-  type: 0
-  subtype: 0
-  currentSupply: 
-  maxSupply: 
-  latestPublicUriVersion: 
-  latestHiddenUriVersion: 
-  latestPublicUri: 
-  tags: []
-  baseMetadata:
-    jsonString: 
-    name: 
-    description: 
-    image: 
-    tags: []
-    type: 
-    subtype: 
-  imageUri: 
-  imageTexture: {fileID: 0}
-  assetComponent: {fileID: 0}
---- !u!4 &2068353331
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2068353329}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.712883, y: -1.3674021, z: -4.12059}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

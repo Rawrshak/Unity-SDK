@@ -11,8 +11,6 @@ using WalletConnectSharp.Unity;
 
 public class TransactionCreator : MonoBehaviour
 {
-    public PrivateKeyWallet devWallet;
-
     public string to;
     public List<BigInteger> tokenIds;
     public List<BigInteger> amounts;
@@ -41,13 +39,6 @@ public class TransactionCreator : MonoBehaviour
         amounts.Add(100);
         amounts.Add(200);
         amounts.Add(300);
-
-        devWallet = FindObjectOfType<PrivateKeyWallet>();
-        if (!devWallet) {
-            devWallet = ScriptableObject.CreateInstance<PrivateKeyWallet>();
-            devWallet.privateKey = privateKey;
-        }
-        devWallet.Load();
 
         transaction = new MintTransactionData();
         transaction.to = "0x" + to;
