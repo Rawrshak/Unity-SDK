@@ -37,7 +37,7 @@ public class MintAssetSample : MonoBehaviour
         // Currently, only developer wallets can mint. Need offline signing for this to work.
         transaction = new MintTransactionData();
         transaction.to = to;
-        transaction.nonce = BigInteger.Parse(await Content.UserMintNonce("ethereum", "optimistic-kovan", contract, to, "https://kovan.optimism.io")) + 1;
+        transaction.nonce = BigInteger.Parse(await ContentManager.UserMintNonce("ethereum", "optimistic-kovan", contract, to, "https://kovan.optimism.io")) + 1;
         // transaction.signer = devWallet.GetPublicAddress();
         transaction.tokenIds = tokenIds;
         transaction.amounts = amounts;

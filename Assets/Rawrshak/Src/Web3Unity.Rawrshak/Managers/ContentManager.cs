@@ -10,7 +10,7 @@ using WalletConnectSharp.Unity;
 
 namespace Rawrshak
 {
-    public class Content
+    public class ContentManager
     {
         private static string AbiFileLocation = "Abis/Content";
         private static string abi = Resources.Load<TextAsset>(AbiFileLocation).text;

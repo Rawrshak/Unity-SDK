@@ -10,10 +10,10 @@ using WalletConnectSharp.Unity;
 
 namespace Rawrshak
 {
-    // The RawrshakWallet Script queries the subgraph for account information and an account's list of assets. It has
-    // several methods of filtering the subgraph query. The RawrshakWallet doesn't keep track of these assets though. 
+    // The Wallet Script queries the subgraph for account information and an account's list of assets. It has
+    // several methods of filtering the subgraph query. The Wallet doesn't keep track of these assets though. 
     // The user should manage that. 
-    public class RawrshakWallet : MonoBehaviour
+    public class Wallet : MonoBehaviour
     {
         public string walletAddress;
         public BigInteger mintCount = 0;
@@ -40,73 +40,73 @@ namespace Rawrshak
             uniqueAssetCount = BigInteger.Parse(responseData.data.account.uniqueAssetCount);
         }
 
-        public async Task<List<KeyValuePair<RawrshakAsset, int>>> GetAllAssetsInWallet(int amount, string lastId)
+        public async Task<List<KeyValuePair<Asset, int>>> GetAllAssetsInWallet(int amount, string lastId)
         {
-            List<KeyValuePair<RawrshakAsset, int>> assets = new List<KeyValuePair<RawrshakAsset, int>>();
+            List<KeyValuePair<Asset, int>> assets = new List<KeyValuePair<Asset, int>>();
 
             GetAssetsInWallet.ReturnData responseData = await GetAssetsInWallet.Fetch(walletAddress, amount, lastId);
 
             foreach (var balanceData in responseData.data.account.assetBalances)
             {
-                RawrshakAsset asset = ScriptableObject.CreateInstance<RawrshakAsset>();
+                Asset asset = ScriptableObject.CreateInstance<Asset>();
                 asset.contractAddress = balanceData.asset.parentContract.id;
                 asset.tokenId = balanceData.asset.tokenId;
                 
-                assets.Add(new KeyValuePair<RawrshakAsset, int>(asset, balanceData.amount));
+                assets.Add(new KeyValuePair<Asset, int>(asset, balanceData.amount));
             }
 
             return assets;
         }
 
-        public async Task<List<KeyValuePair<RawrshakAsset, int>>> GetAssetsInContract(string contractAddress, int amount, string lastId)
+        public async Task<List<KeyValuePair<Asset, int>>> GetAssetsInContract(string contractAddress, int amount, string lastId)
         {
-            List<KeyValuePair<RawrshakAsset, int>> assets = new List<KeyValuePair<RawrshakAsset, int>>();
+            List<KeyValuePair<Asset, int>> assets = new List<KeyValuePair<Asset, int>>();
 
             GetWalletAssetsFromContract.ReturnData responseData = await GetWalletAssetsFromContract.Fetch(walletAddress, contractAddress, amount, lastId);
 
 
             foreach (var balanceData in responseData.data.account.assetBalances)
             {
-                RawrshakAsset asset = ScriptableObject.CreateInstance<RawrshakAsset>();
+                Asset asset = ScriptableObject.CreateInstance<Asset>();
                 asset.contractAddress = balanceData.asset.parentContract.id;
                 asset.tokenId = balanceData.asset.tokenId;
                 
-                assets.Add(new KeyValuePair<RawrshakAsset, int>(asset, balanceData.amount));
+                assets.Add(new KeyValuePair<Asset, int>(asset, balanceData.amount));
             }
 
             return assets;
         }
 
-        public async Task<List<KeyValuePair<RawrshakAsset, int>>> GetAssetsOfType(string type, int amount, string lastId)
+        public async Task<List<KeyValuePair<Asset, int>>> GetAssetsOfType(string type, int amount, string lastId)
         {
-            List<KeyValuePair<RawrshakAsset, int>> assets = new List<KeyValuePair<RawrshakAsset, int>>();
+            List<KeyValuePair<Asset, int>> assets = new List<KeyValuePair<Asset, int>>();
             GetWalletAssetsOfType.ReturnData responseData = await GetWalletAssetsOfType.Fetch(walletAddress, type, amount, lastId);
 
             foreach (var balanceData in responseData.data.account.assetBalances)
             {
-                RawrshakAsset asset = ScriptableObject.CreateInstance<RawrshakAsset>();
+                Asset asset = ScriptableObject.CreateInstance<Asset>();
                 asset.contractAddress = balanceData.asset.parentContract.id;
                 asset.tokenId = balanceData.asset.tokenId;
                 
-                assets.Add(new KeyValuePair<RawrshakAsset, int>(asset, balanceData.amount));
+                assets.Add(new KeyValuePair<Asset, int>(asset, balanceData.amount));
             }
 
             return assets;
         }
 
-        public async Task<List<KeyValuePair<RawrshakAsset, int>>> GetAssetsOfSubtype(string subtype, int amount, string lastId)
+        public async Task<List<KeyValuePair<Asset, int>>> GetAssetsOfSubtype(string subtype, int amount, string lastId)
         {
-            List<KeyValuePair<RawrshakAsset, int>> assets = new List<KeyValuePair<RawrshakAsset, int>>();
+            List<KeyValuePair<Asset, int>> assets = new List<KeyValuePair<Asset, int>>();
 
             GetWalletAssetsOfSubtype.ReturnData responseData = await GetWalletAssetsOfSubtype.Fetch(walletAddress, subtype, amount, lastId);
 
             foreach (var balanceData in responseData.data.account.assetBalances)
             {
-                RawrshakAsset asset = ScriptableObject.CreateInstance<RawrshakAsset>();
+                Asset asset = ScriptableObject.CreateInstance<Asset>();
                 asset.contractAddress = balanceData.asset.parentContract.id;
                 asset.tokenId = balanceData.asset.tokenId;
                 
-                assets.Add(new KeyValuePair<RawrshakAsset, int>(asset, balanceData.amount));
+                assets.Add(new KeyValuePair<Asset, int>(asset, balanceData.amount));
             }
 
             return assets;

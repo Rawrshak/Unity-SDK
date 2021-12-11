@@ -21,7 +21,7 @@ public class SafeTransferTest : MonoBehaviour
     async void Update()
     {
         if (Input.GetKeyDown("t")) {
-            BigInteger balance = await Content.BalanceOf("ethereum", "optimistic-kovan", contract, to, tokenId, "https://kovan.optimism.io");
+            BigInteger balance = await ContentManager.BalanceOf("ethereum", "optimistic-kovan", contract, to, tokenId, "https://kovan.optimism.io");
 
             Debug.Log("Balance: " + balance.ToString());
         }
@@ -31,7 +31,7 @@ public class SafeTransferTest : MonoBehaviour
             // This sends assets from one wallet to another. It uses the current WalletConnect session and 
             // has the user sign the transaction on their connect wallet. Currently, only Metamask is
             // supported.
-            string response = await Content.SafeTransferFrom(contract, from, to, tokenId, amount);
+            string response = await ContentManager.SafeTransferFrom(contract, from, to, tokenId, amount);
             Debug.Log("Response: " + response);
         }
     }

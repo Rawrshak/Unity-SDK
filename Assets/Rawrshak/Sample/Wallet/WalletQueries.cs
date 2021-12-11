@@ -8,9 +8,9 @@ namespace Rawrshak
 {
     public class WalletQueries : MonoBehaviour
     {
-        public Network network;
+        public NetworkManager networkManager;
 
-        // Optimism Kovan Testnet - Sample Content Contract Address
+        // Optimism Kovan Testnet - Sample ContentManager Contract Address
         public string contractAddress;
         public string playerAddress;
         public string oper;
@@ -18,58 +18,58 @@ namespace Rawrshak
         // Start is called before the first frame update
         async void Start()
         {
-            network = Network.Instance;
+            networkManager = NetworkManager.Instance;
             
             Debug.Log("Player Wallet: " + playerAddress);
             Debug.Log("Contract Address: " + contractAddress);
 
-            Debug.Log("Network chain: " + network.chain);
-            Debug.Log("Network network: " + network.network);
-            Debug.Log("Network endpoint: " + network.httpEndpoint);
+            Debug.Log("Network chain: " + networkManager.chain);
+            Debug.Log("Network network: " + networkManager.network);
+            Debug.Log("Network endpoint: " + networkManager.httpEndpoint);
 
             // Check Balance
-            BigInteger balance = await Content.BalanceOf(network.chain, network.network, contractAddress, playerAddress, "3", network.httpEndpoint);
+            BigInteger balance = await ContentManager.BalanceOf(networkManager.chain, networkManager.network, contractAddress, playerAddress, "3", networkManager.httpEndpoint);
             Debug.Log(playerAddress + "'s Balance: " + balance.ToString());
     
             // Check BalanceOfBatch
             string[] accounts = new string[] {playerAddress, playerAddress};
             string[] tokenIds = new string[] {"3", "4"};
-            List<BigInteger> balances = await Content.BalanceOfBatch(network.chain, network.network, contractAddress, accounts, tokenIds, network.httpEndpoint);
+            List<BigInteger> balances = await ContentManager.BalanceOfBatch(networkManager.chain, networkManager.network, contractAddress, accounts, tokenIds, networkManager.httpEndpoint);
             balances.ForEach(delegate(BigInteger balance) {
                 Debug.Log(playerAddress + "'s Balance: " + balance.ToString());
             });
 
-            /****** Content Contract Calls ******/
+            /****** ContentManager Contract Calls ******/
             // IsApprovedForAll()
-            bool isApproved = await Content.isApprovedForAll(network.chain, network.network, contractAddress, playerAddress, oper, network.httpEndpoint);
+            bool isApproved = await ContentManager.isApprovedForAll(networkManager.chain, networkManager.network, contractAddress, playerAddress, oper, networkManager.httpEndpoint);
             Debug.Log("isApproved: " + isApproved);
             
             // ContractUri()
-            string contractUri = await Content.ContractUri(network.chain, network.network, contractAddress, network.httpEndpoint);
+            string contractUri = await ContentManager.ContractUri(networkManager.chain, networkManager.network, contractAddress, networkManager.httpEndpoint);
             Debug.Log("contractUri: " + contractUri);
             
             // ContractRoyalty()
-            Content.RoyaltyResponse contractRoyalty = await Content.ContractRoyalty(network.chain, network.network, contractAddress, network.httpEndpoint);
+            ContentManager.RoyaltyResponse contractRoyalty = await ContentManager.ContractRoyalty(networkManager.chain, networkManager.network, contractAddress, networkManager.httpEndpoint);
             Debug.Log("contractRoyalty: " + contractRoyalty.receiver + ": " + contractRoyalty.rate);
             
             // TokenUri()
-            string tokenUri = await Content.TokenUri(network.chain, network.network, contractAddress, "1", network.httpEndpoint);
+            string tokenUri = await ContentManager.TokenUri(networkManager.chain, networkManager.network, contractAddress, "1", networkManager.httpEndpoint);
             Debug.Log("tokenUri: " + tokenUri);
             
             // TokenUriWithVersion()
-            string tokenUriWithVersion = await Content.TokenUriWithVersion(network.chain, network.network, contractAddress, "1", "0", network.httpEndpoint);
+            string tokenUriWithVersion = await ContentManager.TokenUriWithVersion(networkManager.chain, networkManager.network, contractAddress, "1", "0", networkManager.httpEndpoint);
             Debug.Log("tokenUriWithVersion: " + tokenUriWithVersion);
             
             // Total Supply
-            BigInteger totalSupply = await Content.TotalSupply(network.chain, network.network, contractAddress, "1", network.httpEndpoint);
+            BigInteger totalSupply = await ContentManager.TotalSupply(networkManager.chain, networkManager.network, contractAddress, "1", networkManager.httpEndpoint);
             Debug.Log("Token totalSupply: " + totalSupply.ToString());
             
             // Max Supply
-            BigInteger maxSupply = await Content.MaxSupply(network.chain, network.network, contractAddress, "1", network.httpEndpoint);
+            BigInteger maxSupply = await ContentManager.MaxSupply(networkManager.chain, networkManager.network, contractAddress, "1", networkManager.httpEndpoint);
             Debug.Log("Token maxSupply: " + maxSupply.ToString());
             
             // Supports Interface
-            bool supportsInterface = await Content.SupportsInterface(network.chain, network.network, contractAddress, "0xd9b67a26", network.httpEndpoint);
+            bool supportsInterface = await ContentManager.SupportsInterface(networkManager.chain, networkManager.network, contractAddress, "0xd9b67a26", networkManager.httpEndpoint);
             Debug.Log("Supports Interface: " + supportsInterface.ToString());
         }
 

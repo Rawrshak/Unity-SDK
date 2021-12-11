@@ -4,14 +4,14 @@ using UnityEditor;
 
 namespace Rawrshak
 {
-    [CustomEditor(typeof(RawrshakContent), true)]
-    public class RawrshakContentEditor : Editor
+    [CustomEditor(typeof(Content), true)]
+    public class ContentEditor : Editor
     {
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
 
-            RawrshakContent contract = (RawrshakContent)target;
+            Content contract = (Content)target;
 
             EditorGUI.BeginDisabledGroup(serializedObject.isEditingMultipleObjects);
             EditorGUILayout.LabelField("Contracts Valid", contract.IsValid().ToString());

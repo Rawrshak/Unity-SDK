@@ -10,11 +10,11 @@ namespace Rawrshak
     [Serializable]
     public class SafeBatchTransferFromTransactionData
     {
-        string from;
-        string to;
-        string[] ids;
-        string[] amounts;
-        string bytes;
+        string from = String.Empty;
+        string to = String.Empty;
+        string[] ids = null;
+        string[] amounts = null;
+        string bytes = String.Empty;
         
         public string GenerateArgsForCreateContractData() {
             object[] transferData = {

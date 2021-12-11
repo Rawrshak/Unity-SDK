@@ -12,11 +12,11 @@ namespace Rawrshak
     public class MintTransactionData
     {
         // Mint Public Data
-        public string to;
-        public List<BigInteger> tokenIds;
-        public List<BigInteger> amounts;
-        public BigInteger nonce;
-        public string signer;
+        public string to = String.Empty;
+        public List<BigInteger> tokenIds = null;
+        public List<BigInteger> amounts = null;
+        public BigInteger nonce = 0;
+        public string signer = String.Empty;
         public string signature = "0x";
 
         public string GenerateArgsForCreateContractData() {

@@ -9,8 +9,8 @@ using UnityEngine;
 namespace Rawrshak
 {
     // Todo: Update Debug.LogError() calls to "throw new Exception()";
-    [CreateAssetMenu(fileName="RawrshakContent", menuName="Rawrshak/Create Content Contract Object")]
-    public class RawrshakContent : ScriptableObject
+    [CreateAssetMenu(fileName="Content", menuName="Rawrshak/Create Content Contract Object")]
+    public class Content : ScriptableObject
     {
         public string contractAddress;
         private int statusCheckSleepDuration = 5000;
@@ -18,7 +18,7 @@ namespace Rawrshak
         public ContentMetadataBase metadata;
 
         // Private Variables
-        private Network network;
+        private NetworkManager networkManager;
         private bool isValid;
         private Dictionary<BigInteger, BigInteger> assetsToMint;
         private ContentState state;
@@ -27,7 +27,7 @@ namespace Rawrshak
         {
             isValid = false;
             assetsToMint = new Dictionary<BigInteger, BigInteger>();
-            network = Network.Instance;
+            networkManager = NetworkManager.Instance;
             state = ContentState.NoAssetsToMint;
         }
         
@@ -39,12 +39,12 @@ namespace Rawrshak
 
         public async Task VerifyContracts()
         {
-            if (network == null)
+            if (networkManager == null)
             {
                 Debug.LogError("Network is not set.");
                 isValid = false;
             }
-            isValid = await Content.SupportsInterface(network.chain, network.network, contractAddress, Constants.RAWRSHAK_ICONTENT_INTERFACE_ID, network.httpEndpoint);
+            isValid = await ContentManager.SupportsInterface(networkManager.chain, networkManager.network, contractAddress, Constants.RAWRSHAK_ICONTENT_INTERFACE_ID, networkManager.httpEndpoint);
         }
 
         public async Task LoadContractMetadata()
@@ -57,7 +57,7 @@ namespace Rawrshak
             }
 
             // Get Metadata URI from ethereum
-            string uri = await Content.ContractUri(network.chain, network.network, contractAddress, network.httpEndpoint);
+            string uri = await ContentManager.ContractUri(networkManager.chain, networkManager.network, contractAddress, networkManager.httpEndpoint);
 
             // Download Metadata from Arweave / IPFS
             if (!usingArweave)
@@ -104,12 +104,12 @@ namespace Rawrshak
             // Build the Transaction object
             MintTransactionData transaction = new MintTransactionData();
             transaction.to = receiver;
-            transaction.nonce = BigInteger.Parse(await Content.UserMintNonce(
-                network.chain,
-                network.network,
+            transaction.nonce = BigInteger.Parse(await ContentManager.UserMintNonce(
+                networkManager.chain,
+                networkManager.network,
                 contractAddress,
                 receiver,
-                network.httpEndpoint)) + 1;
+                networkManager.httpEndpoint)) + 1;
             
             // transaction.signer = devWallet.GetPublicAddress();
             transaction.tokenIds = new List<BigInteger>();
@@ -128,7 +128,7 @@ namespace Rawrshak
             string response = String.Empty;
             try
             {
-                response= await Content.MintBatch(network.chain, network.network, contractAddress, transaction, network.httpEndpoint);
+                response= await ContentManager.MintBatch(networkManager.chain, networkManager.network, contractAddress, transaction, networkManager.httpEndpoint);
 
                 state = ContentState.Minting;
             }
@@ -160,7 +160,7 @@ namespace Rawrshak
             {
                 // Poll every duration to check if the transaction has occurred. 
                 // Todo: If the transaction id is invalid, does it return success or fail?
-                transactionStatus = await EVM.TxStatus(network.chain, network.network, transactionId, network.httpEndpoint);
+                transactionStatus = await EVM.TxStatus(networkManager.chain, networkManager.network, transactionId, networkManager.httpEndpoint);
                 Thread.Sleep(statusCheckSleepDuration);
             }
 
@@ -181,7 +181,7 @@ namespace Rawrshak
             return true;
         }
 
-        public bool AddToMintList(RawrshakAsset asset, BigInteger amount)
+        public bool AddToMintList(Asset asset, BigInteger amount)
         {
             if (state == ContentState.Minting) {
                 Debug.LogError("Contract is currently minting.");
@@ -208,7 +208,7 @@ namespace Rawrshak
             return true;
         }
 
-        public bool RemoveFromMintList(RawrshakAsset asset, BigInteger amount)
+        public bool RemoveFromMintList(Asset asset, BigInteger amount)
         {
             if (state == ContentState.Minting) {
                 Debug.LogError("Contract is currently minting.");

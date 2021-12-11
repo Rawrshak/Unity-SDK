@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace Rawrshak
 {
-    public class RawrshakAsset : ScriptableObject
+    public class Asset : ScriptableObject
     {
-        // This is a string because RawrshakAssets received from the GraphQL may be from other contracts that do
+        // This is a string because Asset received from the GraphQL may be from other contracts that do
         // not belong to this developer.
         public string contractAddress;
         public string tokenId;
@@ -27,11 +27,11 @@ namespace Rawrshak
         public Texture2D imageTexture;
         public AssetBase assetComponent;
         
-        private Network network;
+        private NetworkManager networkManager;
 
         void Start()
         {
-            network = Network.Instance;
+            networkManager = NetworkManager.Instance;
         }
 
         public async Task<bool> Load()

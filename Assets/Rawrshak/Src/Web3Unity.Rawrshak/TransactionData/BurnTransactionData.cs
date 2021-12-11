@@ -10,9 +10,9 @@ namespace Rawrshak
     [Serializable]
     public class BurnTransactionData
     {
-        string account;
-        List<BigInteger> tokenIds;
-        List<BigInteger> amounts;
+        string account = String.Empty;
+        List<BigInteger> tokenIds = null;
+        List<BigInteger> amounts = null;
         
         public string GenerateArgsForCreateContractData() {
             object[] burnData = {
