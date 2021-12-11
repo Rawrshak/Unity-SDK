@@ -45,7 +45,7 @@ namespace Rawrshak
             }
 
             // resolution doesn't exists
-            if (!String.IsNullOrEmpty(uri))
+            if (String.IsNullOrEmpty(uri))
             {
                 Debug.LogError("Resolution is not found");
                 return null;

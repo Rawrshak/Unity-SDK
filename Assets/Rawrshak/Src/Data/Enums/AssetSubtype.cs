@@ -12,6 +12,8 @@ namespace Rawrshak
         SoundEffect,
         Shout,
         CharacterLine,
-        BackgroundMusic
+        BackgroundMusic,
+        Trophy,
+        Decoration
     }
 }

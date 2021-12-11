@@ -76,7 +76,7 @@ namespace Rawrshak
         }
 
         // Returns the transaction id
-        public async Task<string> MintAssets(string receiver, WalletBase devWallet)
+        public async Task<string> MintAssets(string receiver)
         {
             if (state == ContentState.Minting) {
                 Debug.LogError("Contract is currently minting.");
@@ -89,11 +89,11 @@ namespace Rawrshak
                 return String.Empty;
             }
             
-            if (devWallet == null || !devWallet.IsLoaded())
-            {
-                Debug.LogError("Dev wallet is not initialized.");
-                return String.Empty;
-            }
+            // if (devWallet == null || !devWallet.IsLoaded())
+            // {
+            //     Debug.LogError("Dev wallet is not initialized.");
+            //     return String.Empty;
+            // }
 
             if (assetsToMint.Count == 0)
             {
@@ -111,7 +111,7 @@ namespace Rawrshak
                 receiver,
                 network.httpEndpoint)) + 1;
             
-            transaction.signer = devWallet.GetPublicAddress();
+            // transaction.signer = devWallet.GetPublicAddress();
             transaction.tokenIds = new List<BigInteger>();
             transaction.amounts = new List<BigInteger>();
             foreach (var asset in assetsToMint)

@@ -11,8 +11,6 @@ using WalletConnectSharp.Unity;
 
 public class TransactionCreator : MonoBehaviour
 {
-    public PrivateKeyWallet devWallet;
-
     public string to;
     public List<BigInteger> tokenIds;
     public List<BigInteger> amounts;
@@ -42,13 +40,6 @@ public class TransactionCreator : MonoBehaviour
         amounts.Add(200);
         amounts.Add(300);
 
-        devWallet = FindObjectOfType<PrivateKeyWallet>();
-        if (!devWallet) {
-            devWallet = ScriptableObject.CreateInstance<PrivateKeyWallet>();
-            devWallet.privateKey = privateKey;
-        }
-        devWallet.Load();
-
         transaction = new MintTransactionData();
         transaction.to = "0x" + to;
         transaction.nonce = nonce;
@@ -56,8 +47,7 @@ public class TransactionCreator : MonoBehaviour
         transaction.tokenIds = tokenIds;
         transaction.amounts = amounts;
 
-        // Todo: SignEIP712MintTransaction is currently not supported. Wait for ChainSafe Offline sign or
-        //       Nethereum to implement Array parameters in offline signing.
+        // Todo: Wait for ChainSafe Offline signing service
         // transaction.signature = devWallet.SignEIP712MintTransaction(transaction, chainId, contract);
 
         signature = transaction.signature;

@@ -10,9 +10,7 @@ using WalletConnectSharp.Core.Models.Ethereum;
 using WalletConnectSharp.Unity;
 
 public class MintAssetSample : MonoBehaviour
-{
-    public PrivateKeyWallet devWallet;
-    
+{    
     // Optimistic Kovan Testnet Chain ID = 69
     public BigInteger chainId = 69;
 
@@ -29,14 +27,6 @@ public class MintAssetSample : MonoBehaviour
             return;
         }
 
-        // Set Developer Key
-        devWallet = FindObjectOfType<PrivateKeyWallet>();
-        if (!devWallet) {
-            devWallet = ScriptableObject.CreateInstance<PrivateKeyWallet>();
-            devWallet.privateKey = privateKey;
-        }
-        devWallet.Load();
-
         Debug.Log("Mint Transaction: Creating the Mint Transaction...");
         List<BigInteger> tokenIds = new List<BigInteger>();
         tokenIds.Add(1);
@@ -48,12 +38,11 @@ public class MintAssetSample : MonoBehaviour
         transaction = new MintTransactionData();
         transaction.to = to;
         transaction.nonce = BigInteger.Parse(await Content.UserMintNonce("ethereum", "optimistic-kovan", contract, to, "https://kovan.optimism.io")) + 1;
-        transaction.signer = devWallet.GetPublicAddress();
+        // transaction.signer = devWallet.GetPublicAddress();
         transaction.tokenIds = tokenIds;
         transaction.amounts = amounts;
 
-        // Todo: SignEIP712MintTransaction is currently not supported. Wait for ChainSafe Offline sign or
-        //       Nethereum to implement Array parameters in offline signing.
+        // Todo: Wait for ChainSafe Offline signing service
         // transaction.signature = devWallet.SignEIP712MintTransaction(transaction, chainId, contract);
 
     }

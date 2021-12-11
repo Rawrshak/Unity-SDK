@@ -18,7 +18,7 @@ namespace Rawrshak
         public enum ContentTypes {
             Invalid,
             Wav,
-            Mpeg,
+            MP3,
             Ogg,
             Aiff
         }
@@ -45,6 +45,7 @@ namespace Rawrshak
             metadata = AudioMetadataBase.Parse(baseMetadata.jsonString);
             metadata.jsonString = baseMetadata.jsonString;
 
+            audioData = new Dictionary<ContentTypes, AudioProperties>();
             foreach (var audioProperty in metadata.assetProperties)
             {
                 // Filter out non-unity engine assets and unsupported content types
@@ -74,16 +75,17 @@ namespace Rawrshak
 
             AudioProperties data = audioData[type];
             
-            if (!String.IsNullOrEmpty(data.uri))
+            if (String.IsNullOrEmpty(data.uri))
             {
                 Debug.LogError("AudioClip metadata uri is not found");
                 return null;
             }
 
             AssetBundle assetBundle = currentAssetBundle;
-            if (data.uri != audioData[currentContentType].uri)
+            if (currentContentType == ContentTypes.Invalid || data.uri != audioData[type].uri)
             {
                 // Download the assetbundle
+                // Debug.Log("****** Audio URI: " + data.uri);
                 assetBundle = await Downloader.DownloadAssetBundle(data.uri);
                 if (assetBundle == null)
                 {
@@ -92,7 +94,8 @@ namespace Rawrshak
                 }
             }
 
-            AudioClip audioClip = assetBundle.LoadAsset<AudioClip>(data.filename);
+            // Debug.Log("****** Filename: " + data.name);
+            AudioClip audioClip = assetBundle.LoadAsset<AudioClip>(data.name);
 
             if (audioClip == null)
             {
@@ -108,7 +111,7 @@ namespace Rawrshak
             }
 
             // If a new AssetBundle was loaded that's different from the current bundle
-            if (assetBundle != currentAssetBundle)
+            if (currentAssetBundle && assetBundle != currentAssetBundle)
             {
                 currentAssetBundle.Unload(false);
             }
@@ -161,8 +164,12 @@ namespace Rawrshak
 
         private bool VerifyAudioClipProperties(AudioClip audioClip, AudioProperties properties)
         {
+            // Debug.Log($"Channels: Actual: {audioClip.channels}, Property: {properties.channelCount}");
+            // Debug.Log($"Length: Actual: {Mathf.RoundToInt(audioClip.length * 1000)}, Property: {properties.duration}");
+            // Debug.Log($"Frequency: Actual: {audioClip.frequency}, Property: {properties.sampleRate}");
+
             if (audioClip.channels != properties.channelCount ||
-                (audioClip.length * 1000) != properties.duration || 
+                Mathf.RoundToInt(audioClip.length * 1000) != properties.duration || 
                 audioClip.frequency != properties.sampleRate)
             {
                 return false;
@@ -178,9 +185,9 @@ namespace Rawrshak
                 {
                     return ContentTypes.Wav;
                 }
-                case "audio/mpeg":
+                case "audio/mp3":
                 {
-                    return ContentTypes.Mpeg;
+                    return ContentTypes.MP3;
                 }
                 case "audio/ogg":
                 {
