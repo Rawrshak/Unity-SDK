@@ -62,7 +62,7 @@ namespace Rawrshak
         {
             List<KeyValuePair<Asset, int>> assets = new List<KeyValuePair<Asset, int>>();
 
-            GetWalletAssetsFromContract.ReturnData responseData = await GetWalletAssetsFromContract.Fetch(walletAddress, contractAddress, amount, lastId);
+            GetWalletAssetsInContent.ReturnData responseData = await GetWalletAssetsInContent.Fetch(walletAddress, contractAddress, amount, lastId);
 
 
             foreach (var balanceData in responseData.data.account.assetBalances)
