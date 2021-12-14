@@ -27,11 +27,11 @@ namespace Rawrshak
         public Texture2D imageTexture;
         public AssetBase assetComponent;
         
-        private NetworkManager networkManager;
+        private Network network;
 
         void Start()
         {
-            networkManager = NetworkManager.Instance;
+            network = Network.Instance;
         }
 
         public async Task<bool> Load()

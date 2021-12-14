@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0714959b60229d0499087a7edbbf0e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkManager: {fileID: 0}
+  network: {fileID: 0}
   contractAddress: 0xc9EBafF8237740353E0dEd89130fB83be4bd3F90
   playerAddress: 0x0dE84C9AaEBAbb2CAF8C07012852671000bf31A7
   oper: 0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF

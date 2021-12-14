@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Rawrshak
 {
-    [CreateAssetMenu(fileName="NetworkManager", menuName="Rawrshak/Create Network Manager Object")]
-    public class NetworkManager : SingletonScriptableObject<NetworkManager>
+    [CreateAssetMenu(fileName="Network", menuName="Rawrshak/Create Network Manager Object")]
+    public class Network : SingletonScriptableObject<Network>
     {
         public string chain = "ethereum";
         public string network = "optimistic-kovan";

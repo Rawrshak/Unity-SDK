@@ -18,7 +18,7 @@ namespace Rawrshak
         public ContentMetadataBase metadata;
 
         // Private Variables
-        private NetworkManager networkManager;
+        private Network network;
         private bool isValid;
         private Dictionary<BigInteger, BigInteger> assetsToMint;
         private ContentState state;
@@ -27,7 +27,7 @@ namespace Rawrshak
         {
             isValid = false;
             assetsToMint = new Dictionary<BigInteger, BigInteger>();
-            networkManager = NetworkManager.Instance;
+            network = Network.Instance;
             state = ContentState.NoAssetsToMint;
         }
         
@@ -39,12 +39,12 @@ namespace Rawrshak
 
         public async Task VerifyContracts()
         {
-            if (networkManager == null)
+            if (network == null)
             {
                 Debug.LogError("Network is not set.");
                 isValid = false;
             }
-            isValid = await ContentManager.SupportsInterface(networkManager.chain, networkManager.network, contractAddress, Constants.RAWRSHAK_ICONTENT_INTERFACE_ID, networkManager.httpEndpoint);
+            isValid = await ContentManager.SupportsInterface(network.chain, network.network, contractAddress, Constants.RAWRSHAK_ICONTENT_INTERFACE_ID, network.httpEndpoint);
         }
 
         public async Task LoadContractMetadata()
@@ -57,7 +57,7 @@ namespace Rawrshak
             }
 
             // Get Metadata URI from ethereum
-            string uri = await ContentManager.ContractUri(networkManager.chain, networkManager.network, contractAddress, networkManager.httpEndpoint);
+            string uri = await ContentManager.ContractUri(network.chain, network.network, contractAddress, network.httpEndpoint);
 
             // Download Metadata from Arweave / IPFS
             if (!usingArweave)
@@ -88,12 +88,6 @@ namespace Rawrshak
                 Debug.LogError("Contract or Network is not valid.");
                 return String.Empty;
             }
-            
-            // if (devWallet == null || !devWallet.IsLoaded())
-            // {
-            //     Debug.LogError("Dev wallet is not initialized.");
-            //     return String.Empty;
-            // }
 
             if (assetsToMint.Count == 0)
             {
@@ -105,11 +99,11 @@ namespace Rawrshak
             MintTransactionData transaction = new MintTransactionData();
             transaction.to = receiver;
             transaction.nonce = BigInteger.Parse(await ContentManager.UserMintNonce(
-                networkManager.chain,
-                networkManager.network,
+                network.chain,
+                network.network,
                 contractAddress,
                 receiver,
-                networkManager.httpEndpoint)) + 1;
+                network.httpEndpoint)) + 1;
             
             // transaction.signer = devWallet.GetPublicAddress();
             transaction.tokenIds = new List<BigInteger>();
@@ -128,7 +122,7 @@ namespace Rawrshak
             string response = String.Empty;
             try
             {
-                response= await ContentManager.MintBatch(networkManager.chain, networkManager.network, contractAddress, transaction, networkManager.httpEndpoint);
+                response= await ContentManager.MintBatch(network.chain, network.network, contractAddress, transaction, network.httpEndpoint);
 
                 state = ContentState.Minting;
             }
@@ -160,7 +154,7 @@ namespace Rawrshak
             {
                 // Poll every duration to check if the transaction has occurred. 
                 // Todo: If the transaction id is invalid, does it return success or fail?
-                transactionStatus = await EVM.TxStatus(networkManager.chain, networkManager.network, transactionId, networkManager.httpEndpoint);
+                transactionStatus = await EVM.TxStatus(network.chain, network.network, transactionId, network.httpEndpoint);
                 Thread.Sleep(statusCheckSleepDuration);
             }
 
