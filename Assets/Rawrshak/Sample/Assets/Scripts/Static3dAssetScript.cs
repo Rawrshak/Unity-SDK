@@ -22,6 +22,8 @@ public class Static3dAssetScript : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+        // Todo: Fix orientation and location of the asset
+        staticAsset = ScriptableObject.CreateInstance<Rawrshak.Asset>();
         data = await Rawrshak.GetWalletAssetsOfType.Fetch(accountAddress, "static3dobject", 1, lastItemId);
         if (data.data.account.assetBalances.Length > 0)
         {

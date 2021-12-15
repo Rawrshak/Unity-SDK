@@ -22,6 +22,8 @@ public class ImageAssetScript : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+        imageAsset = ScriptableObject.CreateInstance<Rawrshak.Asset>();
+        
         // Set internal values
         if (GetComponent<MeshRenderer>() == null)
         {

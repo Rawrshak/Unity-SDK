@@ -22,6 +22,7 @@ public class AudioAssetScript : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+        audioAsset = ScriptableObject.CreateInstance<Rawrshak.Asset>();
         data = await Rawrshak.GetWalletAssetsOfType.Fetch(accountAddress, "audio", 1, lastItemId);
         if (data.data.account.assetBalances.Length > 0)
         {
