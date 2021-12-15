@@ -235,7 +235,7 @@ namespace Rawrshak
                 {
                     return AssetType.Audio;
                 }
-                case "static3dObject":
+                case "static3dobject":
                 {
                     return AssetType.Static3dObject;
                 }
