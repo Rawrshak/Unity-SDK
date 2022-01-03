@@ -23,22 +23,14 @@ namespace Rawrshak
             Aiff
         }
 
+        // todo: add Compression
+
         private static string Engine = "unity";
 
         protected AudioMetadataBase metadata;
         protected Dictionary<ContentTypes, AudioProperties> audioData;
         protected ContentTypes currentContentType;
         protected AudioClip currentAudioClip;
-        protected AssetBundle currentAssetBundle;
-
-        void OnDisabled()
-        {
-            // Unload completely before disabling object
-            if (currentAssetBundle)
-            {
-                currentAssetBundle.Unload(true);
-            }
-        }
 
         public override void Init(PublicAssetMetadataBase baseMetadata)
         {
@@ -81,17 +73,11 @@ namespace Rawrshak
                 return null;
             }
 
-            AssetBundle assetBundle = currentAssetBundle;
-            if (currentContentType == ContentTypes.Invalid || data.uri != audioData[type].uri)
+            AssetBundle assetBundle = await Downloader.DownloadAssetBundle(data.uri);
+            if (assetBundle == null)
             {
-                // Download the assetbundle
-                // Debug.Log("****** Audio URI: " + data.uri);
-                assetBundle = await Downloader.DownloadAssetBundle(data.uri);
-                if (assetBundle == null)
-                {
-                    Debug.LogError("AssetBundle not found");
-                    return null;
-                }
+                Debug.LogError("AssetBundle not found");
+                return null;
             }
 
             // Debug.Log("****** Filename: " + data.name);
@@ -110,13 +96,7 @@ namespace Rawrshak
                 return null;
             }
 
-            // If a new AssetBundle was loaded that's different from the current bundle
-            if (currentAssetBundle && assetBundle != currentAssetBundle)
-            {
-                currentAssetBundle.Unload(false);
-            }
-
-            currentAssetBundle = assetBundle;
+            assetBundle.Unload(false);
             currentAudioClip = audioClip;
             currentContentType = type;
             return currentAudioClip;
