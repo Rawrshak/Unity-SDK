@@ -18,5 +18,5 @@ These libraries give the game developer the following functionality:
 - Unity: 2020.3.12f1
 - graphQL-client-unity: https://github.com/Gazuntype/graphQL-client-unity
 - Chainsafe SDK: https://github.com/ChainSafe/web3.unity 
-  - Web3.Unity: v1.0.7
+  - Web3.Unity: v1.0.14
 - WalletConnectUnity: https://github.com/WalletConnect/WalletConnectUnity
