@@ -20,3 +20,5 @@ These libraries give the game developer the following functionality:
 - Chainsafe SDK: https://github.com/ChainSafe/web3.unity 
   - Web3.Unity: v1.0.14
 - WalletConnectUnity: https://github.com/WalletConnect/WalletConnectUnity
+  - Sync date: 1/10/22
+  - Last Commit Synced: 3c2cac53f33253051e255c91026fc596cf672d04
