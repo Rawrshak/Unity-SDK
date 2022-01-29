@@ -60,6 +60,7 @@ public class AudioAssetScript : MonoBehaviour
                 Debug.LogError("Invalid Audio Metadata.");
                 return;
             }
+            assetComponent.downloadTimeout = 30;
 
             await LoadAudioAssets();
         }
