@@ -23,15 +23,6 @@ namespace Rawrshak
             Aiff
         }
 
-        public enum CompressionType {
-            Raw,
-            PCM,
-            ADPCM,
-            Compressed
-        }
-
-        private static string Engine = "unity";
-
         public int downloadTimeout = 10;
 
         protected AudioMetadataBase metadata;
@@ -49,7 +40,7 @@ namespace Rawrshak
             {
                 // Filter out non-unity engine assets and unsupported content types
                 ContentTypes contentType = ConvertContentTypeFromString(audioProperty.contentType);
-                if (audioProperty.engine == Engine && contentType != ContentTypes.Invalid)
+                if (contentType != ContentTypes.Invalid)
                 {
                     // Note: Overwrite duplicates. Does not throw an exception
                     audioData[contentType] = audioProperty;
@@ -59,7 +50,7 @@ namespace Rawrshak
             currentContentType = ContentTypes.Invalid;
         }
         
-        public async Task<AudioClip> LoadAndSetAudioClipFromContentType(ContentTypes type, CompressionType compressionType)
+        public async Task<AudioClip> LoadAndSetAudioClipFromContentType(ContentTypes type)
         {
             if (!audioData.ContainsKey(type) || type == ContentTypes.Invalid)
             {
@@ -75,7 +66,7 @@ namespace Rawrshak
             AudioProperties data = null;
             foreach (var aData in audioData.Values)
             {
-                if (ConvertContentTypeFromString(aData.contentType) == type && ConvertCompressionFromString(aData.compression) == compressionType) {
+                if (ConvertContentTypeFromString(aData.contentType) == type) {
                     data = aData;
                     break;
                 }
@@ -88,64 +79,34 @@ namespace Rawrshak
             }
 
             AudioClip audioClip;
-            if (ConvertCompressionFromString(data.compression) == CompressionType.Raw)
-            {
-                switch(type)
-                {
-                    case ContentTypes.Wav:
-                    {
-                        audioClip = await Downloader.DownloadAudioClip(data.uri, AudioType.WAV, downloadTimeout);
-                        break;
-                    }
-                    case ContentTypes.MP3:
-                    {
-                        audioClip = await Downloader.DownloadAudioClip(data.uri, AudioType.MPEG, downloadTimeout);
-                        break;
-                    }
-                    case ContentTypes.Ogg:
-                    {
-                        audioClip = await Downloader.DownloadAudioClip(data.uri, AudioType.OGGVORBIS, downloadTimeout);
-                        break;
-                    }
-                    case ContentTypes.Aiff:
-                    {
-                        audioClip = await Downloader.DownloadAudioClip(data.uri, AudioType.AIFF, downloadTimeout);
-                        break;
-                    }
-                    default:
-                    {
-                        Debug.LogError("[AudioAssetBase] Audio Clip Type is not supported.");
-                        return null;
-                    }
-                }
-            }
-            else
-            {
-                AssetBundle assetBundle = await Downloader.DownloadAssetBundle(data.uri, downloadTimeout);
-                if (assetBundle == null)
-                {
-                    Debug.LogError("[AudioAssetBase] Unable to download AssetBundle.");
-                    return null;
-                }
 
-                // Debug.Log("****** Filename: " + data.name);
-                audioClip = assetBundle.LoadAsset<AudioClip>(data.name);
-
-                if (audioClip == null)
+            switch(type)
+            {
+                case ContentTypes.Wav:
                 {
-                    Debug.LogError("[AudioAssetBase] AudioClip doesn't exist in AssetBundle");
-                    assetBundle.Unload(true);
+                    audioClip = await Downloader.DownloadAudioClip(data.uri, AudioType.WAV, downloadTimeout);
+                    break;
+                }
+                case ContentTypes.MP3:
+                {
+                    audioClip = await Downloader.DownloadAudioClip(data.uri, AudioType.MPEG, downloadTimeout);
+                    break;
+                }
+                case ContentTypes.Ogg:
+                {
+                    audioClip = await Downloader.DownloadAudioClip(data.uri, AudioType.OGGVORBIS, downloadTimeout);
+                    break;
+                }
+                case ContentTypes.Aiff:
+                {
+                    audioClip = await Downloader.DownloadAudioClip(data.uri, AudioType.AIFF, downloadTimeout);
+                    break;
+                }
+                default:
+                {
+                    Debug.LogError("[AudioAssetBase] Audio Clip Type is not supported.");
                     return null;
                 }
-                
-                // Compare AudioClip data to audio properties metadata
-                if (!VerifyAudioClipProperties(audioClip, data))
-                {
-                    Debug.LogError("[AudioAssetBase] AudioClip does not have the correct audio properties");
-                    assetBundle.Unload(true);
-                    return null;
-                }
-                assetBundle.Unload(false);
             }
 
             currentAudioClip = audioClip;
@@ -189,42 +150,10 @@ namespace Rawrshak
             }
             return false;
         }
-
-        public bool IsCompressionTypeSupported(CompressionType type)
-        {
-            foreach(var data in audioData)
-            {
-                if (type == ConvertCompressionFromString(data.Value.compression))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public List<CompressionType> GetAvailableCompressionTypes()
-        {
-            List<CompressionType> types = new List<CompressionType>();
-            foreach(var data in audioData)
-            {
-                types.Add(ConvertCompressionFromString(data.Value.compression));
-            }
-            return types;
-        }
         
         public int GetDuration(ContentTypes type)
         {
             return audioData[type].duration;
-        }
-
-        public int GetChannelCount(ContentTypes type)
-        {
-            return audioData[type].channelCount;
-        }
-
-        public int GetSampleRate(ContentTypes type)
-        {
-            return audioData[type].sampleRate;
         }
 
         private bool VerifyAudioClipProperties(AudioClip audioClip, AudioProperties properties)
@@ -233,9 +162,7 @@ namespace Rawrshak
             // Debug.Log($"Length: Actual: {Mathf.RoundToInt(audioClip.length * 1000)}, Property: {properties.duration}");
             // Debug.Log($"Frequency: Actual: {audioClip.frequency}, Property: {properties.sampleRate}");
 
-            if (audioClip.channels != properties.channelCount ||
-                Mathf.RoundToInt(audioClip.length * 1000) != properties.duration || 
-                audioClip.frequency != properties.sampleRate)
+            if (Mathf.RoundToInt(audioClip.length * 1000) != properties.duration )
             {
                 return false;
             }
@@ -265,29 +192,6 @@ namespace Rawrshak
                 default:
                 {
                     return ContentTypes.Invalid;
-                }
-            }
-        }
-        
-        private CompressionType ConvertCompressionFromString(string compressionType)
-        {
-            switch(compressionType)
-            {
-                case "pcm":
-                {
-                    return CompressionType.PCM;
-                }
-                case "adpcm":
-                {
-                    return CompressionType.ADPCM;
-                }
-                case "compressed":
-                {
-                    return CompressionType.Compressed;
-                }
-                default:
-                {
-                    return CompressionType.Raw;
                 }
             }
         }
