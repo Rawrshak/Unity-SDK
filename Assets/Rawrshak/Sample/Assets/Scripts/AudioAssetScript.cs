@@ -24,7 +24,7 @@ public class AudioAssetScript : MonoBehaviour
     {
         audioAsset = ScriptableObject.CreateInstance<Rawrshak.Asset>();
         data = await Rawrshak.GetWalletAssetsOfType.Fetch(accountAddress, "audio", 1, lastItemId);
-        if (data.data.account.assetBalances.Length > 0)
+        if (data.data.account != null && data.data.account.assetBalances.Length > 0)
         {
             lastItemId = data.data.account.assetBalances[0].id;
             contractAddress = data.data.account.assetBalances[0].asset.parentContract.id;
@@ -72,14 +72,20 @@ public class AudioAssetScript : MonoBehaviour
         
         // Load the Audio file
         Rawrshak.AudioAssetBase assetComponent = audioAsset.assetComponent as Rawrshak.AudioAssetBase;
-        List<Rawrshak.AudioAssetBase.ContentTypes> contentTypes = assetComponent.GetAvailableContentTypes();
+        List<AudioType> audioTypes = assetComponent.GetAvailableAudioTypes();
 
-        if (contentTypes.Count == 0)
+        if (assetComponent.IsAudioTypeSupported(AudioType.MPEG))
+        {
+            m_source.clip = await assetComponent.LoadAndSetAudioClipFromAudioType(AudioType.MPEG);
+        }
+        else if (assetComponent.IsAudioTypeSupported(AudioType.WAV))
+        {
+            m_source.clip = await assetComponent.LoadAndSetAudioClipFromAudioType(AudioType.WAV);
+        }
+        else
         {
             Debug.LogError("No supported audio files available for the audio clip");
             return;
         }
-
-        m_source.clip = await assetComponent.LoadAndSetAudioClipFromContentType(contentTypes[0]);
     }
 }
