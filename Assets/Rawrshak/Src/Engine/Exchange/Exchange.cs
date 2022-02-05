@@ -11,10 +11,9 @@ namespace Rawrshak
     [CreateAssetMenu(fileName="Exchange", menuName="Rawrshak/Create Exchange Object")]
     public class Exchange : ScriptableObject
     {
-        public static string exchangeAddress;
+        // Public Variables
+        public string exchangeAddress;
         public string tokenAddress;
-        private int statusCheckSleepDuration = 1000;
-        private static BigInteger MaxApproveAmount = BigInteger.Pow(2, 256);
 
         // Private Variables
         private Network network;
@@ -57,7 +56,7 @@ namespace Rawrshak
                 // Poll every duration to check if the transaction has occurred. 
                 // Todo: If the transaction id is invalid, does it return success or fail?
                 transactionStatus = await EVM.TxStatus(network.chain, network.network, transactionId, network.httpEndpoint);
-                Thread.Sleep(statusCheckSleepDuration);
+                Thread.Sleep(Constants.statusCheckSleepDuration);
             }
 
             return transactionStatus;
@@ -69,7 +68,7 @@ namespace Rawrshak
             {
                 string oper = await ExchangeManager.GetTokenEscrowAddress(network.chain, network.network, exchangeAddress, network.httpEndpoint);
 
-                string response = await ERC20Extension.Approve(network.chain, network.network, tokenAddress, oper, MaxApproveAmount, network.httpEndpoint);
+                string response = await ERC20Extension.Approve(network.chain, network.network, tokenAddress, oper, Constants.MaxApproveAmount, network.httpEndpoint);
                 
                 return Boolean.Parse(response);
             }
@@ -335,7 +334,7 @@ namespace Rawrshak
                 return String.Empty;
             }
 
-            // // Todo: Get Transaction ID from response
+            // Todo: Get Transaction ID from response
             try
             {
                 string response = await ExchangeManager.CancelOrders(network.chain, network.network, exchangeAddress, orderIds, network.httpEndpoint);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 namespace Rawrshak
@@ -27,5 +28,9 @@ namespace Rawrshak
         public static string GET_ACCOUNT_ORDERS_QUERY_STRING_LOCATION = "ExchangeInfo/GetAccountOrders";
         public static string GET_ASSET_ACTIVE_ORDERS_QUERY_STRING_LOCATION = "ExchangeInfo/GetAssetActiveOrders";
         public static string GET_ORDER_INFO_QUERY_STRING_LOCATION = "ExchangeInfo/GetOrderInfo";
+
+        // Static Variables
+        public static int statusCheckSleepDuration = 1000;
+        public static BigInteger MaxApproveAmount = BigInteger.Pow(2, 256) - 1;
     }
 }

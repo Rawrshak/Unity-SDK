@@ -617,6 +617,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 222388}
     m_Modifications:
+    - target: {fileID: 4216951124642731661, guid: 5d64007f6d60c2a40b8e8a00b3813da1, type: 3}
+      propertyPath: tokenId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4216951124642731661, guid: 5d64007f6d60c2a40b8e8a00b3813da1, type: 3}
+      propertyPath: contentContractAddress
+      value: 0x899753a7055093b1dc32422cffd55186a5c18198
+      objectReference: {fileID: 0}
     - target: {fileID: 4216951124642731662, guid: 5d64007f6d60c2a40b8e8a00b3813da1, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1861,6 +1869,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 222388}
     m_Modifications:
+    - target: {fileID: 7958585246446155430, guid: 5b0a9b1ae5eeef246a6d555e09743860, type: 3}
+      propertyPath: contentContractAddress
+      value: 0x899753a7055093b1dc32422cffd55186a5c18198
+      objectReference: {fileID: 0}
     - target: {fileID: 7958585246446155480, guid: 5b0a9b1ae5eeef246a6d555e09743860, type: 3}
       propertyPath: m_Name
       value: GetContentInfo
