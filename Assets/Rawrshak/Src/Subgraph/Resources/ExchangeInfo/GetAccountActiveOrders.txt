@@ -1,0 +1,7 @@
+query GetAccountActiveBuyOrders {{
+    account ( id: "{0}" ) {{
+        orders ( first: {1}, where: {{ id_gt: "{2}", type: {3}, status_in: [ Ready, PartiallyFilled ] }}, orderBy: createdAtTimestamp ) {{
+            id
+        }}
+    }}
+}}

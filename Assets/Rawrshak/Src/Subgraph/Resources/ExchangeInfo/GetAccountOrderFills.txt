@@ -1,0 +1,17 @@
+query GetAccountOrderFills {{
+    account ( id: "{0}" ) {{
+        orderFills ( first: {1}, where: {{ id_gt: "{2}" }}, orderBy: createdAtTimestamp ) {{
+            id
+            order {{
+                id
+            }}
+            amount
+            pricePerItem
+            totalPrice
+            token {{
+                address
+            }}
+            createdAtTimestamp
+        }}
+    }}
+}}

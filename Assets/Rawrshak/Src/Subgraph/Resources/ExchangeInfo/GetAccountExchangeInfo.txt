@@ -1,0 +1,16 @@
+query GetAccountExchangeInfo {{
+    account ( id: "{0}" ) {{
+        id
+        address
+        ordersCount
+        orderFillsCount
+        activeBuyOrders
+        activeSellOrders
+        activeOrdersCount
+        filledOrdersCount
+        volume
+        volumeAsBuyer
+        volumeAsSeller
+        daysActive
+    }}
+}}

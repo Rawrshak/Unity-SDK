@@ -13,7 +13,6 @@ namespace Rawrshak
     public class Content : ScriptableObject
     {
         public string contractAddress;
-        private int statusCheckSleepDuration = 5000;
         public bool usingArweave = false;
         public ContentMetadataBase metadata;
 
@@ -155,7 +154,7 @@ namespace Rawrshak
                 // Poll every duration to check if the transaction has occurred. 
                 // Todo: If the transaction id is invalid, does it return success or fail?
                 transactionStatus = await EVM.TxStatus(network.chain, network.network, transactionId, network.httpEndpoint);
-                Thread.Sleep(statusCheckSleepDuration);
+                Thread.Sleep(Constants.statusCheckSleepDuration);
             }
 
             assetsToMint.Clear();

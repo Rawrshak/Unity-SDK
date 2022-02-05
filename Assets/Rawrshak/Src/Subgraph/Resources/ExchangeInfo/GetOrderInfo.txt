@@ -1,0 +1,19 @@
+query GetOrderInfo {{
+    order ( id: "{0}") {{
+        id
+        asset {{
+            parentContract
+            tokenId
+        }}
+        type
+        price
+        amountOrdered
+        amountFilled
+        amountClaimed
+        status
+        createdAtTimestamp
+        filledAtTimestamp
+        cancelledAtTimestamp
+        lastClaimedAtTimestamp
+    }}
+}}

@@ -1,0 +1,7 @@
+query GetAccountOrders {{
+    account ( id: "{0}" ) {{
+        orders ( first: {1}, where: {{ id_gt: "{2}" }}, orderBy: createdAtTimestamp ) {{
+            id
+        }}
+    }}
+}}
