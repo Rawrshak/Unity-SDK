@@ -20,9 +20,10 @@ namespace Rawrshak
         private Network network;
         private bool isValid = false;
 
-        public void OnEnable()
+        public async Task OnEnable()
         {
             network = Network.Instance;
+            await VerifyContracts();
         }
         
         public void OnDisable()
@@ -256,6 +257,118 @@ namespace Rawrshak
             walletData.daysActive = BigInteger.Parse(data.data.account.daysActive);
 
             return walletData;
+        }
+
+        // Blockchain Transactions
+        public async Task<string> PlaceOrder(string accountAddress, Asset asset, BigInteger price, BigInteger amount, bool isBuyOrder)
+        {
+            if (!IsValid())
+            {
+                Debug.LogError("[Exchange] Exchange is not valid.");
+                return String.Empty;
+            }
+
+            PlaceOrderTransactionData transactionData = new PlaceOrderTransactionData();
+            transactionData.owner = accountAddress;
+            transactionData.token = tokenAddress;
+            transactionData.price = price;
+            transactionData.amount = amount;
+            transactionData.isBuyOrder = isBuyOrder;
+            transactionData.asset.contractAddress = asset.contractAddress;
+            transactionData.asset.tokenId = BigInteger.Parse(asset.tokenId);
+
+            // Todo: Get Transaction ID from response
+            try
+            {
+                string response = await ExchangeManager.PlaceOrder(network.chain, network.network, exchangeAddress, transactionData, network.httpEndpoint);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+                return String.Empty;
+            }
+        }
+
+        public async Task<string> FillOrder(List<BigInteger> orderIds, BigInteger amount, BigInteger maxSpend, bool isBuyOrder)
+        {
+            if (!IsValid())
+            {
+                Debug.LogError("[Exchange] Exchange is not valid.");
+                return String.Empty;
+            }
+
+            FillOrderTransactionData transactionData = new FillOrderTransactionData();
+            transactionData.orderIds = orderIds;
+            transactionData.amount = amount;
+            transactionData.maxSpend = maxSpend;
+
+            // Todo: Get Transaction ID from response
+            try
+            {
+                string response;
+                
+                if (isBuyOrder)
+                {
+                    response = await ExchangeManager.FillBuyOrder(network.chain, network.network, exchangeAddress, transactionData, network.httpEndpoint);
+                }
+                else
+                {
+                    response = await ExchangeManager.FillSellOrder(network.chain, network.network, exchangeAddress, transactionData, network.httpEndpoint);
+                }
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+                return String.Empty;
+            }
+        }
+
+        public async Task<string> CancelOrders(List<BigInteger> orderIds)
+        {
+            if (!IsValid())
+            {
+                Debug.LogError("[Exchange] Exchange is not valid.");
+                return String.Empty;
+            }
+
+            // // Todo: Get Transaction ID from response
+            try
+            {
+                string response = await ExchangeManager.CancelOrders(network.chain, network.network, exchangeAddress, orderIds, network.httpEndpoint);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+                return String.Empty;
+            }
+        }
+        
+        public async Task<string> ClaimOrders(List<BigInteger> orderIds)
+        {
+            if (!IsValid())
+            {
+                Debug.LogError("[Exchange] Exchange is not valid.");
+                return String.Empty;
+            }
+
+            // Todo: Get Transaction ID from response
+            try
+            {
+                string response = await ExchangeManager.ClaimOrders(network.chain, network.network, exchangeAddress, orderIds, network.httpEndpoint);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+                return String.Empty;
+            }
         }
 
         public bool IsValid()
