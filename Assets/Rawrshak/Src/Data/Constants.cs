@@ -20,5 +20,13 @@ namespace Rawrshak
         public static string GET_WALLET_ASSETS_OF_TYPE_QUERY_STRING_LOCATION = "WalletInfo/GetWalletAssetsOfType";
         
         public static string GET_ASSET_EXCHANGE_INFO_QUERY_STRING_LOCATION = "ExchangeInfo/GetAssetExchangeInfo";
+        public static string GET_ACCOUNT_ACTIVE_BUY_ORDERS_QUERY_STRING_LOCATION = "ExchangeInfo/GetAccountActiveBuyOrders";
+        public static string GET_ACCOUNT_ACTIVE_SELL_ORDERS_QUERY_STRING_LOCATION = "ExchangeInfo/GetAccountActiveSellOrders";
+        public static string GET_ACCOUNT_EXCHANGE_INFO_QUERY_STRING_LOCATION = "ExchangeInfo/GetAccountExchangeInfo";
+        public static string GET_ACCOUNT_ORDER_FILLS_QUERY_STRING_LOCATION = "ExchangeInfo/GetAccountOrderFills";
+        public static string GET_ACCOUNT_ORDERS_QUERY_STRING_LOCATION = "ExchangeInfo/GetAccountOrders";
+        public static string GET_ASSET_ACTIVE_BUY_ORDERS_QUERY_STRING_LOCATION = "ExchangeInfo/GetAssetActiveBuyOrders";
+        public static string GET_ASSET_ACTIVE_SELL_ORDERS_QUERY_STRING_LOCATION = "ExchangeInfo/GetAssetActiveSellOrders";
+        public static string GET_ORDER_INFO_QUERY_STRING_LOCATION = "ExchangeInfo/GetOrderInfo";
     }
 }

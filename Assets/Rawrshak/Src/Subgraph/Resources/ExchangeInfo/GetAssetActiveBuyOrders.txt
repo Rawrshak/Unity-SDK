@@ -1,5 +1,5 @@
 query GetAssetActiveBuyOrders {{
-    assets ( id: "{0}-{1}") {{
+    asset ( id: "{0}-{1}") {{
         orders ( first: {2}, where: {{ id_gt: "{3}", type: Buy, status_in: [ Ready, PartiallyFilled ]  }}, orderBy: price, orderDirection: desc ) {{
             id
         }}

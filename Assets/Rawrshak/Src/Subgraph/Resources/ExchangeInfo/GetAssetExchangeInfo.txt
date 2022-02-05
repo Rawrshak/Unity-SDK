@@ -1,5 +1,5 @@
 query GetAssetExchangeInfo {{
-    assets ( id: "{0}-{1}") {{
+    asset ( id: "{0}-{1}") {{
         assetVolumeTransacted
     }}
 }}

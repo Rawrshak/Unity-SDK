@@ -1,5 +1,5 @@
 query GetOrderInfo {{
-    orders ( id: "{0}") {{
+    order ( id: "{0}") {{
         id
         asset {{
             parentContract
