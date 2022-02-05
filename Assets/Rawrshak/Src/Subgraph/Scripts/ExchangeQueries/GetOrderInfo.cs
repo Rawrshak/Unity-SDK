@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Networking;
 using GraphQlClient.Core;
@@ -10,12 +11,13 @@ namespace Rawrshak
 {
     public class GetOrderInfo : QueryBase
     {
-        public static async Task<ReturnData> Fetch(string orderId) {
+        public static async Task<ReturnData> Fetch(BigInteger orderId) {
             // Load query if this is the first Fetch
             string query = LoadQuery(Constants.GET_ORDER_INFO_QUERY_STRING_LOCATION);
 
             // Load the query parameters
-            string queryWithArgs = String.Format(query, orderId.ToLower());
+            string orderIdStr = "0x" + orderId.ToString("X");
+            string queryWithArgs = String.Format(query, orderIdStr.ToLower());
 
             // Post query
             string returnData = await PostAsync(Subgraph.Instance.exchangeSubgraphUri, queryWithArgs);
