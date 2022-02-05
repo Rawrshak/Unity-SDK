@@ -18,5 +18,7 @@ namespace Rawrshak
         public static string GET_WALLET_ASSETS_FROM_CONTRACT_QUERY_STRING_LOCATION = "WalletInfo/GetWalletAssetsInContent";
         public static string GET_WALLET_ASSETS_OF_SUBTYPE_QUERY_STRING_LOCATION = "WalletInfo/GetWalletAssetsOfSubtype";
         public static string GET_WALLET_ASSETS_OF_TYPE_QUERY_STRING_LOCATION = "WalletInfo/GetWalletAssetsOfType";
+        
+        public static string GET_ASSET_EXCHANGE_INFO_QUERY_STRING_LOCATION = "ExchangeInfo/GetAssetExchangeInfo";
     }
 }

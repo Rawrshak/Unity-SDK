@@ -1,0 +1,7 @@
+query GetAccountActiveSellOrders {{
+    account ( id: "{0}" ) {{
+        orders ( first: {1}, where: {{ id_gt: "{2}", type: Sell, status_in: [ Ready, PartiallyFilled ] }}, orderBy: createdAtTimestamp ) {{
+            id
+        }}
+    }}
+}}
