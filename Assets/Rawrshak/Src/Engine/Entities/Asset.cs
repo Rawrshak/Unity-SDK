@@ -34,6 +34,16 @@ namespace Rawrshak
             network = Network.Instance;
         }
 
+        public bool IsAssetTokenIdValid()
+        {
+            // Todo: Check if contractAddress is a valid Ethereum Address
+            if (String.IsNullOrEmpty(contractAddress) || String.IsNullOrEmpty(tokenId))
+            {
+                return false;
+            }
+            return true;
+        }
+
         public async Task<bool> Load()
         {
             GetAssetInfo.ReturnData data = await GetAssetInfo.Fetch(contractAddress, tokenId);
