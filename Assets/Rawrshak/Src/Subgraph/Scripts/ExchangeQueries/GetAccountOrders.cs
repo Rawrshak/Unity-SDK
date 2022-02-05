@@ -46,24 +46,6 @@ namespace Rawrshak
         public class Order
         {
             public string id;
-            public Asset asset;
-            public string type;
-            public string price;
-            public string amountOrdered;
-            public string amountFilled;
-            public string amountClaimed;
-            public string status;
-            public string createdAtTimestamp;
-            public string filledAtTimestamp;
-            public string cancelledAtTimestamp;
-            public string lastClaimedAtTimestamp;
-        }
-
-        [Serializable]
-        public class Asset
-        {
-            public string parentContract;
-            public string tokenId;
         }
     }
 }

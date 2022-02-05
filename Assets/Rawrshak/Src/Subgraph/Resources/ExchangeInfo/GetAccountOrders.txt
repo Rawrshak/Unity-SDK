@@ -2,20 +2,6 @@ query GetAccountOrders {{
     account ( id: "{0}" ) {{
         orders ( first: {1}, where: {{ id_gt: "{2}" }}, orderBy: createdAtTimestamp ) {{
             id
-            asset {{
-                parentContract
-                tokenId
-            }}
-            type
-            price
-            amountOrdered
-            amountFilled
-            amountClaimed
-            status
-            createdAtTimestamp
-            filledAtTimestamp
-            cancelledAtTimestamp
-            lastClaimedAtTimestamp
         }}
     }}
 }}
