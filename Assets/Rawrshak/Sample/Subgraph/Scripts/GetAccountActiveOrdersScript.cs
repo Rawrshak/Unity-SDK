@@ -1,20 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rawrshak;
 
-public class GetAccountActiveBuyOrdersScript : MonoBehaviour
+public class GetAccountActiveOrdersScript : MonoBehaviour
 {
     // Input
     public string accountAddress;
     public int pageSize;
     public string lastOrderId;
+    public OrderType orderType;
 
     // Return Value
-    public Rawrshak.GetAccountActiveBuyOrders.ReturnData data;
+    public GetAccountActiveOrders.ReturnData data;
     
     // Start is called before the first frame update
     async void Start()
     {
-        data = await Rawrshak.GetAccountActiveBuyOrders.Fetch(accountAddress, pageSize, lastOrderId);
+        data = await GetAccountActiveOrders.Fetch(accountAddress, pageSize, lastOrderId, orderType);
     }
 }

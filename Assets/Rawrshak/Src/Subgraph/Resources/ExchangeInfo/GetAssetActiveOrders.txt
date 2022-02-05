@@ -1,0 +1,7 @@
+query GetAssetActiveOrders {{
+    asset ( id: "{0}-{1}") {{
+        orders ( first: {2}, where: {{ id_gt: "{3}", type: {4}, status_in: [ Ready, PartiallyFilled ]  }}, orderBy: price, orderDirection: desc ) {{
+            id
+        }}
+    }}
+}}

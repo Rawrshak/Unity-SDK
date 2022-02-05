@@ -8,14 +8,14 @@ using GraphQlClient.Core;
 
 namespace Rawrshak
 {
-    public class GetAccountActiveBuyOrders : QueryBase
+    public class GetAccountActiveOrders : QueryBase
     {
-        public static async Task<ReturnData> Fetch(string accountAddress, int pageSize, string lastOrderId) {
+        public static async Task<ReturnData> Fetch(string accountAddress, int pageSize, string lastOrderId, OrderType orderType) {
             // Load query if this is the first Fetch
-            string query = LoadQuery(Constants.GET_ACCOUNT_ACTIVE_BUY_ORDERS_QUERY_STRING_LOCATION);
+            string query = LoadQuery(Constants.GET_ACCOUNT_ACTIVE_ORDERS_QUERY_STRING_LOCATION);
 
             // Load the query parameters
-            string queryWithArgs = String.Format(query, accountAddress.ToLower(), pageSize, lastOrderId.ToLower());
+            string queryWithArgs = String.Format(query, accountAddress.ToLower(), pageSize, lastOrderId.ToLower(), orderType.ToString());
 
             // Post query
             string returnData = await PostAsync(Subgraph.Instance.exchangeSubgraphUri, queryWithArgs);
