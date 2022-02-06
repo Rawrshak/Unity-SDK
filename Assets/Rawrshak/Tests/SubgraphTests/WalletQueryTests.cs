@@ -7,12 +7,6 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using GraphQlClient.Core;
 
-public static class UnityTestUtils {
-    public static void RunAsyncMethodSync(this Func < Task > asyncFunc) {
-    Task.Run(async () => await asyncFunc()).GetAwaiter().GetResult();
-    }
-}
-
 public class WalletQueryTests
 {
     string accountAddress = "0xB796BCe3db9A9DFb3F435A375f69f43a104b4caF";
@@ -26,22 +20,28 @@ public class WalletQueryTests
     /******************************************/
     /*          Wallet Query Tests            */
     /******************************************/
-    [Test]
-    public async void GetAccountInfoTest()
+    [UnityTest]
+    public IEnumerator GetAccountInfoTest()
     {
-        var data = await Rawrshak.GetAccountInfo.Fetch(accountAddress);
+        // AsIEnumerator allows us to run Async Tasks that need to run in the main thread to be used 
+        // in a coroutine
+        yield return Rawrshak.GetAccountInfo.Fetch(accountAddress).AsIEnumerator<Rawrshak.GetAccountInfo.ReturnData>();
+
+        var data = Rawrshak.GetAccountInfo.LastFetchData;
 
         Assert.AreEqual(data.data.account.id, accountAddress.ToLower());
         Assert.AreEqual(data.data.account.address, accountAddress.ToLower());
     }
     
-    [Test]
-    public async void GetAssetsInWalletTest()
+    [UnityTest]
+    public IEnumerator GetAssetsInWalletTest()
     {
-        var data = await Rawrshak.GetAssetsInWallet.Fetch(accountAddress, pageSize, lastId);
+        yield return Rawrshak.GetAssetsInWallet.Fetch(accountAddress, pageSize, lastId).AsIEnumerator<Rawrshak.GetAssetsInWallet.ReturnData>();
 
         string expectedResultContractAddress = "0x20af0c7dd43fc91e7e8f449692f26adc2fa69ee4";
         string expectedResultTokenId = "0";
+        
+        var data = Rawrshak.GetAssetsInWallet.LastFetchData;
         
         Assert.AreEqual(data.data.account.assetBalances.Length, 1);
         Assert.AreEqual(data.data.account.assetBalances[0].asset.parentContract.id, expectedResultContractAddress);
@@ -49,37 +49,51 @@ public class WalletQueryTests
         Assert.AreEqual(data.data.account.assetBalances[0].id, String.Format("{0}-{1}-{2}", expectedResultContractAddress, accountAddress.ToLower(), expectedResultTokenId));
     }
     
-    [Test]
-    public void GetWalletAssetsInContentTest()
+    [UnityTest]
+    public IEnumerator GetWalletAssetsInContentTest()
     {
-        UnityTestUtils.RunAsyncMethodSync(async() => {
-            var data = await Rawrshak.GetWalletAssetsInContent.Fetch(accountAddress, contentAddress, pageSize, lastId);
+        yield return Rawrshak.GetWalletAssetsInContent.Fetch(accountAddress, contentAddress, pageSize, lastId).AsIEnumerator<Rawrshak.GetWalletAssetsInContent.ReturnData>();
 
-            string expectedResultContractAddress = "0x20af0c7dd43fc91e7e8f449692f26adc2fa69ee4";
-            string expectedResultTokenId = "0";
+        string expectedResultContractAddress = "0x20af0c7dd43fc91e7e8f449692f26adc2fa69ee4";
+        string expectedResultTokenId = "0";
+        
+        var data = Rawrshak.GetWalletAssetsInContent.LastFetchData;
 
-            Assert.AreEqual(data.data.account.assetBalances.Length, 1);
-            Assert.AreEqual(data.data.account.assetBalances[0].asset.parentContract.id, expectedResultContractAddress);
-            Assert.AreEqual(data.data.account.assetBalances[0].asset.tokenId, expectedResultTokenId);
-            Assert.AreEqual(data.data.account.assetBalances[0].id, String.Format("{0}-{1}-{2}", expectedResultContractAddress, accountAddress.ToLower(), expectedResultTokenId));
-        });
+        Assert.AreEqual(data.data.account.assetBalances.Length, 1);
+        Assert.AreEqual(data.data.account.assetBalances[0].asset.parentContract.id, expectedResultContractAddress);
+        Assert.AreEqual(data.data.account.assetBalances[0].asset.tokenId, expectedResultTokenId);
+        Assert.AreEqual(data.data.account.assetBalances[0].id, String.Format("{0}-{1}-{2}", expectedResultContractAddress, accountAddress.ToLower(), expectedResultTokenId));
     }
     
-    [Test]
-    public async void GetWalletAssetsOfTypeTest()
+    [UnityTest]
+    public IEnumerator GetWalletAssetsOfTypeTest()
     {
-        var data = await Rawrshak.GetWalletAssetsOfType.Fetch(accountAddress, type, pageSize, lastId);
+        yield return Rawrshak.GetWalletAssetsOfType.Fetch(accountAddress, type, pageSize, lastId).AsIEnumerator<Rawrshak.GetWalletAssetsOfType.ReturnData>();
+        
+        string expectedResultContractAddress = "0x899753a7055093b1dc32422cffd55186a5c18198";
+        string expectedResultTokenId = "0";
 
-        // Assert.AreEqual(data.data.account.id, accountAddress.ToLower());
-        // Assert.AreEqual(data.data.account.address, accountAddress.ToLower());
+        var data = Rawrshak.GetWalletAssetsOfType.LastFetchData;
+
+        Assert.AreEqual(data.data.account.assetBalances.Length, 1);
+        Assert.AreEqual(data.data.account.assetBalances[0].asset.parentContract.id, expectedResultContractAddress);
+        Assert.AreEqual(data.data.account.assetBalances[0].asset.tokenId, expectedResultTokenId);
+        Assert.AreEqual(data.data.account.assetBalances[0].id, String.Format("{0}-{1}-{2}", expectedResultContractAddress, accountAddress.ToLower(), expectedResultTokenId));
     }
     
-    [Test]
-    public async void GetWalletAssetsOfSubtypeTest()
+    [UnityTest]
+    public IEnumerator GetWalletAssetsOfSubtypeTest()
     {
-        var data = await Rawrshak.GetWalletAssetsOfSubtype.Fetch(accountAddress, subtype, pageSize, lastId);
+        yield return Rawrshak.GetWalletAssetsOfSubtype.Fetch(accountAddress, subtype, pageSize, lastId).AsIEnumerator<Rawrshak.GetWalletAssetsOfSubtype.ReturnData>();
 
-        // Assert.AreEqual(data.data.account.id, accountAddress.ToLower());
-        // Assert.AreEqual(data.data.account.address, accountAddress.ToLower());
+        var data = Rawrshak.GetWalletAssetsOfSubtype.LastFetchData;
+        
+        string expectedResultContractAddress = "0x899753a7055093b1dc32422cffd55186a5c18198";
+        string expectedResultTokenId = "0";
+
+        Assert.AreEqual(data.data.account.assetBalances.Length, 1);
+        Assert.AreEqual(data.data.account.assetBalances[0].asset.parentContract.id, expectedResultContractAddress);
+        Assert.AreEqual(data.data.account.assetBalances[0].asset.tokenId, expectedResultTokenId);
+        Assert.AreEqual(data.data.account.assetBalances[0].id, String.Format("{0}-{1}-{2}", expectedResultContractAddress, accountAddress.ToLower(), expectedResultTokenId));
     }
 }

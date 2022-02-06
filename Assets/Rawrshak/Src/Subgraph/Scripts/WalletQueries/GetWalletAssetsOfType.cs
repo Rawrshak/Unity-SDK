@@ -10,6 +10,8 @@ namespace Rawrshak
 {
     public class GetWalletAssetsOfType : QueryBase
     {
+        public static ReturnData LastFetchData = null;
+
         public static async Task<ReturnData> Fetch(string walletAddress, string type, int first, string lastId) {
             // Load query if this is the first Fetch
             string query = LoadQuery(Constants.GET_WALLET_ASSETS_OF_TYPE_QUERY_STRING_LOCATION);
@@ -21,7 +23,8 @@ namespace Rawrshak
             string returnData = await PostAsync(Subgraph.Instance.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
-            return JsonUtility.FromJson<ReturnData>(returnData);
+            LastFetchData = JsonUtility.FromJson<ReturnData>(returnData);
+            return LastFetchData;
         }
 
         [Serializable]
