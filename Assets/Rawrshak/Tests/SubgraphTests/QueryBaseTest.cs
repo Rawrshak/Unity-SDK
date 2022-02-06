@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -9,7 +8,6 @@ using GraphQlClient.Core;
 
 public class QueryBaseTests
 {
-    private string subgraphUri = "https://api.thegraph.com/subgraphs/name/gcbsumid/contents-optimistic-kovan";
 
     /******************************************/
     /*          Query Base Tests              */
@@ -39,7 +37,7 @@ public class QueryBaseTests
         
         string queryWithArgs = String.Format(query, address.ToLower(), tokenId.ToLower());
 
-        string result = await queryBase.PostAsync(subgraphUri, queryWithArgs);
+        string result = await queryBase.PostAsync(TestConstants.ContentSubgraphUri, queryWithArgs);
 
         string expectedResult = @"{""data"":{""asset"":{""id"":""0x899753a7055093b1dc32422cffd55186a5c18198-1""}}}";
 
