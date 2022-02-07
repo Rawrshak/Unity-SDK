@@ -65,6 +65,16 @@ public class ExchangeQueryTests
         Assert.AreNotEqual(data.data.account, null);
         Assert.AreEqual(data.data.account.id, accountAddress.ToLower());
         Assert.AreEqual(data.data.account.address, accountAddress.ToLower());
+        Assert.IsTrue(BigInteger.Parse(data.data.account.ordersCount) >= 142);
+        Assert.IsTrue(BigInteger.Parse(data.data.account.orderFillsCount) >= 65);
+        Assert.IsTrue(BigInteger.Parse(data.data.account.activeBuyOrders) >= 1);
+        Assert.IsTrue(BigInteger.Parse(data.data.account.activeSellOrders) >= 52);
+        Assert.IsTrue(BigInteger.Parse(data.data.account.activeOrdersCount) >= 53);
+        Assert.IsTrue(BigInteger.Parse(data.data.account.filledOrdersCount) >= 56);
+        Assert.IsTrue(BigInteger.Parse(data.data.account.volume) >= BigInteger.Parse("36859150000000000000000"));
+        Assert.IsTrue(BigInteger.Parse(data.data.account.volumeAsBuyer) >= BigInteger.Parse("185500000000000000000"));
+        Assert.IsTrue(BigInteger.Parse(data.data.account.volumeAsSeller) >= BigInteger.Parse("36673650000000000000000"));
+        Assert.IsTrue(BigInteger.Parse(data.data.account.daysActive) >= 32);
     }
 
     [UnityTest]
@@ -73,6 +83,10 @@ public class ExchangeQueryTests
         yield return Rawrshak.GetAccountOrders.Fetch(accountAddress, pageSize, lastOrderId).AsIEnumerator<Rawrshak.GetAccountOrders.ReturnData>();
 
         var data = Rawrshak.GetAccountOrders.LastFetchData;
+        
+        Assert.AreNotEqual(data.data.account, null);
+        Assert.AreEqual(data.data.account.orders.Length, 1);
+        Assert.AreEqual(data.data.account.orders[0].id, "0xc");
     }
 
     [UnityTest]
@@ -81,6 +95,15 @@ public class ExchangeQueryTests
         yield return Rawrshak.GetAccountOrderFills.Fetch(accountAddress, pageSize, lastOrderId).AsIEnumerator<Rawrshak.GetAccountOrderFills.ReturnData>();
 
         var data = Rawrshak.GetAccountOrderFills.LastFetchData;
+        
+        Assert.AreNotEqual(data.data.account, null);
+        Assert.AreEqual(data.data.account.orderFills.Length, 1);
+        Assert.AreEqual(data.data.account.orderFills[0].order.id, "0x2c");
+        Assert.AreEqual(data.data.account.orderFills[0].amount, "1");
+        Assert.AreEqual(data.data.account.orderFills[0].pricePerItem, "2500000000000000000");
+        Assert.AreEqual(data.data.account.orderFills[0].totalPrice, "2500000000000000000");
+        Assert.AreEqual(data.data.account.orderFills[0].token.address, "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1");
+        Assert.AreEqual(data.data.account.orderFills[0].createdAtTimestamp, "1641596584");
     }
 
     [UnityTest]
@@ -89,6 +112,10 @@ public class ExchangeQueryTests
         yield return Rawrshak.GetAssetActiveOrders.Fetch(contentAddress, tokenId, pageSize, lastOrderId, Rawrshak.OrderType.Buy).AsIEnumerator<Rawrshak.GetAssetActiveOrders.ReturnData>();
 
         var data = Rawrshak.GetAssetActiveOrders.LastFetchData;
+        
+        Assert.AreNotEqual(data.data.asset, null);
+        Assert.AreEqual(data.data.asset.orders.Length, 1);
+        Assert.AreEqual(data.data.asset.orders[0].id, "0x18a");
     }
 
     [UnityTest]
@@ -97,6 +124,10 @@ public class ExchangeQueryTests
         yield return Rawrshak.GetAssetActiveOrders.Fetch(contentAddress, tokenId, pageSize, lastOrderId, Rawrshak.OrderType.Sell).AsIEnumerator<Rawrshak.GetAssetActiveOrders.ReturnData>();
 
         var data = Rawrshak.GetAssetActiveOrders.LastFetchData;
+        
+        Assert.AreNotEqual(data.data.asset, null);
+        Assert.AreEqual(data.data.asset.orders.Length, 1);
+        Assert.AreEqual(data.data.asset.orders[0].id, "0x249");
     }
 
     [UnityTest]
@@ -105,6 +136,10 @@ public class ExchangeQueryTests
         yield return Rawrshak.GetAccountActiveOrders.Fetch(accountAddress, pageSize, lastOrderId, Rawrshak.OrderType.Buy).AsIEnumerator<Rawrshak.GetAccountActiveOrders.ReturnData>();
 
         var data = Rawrshak.GetAccountActiveOrders.LastFetchData;
+        
+        Assert.AreNotEqual(data.data.account, null);
+        Assert.AreEqual(data.data.account.orders.Length, 1);
+        Assert.AreEqual(data.data.account.orders[0].id, "0x69");
     }
 
     [UnityTest]
@@ -113,5 +148,9 @@ public class ExchangeQueryTests
         yield return Rawrshak.GetAccountActiveOrders.Fetch(accountAddress, pageSize, lastOrderId, Rawrshak.OrderType.Sell).AsIEnumerator<Rawrshak.GetAccountActiveOrders.ReturnData>();
 
         var data = Rawrshak.GetAccountActiveOrders.LastFetchData;
+        
+        Assert.AreNotEqual(data.data.account, null);
+        Assert.AreEqual(data.data.account.orders.Length, 1);
+        Assert.AreEqual(data.data.account.orders[0].id, "0xc");
     }
 }
