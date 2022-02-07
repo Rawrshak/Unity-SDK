@@ -11,6 +11,8 @@ namespace Rawrshak
 {
     public class GetAssetsInContentContract : QueryBase
     {
+        public static ReturnData LastFetchData = null;
+
         public static async Task<ReturnData> Fetch(string contractAddress, int first, string lastId) {
             // Load query if this is the first Fetch
             string query = LoadQuery(Constants.GET_ASSETS_IN_CONTENT_CONTRACT_QUERY_STRING_LOCATION);
@@ -23,7 +25,8 @@ namespace Rawrshak
             string returnData = await PostAsync(Subgraph.Instance.contentsSubgraphUri, queryWithArgs);
 
             // Parse data
-            return JsonUtility.FromJson<ReturnData>(returnData);
+            LastFetchData = JsonUtility.FromJson<ReturnData>(returnData);
+            return LastFetchData;
         }
 
         [Serializable]

@@ -10,6 +10,8 @@ namespace Rawrshak
 {
     public class GetAccountOrderFills : QueryBase
     {
+        public static ReturnData LastFetchData = null;
+
         public static async Task<ReturnData> Fetch(string accountAddress, int pageSize, string lastOrderId) {
             // Load query if this is the first Fetch
             string query = LoadQuery(Constants.GET_ACCOUNT_ORDER_FILLS_QUERY_STRING_LOCATION);
@@ -21,7 +23,8 @@ namespace Rawrshak
             string returnData = await PostAsync(Subgraph.Instance.exchangeSubgraphUri, queryWithArgs);
 
             // Parse data
-            return JsonUtility.FromJson<ReturnData>(returnData);
+            LastFetchData = JsonUtility.FromJson<ReturnData>(returnData);
+            return LastFetchData;
         }
 
         [Serializable]

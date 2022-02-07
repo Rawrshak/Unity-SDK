@@ -12,12 +12,14 @@ namespace Rawrshak
     // public abstract class QueryBase : SingletonScriptableObject<QueryBase>
     public abstract class QueryBase
     {
-        protected static string LoadQuery(string queryLocation) {
+        protected static string LoadQuery(string queryLocation)
+        {
             TextAsset metadataTextAsset=(TextAsset)Resources.Load(queryLocation);
             return metadataTextAsset.text;
         }
 
-        protected static async Task<string> PostAsync(string uri, string queryWithArgs) {
+        protected static async Task<string> PostAsync(string uri, string queryWithArgs)
+        {
             // Post query
             using (UnityWebRequest request = await HttpHandler.PostAsync(uri, queryWithArgs, null))
             {

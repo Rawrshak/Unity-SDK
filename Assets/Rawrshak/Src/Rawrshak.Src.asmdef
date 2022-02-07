@@ -1,0 +1,16 @@
+{
+    "name": "Rawrshak.Src",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c93e6b256c805144c951c9827381177c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
