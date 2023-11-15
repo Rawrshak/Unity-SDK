@@ -1,9 +1,14 @@
 namespace Helika
 {
-    public enum HelikaBaseURL
+    public class HelikaBaseURL
     {
-        Production = "https://api.helika.io/v1",
-        Develop = "https://api-stage.helika.io/v1",
-        Localhost = "http://localhost:3000",
+        public const string Production = "https://api.helika.io/v1";
+        public const string Develop = "https://api-stage.helika.io/v1";
+        public const string Localhost = "http://localhost:8181/v1";
+
+        public static bool validate(string baseUrl)
+        {
+            return baseUrl == Production || baseUrl == Develop || baseUrl == Localhost;
+        }
     }
 }

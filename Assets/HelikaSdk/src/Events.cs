@@ -6,52 +6,89 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.Networking;
 using GraphQlClient.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Helika
 {
-    public abstract class EventManager
+    public class EventManager : HelikaSingletonScriptableObject<EventManager>
     {
         private string _apiKey;
-        protected string _baesUrl;
+        protected string _baseUrl;
         protected string _gameId;
         protected string _sessionID;
+        protected bool _isInitialized = false;
 
-        public override void Init(string apiKey, string gameId, HelikaBaseURL baseUrl)
+
+        public void Init(string apiKey, string gameId, string baseUrl)
         {
-            _apiKey = apiKey;
-            _gameId = gameId,
-            _baseUrl = baseUrl;
-            
-            // todo: generate Session ID
-        }
-
-        public async Task<ReturnData> EmitEvent()
-        {
-            string returnData = await PostAsync("/game/game-event", queryWithArgs);
-            return JsonUtility.FromJson<ReturnData>(returnData);
-        }
-
-
-        // protected static string LoadQuery(string queryLocation)
-        // {
-        //     TextAsset metadataTextAsset=(TextAsset)Resources.Load(queryLocation);
-        //     return metadataTextAsset.text;
-        // }
-
-        protected static async Task<string> PostAsync(string uri, string queryWithArgs)
-        {
-            // Post query
-            using (UnityWebRequest request = await HttpHandler.PostAsync(_baseUrl + uri, queryWithArgs, null))
+            if (_isInitialized)
             {
-                if (request.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.LogError(request.error);
-                    return String.Empty;
-                }
-                
-                Debug.Log(HttpHandler.FormatJson(request.downloadHandler.text));
-                return request.downloadHandler.text;
+                return;
             }
+
+            if (!HelikaBaseURL.validate(baseUrl))
+            {
+                throw new ArgumentException("Invalid Base URL");
+            }
+
+            _apiKey = apiKey;
+            _gameId = gameId;
+            _baseUrl = baseUrl;
+            _sessionID = Guid.NewGuid().ToString();
+        }
+
+        public async Task<string> EmitEvent(string data)
+        {
+            return await PostAsync("/game/game-event", data);
+        }
+
+        public async Task<string> TestHelikaAPI()
+        {
+            var jsonObject = new
+            {
+                message = "test"
+            };
+            var jsonString = JsonConvert.SerializeObject(jsonObject);
+            Debug.Log(jsonString);
+
+            string returnData = await PostAsync("/game/test-event", jsonString);
+            Debug.Log(returnData);
+            return returnData;
+            // return JsonUtility.FromJson<ReturnData>(returnData);
+        }
+
+        protected async Task<string> PostAsync(string url, string data)
+        {
+            // Create a UnityWebRequest object
+            UnityWebRequest request = new UnityWebRequest(_baseUrl.ToString() + url, "POST");
+
+            // Set the request method and content type
+            // request.method = "POST";
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("x-api-key", _apiKey);
+
+            // Convert the data to bytes and attach it to the request
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(data);
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+            // Send the request asynchronously
+            await request.SendWebRequest();
+
+            // Check for errors
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                // Display the response text
+                Debug.Log("Response: " + request.downloadHandler.text);
+            }
+            else
+            {
+                // Display the error
+                Debug.LogError("Error: " + request.error + ", data: " + request.downloadHandler.text);
+            }
+
+            return request.downloadHandler.text;
         }
     }
 }

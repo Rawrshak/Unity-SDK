@@ -581,7 +581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1492994861
 Transform:
   m_ObjectHideFlags: 0
@@ -1243,6 +1243,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 220a678b82632204dbfa22dfd2c04728, type: 3}
+--- !u!1 &3657001899750161601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 869200955039017954, guid: 220a678b82632204dbfa22dfd2c04728, type: 3}
+  m_PrefabInstance: {fileID: 3657001899750161600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3657001899750161602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3657001899750161601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6cc832c4449a645be9a225e30146c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3708001621952466634
 PrefabInstance:
   m_ObjectHideFlags: 0
